@@ -19,13 +19,13 @@
 5.	Número de cuotas: Plazo * frecuencia.
 
     ```
-    Esta es una de las ingresadas según instrucciones, asumiendo que son mensuales, se toma como cantidad de meses. Por ende, es mejor usar la formula 2 de cuota mensual si el input es número de cuotas y es mensual el pago. Así se ignoran las variables de plazo y frecuencia.
+    Esta es una de las ingresadas según instrucciones, asumiendo que son mensuales, se toma como cantidad de meses. Por ende, es mejor usar la primera fórmula de cuota mensual si el input es número de cuotas y es mensual el pago. Así se ignoran las variables de plazo, frecuencia, m y n.
     ```
 
 ### Variables a calcular:
 * Cuota mensual: El pago que se debe hacer cada mes, incluye el pago de intereses y pago de deuda. Fórmulas de cuota mensual para tasa fija:
 
-    <a><img src="https://github.com/DiegoAlfaroUCR/repoImagenes/blob/803c59cf447e9d7d332710a02954c8c79d73534e/imagenesProyecto/cuotasMensuales1.svg?raw=true"></a>
+    <a><img src="https://github.com/DiegoAlfaroUCR/repoImagenes/blob/9c2612ae3a7fb4ac7dd806ae3d0d651074d41ff3/imagenesProyecto/cuotasMensuales1.svg?raw=true"></a>
 
     Tomada de https://www.billin.net/simulador-prestamos-personales-calculadora/#resultados
     
@@ -34,6 +34,8 @@
     Tomada de https://excelparatodos.com/tabla-de-amortizacion/
 
     P: Valor del préstamo
+
+    CM: Cantidad de meses a pagar.
 
     i: Tasa de interés nominal anual (en porcentaje, osea para 3% usar 0.003)
 
