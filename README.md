@@ -25,11 +25,13 @@
 ### Variables a calcular:
 * Cuota mensual: El pago que se debe hacer cada mes, incluye el pago de intereses y pago de deuda. Fórmulas de cuota mensual para tasa fija:
 
+    <a><img src="https://github.com/DiegoAlfaroUCR/repoImagenes/blob/803c59cf447e9d7d332710a02954c8c79d73534e/imagenesProyecto/cuotasMensuales1.svg?raw=true"></a>
+
     Tomada de https://www.billin.net/simulador-prestamos-personales-calculadora/#resultados
-    $$ \frac{P \cdot i/12 }{1 - (1+i/12)^{-12} } $$
+    
+    <a><img src="https://github.com/DiegoAlfaroUCR/repoImagenes/blob/803c59cf447e9d7d332710a02954c8c79d73534e/imagenesProyecto/cuotasMensuales2.svg?raw=true"></a>
 
     Tomada de https://excelparatodos.com/tabla-de-amortizacion/
-    $$ \frac{P \cdot i/m \cdot (1+i/m)^{nm}}{(1+i/m)^{nm} - 1} $$
 
     P: Valor del préstamo
 
