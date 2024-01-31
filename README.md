@@ -70,11 +70,15 @@ Tomada de: https://miniwebtool.com/es/certificate-of-deposit-calculator/?p=1000&
 
 Donde:
 
-A = Es el saldo que recibirá el cliente, su depósito más los interéses
-P = Depósito inicial que realizó el cliente
-r = Tasa de interés anual
-t = Plazo en años que estará el depósito en el banco
-n = número de períodos de capitalización por año (Cuantas veces se capitalizan las ganancias al año)
+A = Es el saldo que recibirá el cliente, su depósito más los interéses.
+
+P = Depósito inicial que realizó el cliente.
+
+r = Tasa de interés anual.
+
+t = Plazo en años que estará el depósito en el banco.
+
+n = número de períodos de capitalización por año (Cuantas veces se capitalizan las ganancias al año).
 
 Para su implementación en C++ se puede crear una clase CDP, que tenga como atributos las variables para calcular el CDP, así como una variable que indique si el depósito del cliente será en dólares o colones. Utilizando un método de la clase que incorporé la fórmula anterior se podría obtener la ganancia que obtendría el cliente dependiendo de la cantidad de dinero y la cantidad de tiempo que deje el dinero en el banco. La instancia de esta clase podría ser almacenada de forma que cada cliente tenga acceso a su respectivo CDP realizado.
 
