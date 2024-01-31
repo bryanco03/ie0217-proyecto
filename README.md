@@ -64,7 +64,7 @@ Otro tema a tratar dentro del proyecto, son los certificados de depósito a plaz
 
 La fórmula para generar los interéses ganados por el cliente es la siguiente:
 
-<a><img src="https://latex.codecogs.com/svg.image?%20A=P%20x(1+r/n)^{nt}"></a>
+<a><img src="https://latex.codecogs.com/svg.image?{\color{White}P\cdot(1+r/n)^{nt}}"></a>
 
 Tomada de: https://miniwebtool.com/es/certificate-of-deposit-calculator/?p=1000&t=12&r=5&n=1
 
