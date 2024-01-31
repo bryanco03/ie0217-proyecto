@@ -10,6 +10,7 @@ Existen diferentes tipos de préstamos además del préstamo personal anteriorme
 
 Por otra parte, se tiene uno de los préstamos más cómunes utilizado por las personas para poder conseguir contruir sus viviendas, el préstamo hipotecario, este un préstamo es utilizado para la adquisición de un bien inmueble por parte del cliente. En este caso el crédito dado por el banco no superará el valor de la vivienda que se desea adquirir, esto es así ya que, el inmueble adquirido por el usuario se grava con una hipoteca, esto significa que en caso de que el cliente no pague el crédito al banco, este tendrá la libertad de hacer valer la garantía hipotecaria y vender el inmueble hipotecado, con el fin de saldar la deuda del crédito entrega al cliente, en caso de que el banco logre vender el inmueble por un precio mayor a la deuda del cliente, el excedente será entregado al cliente, pero si, el precio de venta es menor a la deuda, el banco tendrá derecho a apropiarse de los bienes presentes y futuros del deudor, hasta que la deuda quede saldada.[7]
 
+
 La forma en que los pagdos de interéses son realizados se encuentran en el punto 2. Y la forma en que se pueden manejar los préstamos en este proyecto es mencionada en el punto 6 de este documento.
 
 
@@ -44,6 +45,7 @@ La forma en que los pagdos de interéses son realizados se encuentran en el punt
 
     Tomada de [8]
 
+
     P: Valor del préstamo
 
     CM: Cantidad de meses a pagar.
@@ -60,6 +62,7 @@ La forma en que los pagdos de interéses son realizados se encuentran en el punt
 
 ## 3. Certificados de depósito a plazo (CDP)
 
+
 Otro tema a tratar dentro del proyecto, son los certificados de depósito a plazo, estos consisten en un depósito que realiza el cliente al banco, donde esté recibirá el dinero y trabajará con él durante un tiempo establecido por un acuerdo entre el banco y el cliente, inicialmente la idea de este proceso es que el cliente no pueda retirar el dinero durante el tiempo establecido y cuando este tiempo termine, el banco devolverá al cliente el dinero depositado, más una cantidad de interés extra generados por el tiempo que estuvo el dinero en el banco.[2]
 
 La fórmula para generar los interéses ganados por el cliente es la siguiente:
@@ -67,6 +70,7 @@ La fórmula para generar los interéses ganados por el cliente es la siguiente:
 <a><img src="https://latex.codecogs.com/svg.image?{\color{White}P\cdot(1+r/n)^{nt}}"></a>
 
 Tomada de [10]
+
 Donde:
 
 A = Es el saldo que recibirá el cliente, su depósito más los interéses.
