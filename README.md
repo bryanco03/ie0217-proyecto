@@ -148,7 +148,7 @@ int main () {
   return 0;
 }
 ```
-Ejemplo tomado de: [12]
+Tomado de: [12]
 
 ## 8. Cronograma
 
