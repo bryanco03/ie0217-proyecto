@@ -126,8 +126,11 @@ Se podría tener una clase Prestamo que guarde la cantidad del préstamo, la tas
 Para el manejo de archivos se utilizará una clase de la biblioteca estándar de C++, siendo esta fstream, esta clase ofrece la posibilidad de leer y escribir en archivos, tales como archivos csv o log que serán utilizados en este proyecto. Para trabajar con este clase se trabaja con objetos tipo fstream, donde este será utilizado tanto para escribir como leer en el archivo. Algunos de los comandos básicos para el manejo de fstream son los siguientes:
 
 open(): Método para abrir el archivo.
+
 close(): Método para cerrar el archivo.
+
 <<: Operador para escribir en el archivo.
+
 >>: Operador para leer del archivo.
 
 En caso de que el archivo buscado para trabajar con fstream no se encuentre, este será creado automáticamente con el nombre del archivo que se busca. Un ejemplo básico del uso de fstream es el siguiente:
