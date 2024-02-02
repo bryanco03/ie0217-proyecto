@@ -11,9 +11,7 @@ Existen diferentes tipos de préstamos además del préstamo personal anteriorme
 Por otra parte, se tiene uno de los préstamos más cómunes utilizado por las personas para poder conseguir contruir sus viviendas, el préstamo hipotecario, este un préstamo es utilizado para la adquisición de un bien inmueble por parte del cliente. En este caso el crédito dado por el banco no superará el valor de la vivienda que se desea adquirir, esto es así ya que, el inmueble adquirido por el usuario se grava con una hipoteca, esto significa que en caso de que el cliente no pague el crédito al banco, este tendrá la libertad de hacer valer la garantía hipotecaria y vender el inmueble hipotecado, con el fin de saldar la deuda del crédito entrega al cliente, en caso de que el banco logre vender el inmueble por un precio mayor a la deuda del cliente, el excedente será entregado al cliente, pero si, el precio de venta es menor a la deuda, el banco tendrá derecho a apropiarse de los bienes presentes y futuros del deudor, hasta que la deuda quede saldada.[7]
 
 
-La forma en que los pagdos de interéses son realizados se encuentran en el punto 2. Y la forma en que se pueden manejar los préstamos en este proyecto es mencionada en el punto 6 de este documento.
-
-
+La forma en que los pagos de interéses son realizados se encuentran en el punto 2. Y la forma en que se pueden manejar los préstamos en este proyecto es mencionada en el punto 6 de este documento.
 
 ## 2. Como obtener la tabla mediante valores personalizados demonto, cantidad de cuotas y la tasa de interés
 
@@ -45,7 +43,6 @@ La forma en que los pagdos de interéses son realizados se encuentran en el punt
 
     Tomada de [8]
 
-
     P: Valor del préstamo
 
     CM: Cantidad de meses a pagar.
@@ -62,12 +59,11 @@ La forma en que los pagdos de interéses son realizados se encuentran en el punt
 
 ## 3. Certificados de depósito a plazo (CDP)
 
-
 Otro tema a tratar dentro del proyecto, son los certificados de depósito a plazo, estos consisten en un depósito que realiza el cliente al banco, donde esté recibirá el dinero y trabajará con él durante un tiempo establecido por un acuerdo entre el banco y el cliente, inicialmente la idea de este proceso es que el cliente no pueda retirar el dinero durante el tiempo establecido y cuando este tiempo termine, el banco devolverá al cliente el dinero depositado, más una cantidad de interés extra generados por el tiempo que estuvo el dinero en el banco.[2]
 
 La fórmula para generar los interéses ganados por el cliente es la siguiente:
 
-<a><img src="https://latex.codecogs.com/svg.image?{\color{White}P\cdot(1+r/n)^{nt}}"></a>
+<a><img src="https://latex.codecogs.com/svg.image?\color{White}A=P\cdot(1+r/n)^{nt}"></a>
 
 Tomada de [10]
 
@@ -109,9 +105,7 @@ Para efectos de la implementacion de un Registro de transacciones en el programa
 - Cuentas asociadas : Cuentas contables que fueron afectadas por la transacción
 - Monto: Cantidad de dinero de la transaccion.
 
-Dicha tabla se encontrará en un archivo txt y el cual es actualizado en el mismo instante en el que se ejecuta una transaccion en el programa para asi asegurarse la seguridad y el seguimento preciso de cualquier operacion realizada.
-
-
+Dicha tabla se encontrará en un archivo log y el cual es actualizado en el mismo instante en el que se ejecuta una transaccion en el programa para asi asegurarse la seguridad y el seguimento preciso de cualquier operacion realizada.
 
 ## 5. Reporte de préstamos: las cuotas pagadas, desglosando el aporte al capital y los intereses abonados hasta el momento
 
@@ -127,9 +121,37 @@ En dicho reporte de préstamos se tiene contemplado mostrar la informacion del p
 
 Se podría tener una clase Prestamo que guarde la cantidad del préstamo, la tasa de interés, el periodo, la cuota mensual (esta última es opcional se podría obtener con la fórmula). Además se le agregaría un atributo que indica si es en dólares o en colones que modifica las impresiones (las fórmulas deberían ser iguales). Se podría guardar un contenedor de objetos tipo Prestamo para cada cliente así pueden tener más de uno. Como se guardan los tres datos necesarios para generar la tabla se podría generar la tabla del préstamo en cualquier momento accediendo al objeto Prestamo. La clase Prestamo debería ser accedida por los usuarios y por el sistema bancario en sí. La clase Préstamo podría tener los métodos para generar la cuota mensual y la tabla de sí misma.
 
+## 7. Manejo de archivos
 
+Para el manejo de archivos se utilizará una clase de la biblioteca estándar de C++, siendo esta fstream, esta clase ofrece la posibilidad de leer y escribir en archivos, tales como archivos csv o log que serán utilizados en este proyecto. Para trabajar con este clase se trabaja con objetos tipo fstream, donde este será utilizado tanto para escribir como leer en el archivo. Algunos de los comandos básicos para el manejo de fstream son los siguientes:
 
+open(): Método para abrir el archivo.
+close(): Método para cerrar el archivo.
+<<: Operador para escribir en el archivo.
+>>: Operador para leer del archivo.
 
+En caso de que el archivo buscado para trabajar con fstream no se encuentre, este será creado automáticamente con el nombre del archivo que se busca. Un ejemplo básico del uso de fstream es el siguiente:
+
+```C++
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main () {
+  fstream myfile;
+  myfile.open ("example.txt");
+  myfile << "Writing this to a file.\n";
+  myfile.close();
+  return 0;
+}
+```
+Ejemplo tomado de: [12]
+
+## 8. Cronograma
+
+A continuación se coloca el cronograma tentativo con el cual se va a llevar acabo el proyecto.
+
+<a><img src="https://github.com/DiegoAlfaroUCR/repoImagenes/blob/0774487b0c27f52b39e2f32a6f4963718beffac7/imagenesProyecto/Cronograma%20-%20Sheet1-1.svg?raw=true"></a>
 
 ## Referencias
 
@@ -154,5 +176,7 @@ Se podría tener una clase Prestamo que guarde la cantidad del préstamo, la tas
 [10] [miniwebtool](https://miniwebtool.com/es/certificate-of-deposit-calculator/?p=1000&t=12&r=5&n=1)
 
 [11] [Profinomics](https://profinomics.com/que-es-una-transaccion-en-contabilidad/?expand_article=1)
+
+[12] [cplusplus](https://cplusplus.com/doc/tutorial/files/)
 
 
