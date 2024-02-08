@@ -1,5 +1,5 @@
 /**
- * \copyright Copyright 2024 Heiner Obando Vega. All right reserved. This project is released under the MIT License
+ * \copyright Copyright 2024 Diego Alfaro, Bryan Cortes, Heiner Obando. All right reserved. This project is released under the MIT License
  * @file CDP.hpp
  * @date 07/02/2024
  * @author Diego Alfaro, Bryan Cortes, Heiner Obando
