@@ -9,7 +9,7 @@ unsigned long int Usuario::getIdentificacion(){
 vector<Prestamo>  Usuario::getPrestamos(){
     return prestamos;
 }
-vector<Cdp> Usuario::getCdps(){
+vector<CDP> Usuario::getCdps(){
     return cdps;
 }
 
@@ -25,6 +25,15 @@ void Usuario::setCuentas(Cuenta cuenta){
 void Usuario::setPrestamo(Prestamo prestamo){
     prestamos.push_back(prestamo);
 }
-void Usuario::setCdp(Cdp cdp){
+void Usuario::setCdp(CDP cdp){
     cdps.push_back(cdp);
+}
+
+bool Usuario::verificarDinero(double dinero){
+    for( auto& cuenta : cuentas){
+        if (cuenta.dinero >= dinero){
+            return true;
+        }
+    }
+    return false;
 }

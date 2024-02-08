@@ -18,16 +18,16 @@ public:
     vector<Cuenta> cuentas;
     unsigned long int identificacion;
     vector<Prestamo> prestamos;
-    vector<Cdp> cdps;
+    vector<CDP> cdps;
 
     vector<Cuenta> getCuentas();
     unsigned long int getIdentificacion();
     vector<Prestamo> getPrestamos();
-    vector<Cdp> getCdps();
+    vector<CDP> getCdps();
     void setCuentas(Cuenta cuenta);
     void setPrestamo(Prestamo prestamo);
-    void setCdp(Cdp cdp);
-    void verificarDinero(double dinero);
+    void setCdp(CDP cdp);
+    bool verificarDinero(double dinero);
 };
 
 
