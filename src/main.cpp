@@ -17,7 +17,7 @@ int main() {
     Usuario usuario(identificacion);
 
 
-    std::cout << "\nSe procede a realizar una prueba sobre el funcionamiento de la clase CDP\n";
+    std::cout << "\nSe procede a realizar una prueba sobre el funcionamiento de las clases\n";
     while(1){
         menupruebas(&usuario);
     }

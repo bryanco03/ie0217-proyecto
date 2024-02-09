@@ -2,6 +2,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <iomanip>
+#include <typeinfo>
 
 void PruebasClaseCDP(Usuario* usuario){
 
@@ -138,7 +139,7 @@ void menupruebas(Usuario* usuario){
         PruebasClaseCDP(usuario);
         break;
     case 4:
-
+        mostrarDatosUsuario(usuario);
         break;
     case 5:
         exit(0);
@@ -181,6 +182,7 @@ void mostrarDatosUsuario(Usuario* usuario){
     for ( const auto& cuenta : usuario->getCuentas()){
         if (cuenta.esDolar){
             std::cout << "La cuenta es en dolares"<< std::endl;
+            std::cout << "---------------"<< std::endl;
         }
         else{
             std::cout << "La cuenta es Colones"<< std::endl;
@@ -188,8 +190,9 @@ void mostrarDatosUsuario(Usuario* usuario){
         std::cout << "Dinero: "<< cuenta.dinero<< std::endl;
     }
     std::cout << "---CDP---"<< std::endl;
-    for (const auto& cdp : usuario->getCdps()){
+    for ( auto& cdp : usuario->getCdps()){
         std::cout << "Informacion del CDP" << std::endl;
-        //std::cout << "Monto ganado: " << cdp.calcularGanancia() << std::endl;
+        double monto = cdp.getCdp();
+        std::cout << "Monto Ganado: "<< monto << std::endl;
     }
 }
