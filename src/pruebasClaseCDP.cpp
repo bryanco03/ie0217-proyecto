@@ -1,9 +1,9 @@
-#include "pruebasClaseCDP.hpp"
+#include "pruebas.hpp"
 #include <stdexcept>
 #include <iostream>
 #include <iomanip>
 
-void PruebasClaseCDP(){
+void PruebasClaseCDP(Usuario* usuario){
 
     int opcion; // Almacena la opcion de la prueba que se desea realizar
     double monto; // Almacena monto que el usuario desea ingresar en el CDP
@@ -47,6 +47,8 @@ void PruebasClaseCDP(){
             std::cout << "Su ganacia con un monto de " << monto << " seria: " << ganancia - monto << std::endl;
             std::cout << "Recibiendo al final del plazo: " << ganancia << std::endl; 
 
+            usuario->setCdp(opcionUno);
+
         } catch (const std::exception& e) {
 		    std::cerr << e.what() << std::endl;
         }
@@ -75,6 +77,8 @@ void PruebasClaseCDP(){
             std::cout << "Su ganacia con un monto de " << monto << " seria: " << ganancia - monto << std::endl;
             std::cout << "Recibiendo al final del plazo: " << ganancia << std::endl; 
 
+            usuario->setCdp(opcionUno);
+
         } catch (const std::exception& e) {
 		    std::cerr << e.what() << std::endl;
         }
@@ -102,6 +106,8 @@ void PruebasClaseCDP(){
             std::cout << "A 2 annos el CDP se trabaja a 9\% de intereses" << std::endl;
             std::cout << "Su ganacia con un monto de " << monto << " seria: " << ganancia - monto << std::endl;
             std::cout << "Recibiendo al final del plazo: " << ganancia << std::endl;  
+
+            usuario->setCdp(opcionUno);
 
         } catch (const std::exception& e) {
 		    std::cerr << e.what() << std::endl;

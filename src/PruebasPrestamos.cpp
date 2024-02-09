@@ -1,10 +1,6 @@
-#include "Prestamos.hpp"
+#include "pruebas.hpp"
 
-Prestamos personal(const double);
-Prestamos hipotecario(const double);
-Prestamos prendario(const double);
-
-void PruebasPrestamos(){
+void PruebasPrestamos(Usuario* usuario){
     std::cout << "Realizando pruebas de los metodos de Prestamos..." << std::endl;
 
     std::cout << "\nEscoja el tipo de prestamo a realizar: " << std::endl
@@ -21,22 +17,26 @@ void PruebasPrestamos(){
     switch (opcion) {
     case 1:{
         Prestamos inst = personal(monto);
+        usuario->setPrestamo(inst);
         prestamo = &inst;
         break;
         }
 
     case 2:{
         Prestamos inst = hipotecario(monto);
+        usuario->setPrestamo(inst);
         prestamo = &inst;
         break;
         }
     case 3:{
         Prestamos inst = prendario(monto);
+        usuario->setPrestamo(inst);
         prestamo = &inst;
         break;
         }
     default:{
         Prestamos inst = personal(monto);
+        usuario->setPrestamo(inst);
         prestamo = &inst;
         break;
         }
@@ -70,8 +70,8 @@ void PruebasPrestamos(){
             }
 
         case 3:{
-            std::cout << "\nSaliendo del sistema...";
-            exit(0);
+            //std::cout << "\nSaliendo del sistema...";
+            return;
             break;
             }
         default:{

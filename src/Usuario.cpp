@@ -6,7 +6,7 @@ unsigned long int Usuario::getIdentificacion(){
     return identificacion;
 }
 
-vector<Prestamo>  Usuario::getPrestamos(){
+vector<Prestamos>  Usuario::getPrestamos(){
     return prestamos;
 }
 vector<CDP> Usuario::getCdps(){
@@ -22,7 +22,7 @@ void Usuario::setCuentas(Cuenta cuenta){
     cuentas.push_back(cuenta);
 }
 
-void Usuario::setPrestamo(Prestamo prestamo){
+void Usuario::setPrestamo(Prestamos prestamo){
     prestamos.push_back(prestamo);
 }
 void Usuario::setCdp(CDP cdp){

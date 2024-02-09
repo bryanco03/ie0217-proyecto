@@ -9,15 +9,21 @@
 #define PRUEBAS_HPP
 #include "cdp.hpp"
 #include "Usuario.hpp"
+#include "Prestamos.hpp"
 
 
 /**
- * @brief CDP: Funcion que realiza pruebas sobre la clase CDP
+ * @brief CDP: Funciones que realiza pruebas sobre las clases  
 */
 
 void PruebasClaseCDP(Usuario* usuario);
 void menupruebas(Usuario* usuario);
-void pruebasUsuario();
 void crearCuenta(Usuario* usuario);
 void mostrarDatosUsuario(Usuario* Usuario);
+Prestamos personal(const double);
+Prestamos hipotecario(const double);
+Prestamos prendario(const double);
+void PruebasPrestamos(Usuario* usuario);
+
+
 #endif

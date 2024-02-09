@@ -2,7 +2,7 @@
 #define USUARIO_HPP
 
 #include <vector>
-#include "prestamo.hpp"
+#include "Prestamos.hpp"
 #include "cdp.hpp"
 using namespace std;
 
@@ -17,15 +17,15 @@ public:
     Usuario(unsigned long int identificacion);  
     vector<Cuenta> cuentas;
     unsigned long int identificacion;
-    vector<Prestamo> prestamos;
+    vector<Prestamos> prestamos;
     vector<CDP> cdps;
 
     vector<Cuenta> getCuentas();
     unsigned long int getIdentificacion();
-    vector<Prestamo> getPrestamos();
+    vector<Prestamos> getPrestamos();
     vector<CDP> getCdps();
     void setCuentas(Cuenta cuenta);
-    void setPrestamo(Prestamo prestamo);
+    void setPrestamo(Prestamos prestamo);
     void setCdp(CDP cdp);
     bool verificarDinero(double dinero);
 };
