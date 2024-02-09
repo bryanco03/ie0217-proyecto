@@ -2,18 +2,22 @@
 #define PRESTAMOS_HPP
 
 #include <string>
+#include <iostream>
+#include <cmath>
+#include <fstream>
 
 class Prestamos{
-    protected:
+    private:
         int duracionMeses;
         int cuotasPagadas = 0;
-        double monto;
+        double monto, cuotaMensual;
         float tasaInteres;
         std::string tipo;
 
     public:
-        int ID;
-        Prestamos(double monto, float tasaInteres, int duracionMeses, std::string tipo);
+        std::string estado, ID;
+        Prestamos(double monto, float tasaInteres, int duracionMeses,
+                  std::string tipo, std::string ID);
         void pagarCuota();
         void calcular();
 };
