@@ -8,9 +8,9 @@
 
 void menupruebas(Usuario* usuario){
     int opcion;
-    std::cout << "---Menu---"<< std::endl;
+    std::cout << "\n---Menu---"<< std::endl;
     std::cout << "1. Crear cuenta"<< std::endl;
-    std::cout << "2. prestamos"<< std::endl;
+    std::cout << "2. Prestamos"<< std::endl;
     std::cout << "3. Certificado de plazo"<< std::endl;
     std::cout << "4. Mostrar datos de la cuenta"<< std::endl;
     std::cout << "5. Salir "<< std::endl;
@@ -42,9 +42,9 @@ void menupruebas(Usuario* usuario){
 }
 
 void crearCuenta(Usuario* usuario){
-    bool esDolar;
+    // bool esDolar;
     int opcion;
-    std::cout << "La cuenta es en:" << std::endl;
+    std::cout << "\nLa cuenta es en:" << std::endl;
     std::cout << "1. Dolar" << std::endl;
     std::cout << "2. Colon" << std::endl;
     std::cout << "ingrese una opcion: " << std::endl;
@@ -59,7 +59,7 @@ void crearCuenta(Usuario* usuario){
     else if (opcion == 2){
         Cuenta cuenta;
         cuenta.dinero = 0.0;
-        cuenta.esDolar = true;
+        cuenta.esDolar = false;
         usuario->setCuentas(cuenta);
         std::cout << "Cuenta creada con exito"<< std::endl;
     }

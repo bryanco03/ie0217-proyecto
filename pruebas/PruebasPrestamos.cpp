@@ -1,7 +1,7 @@
 #include "pruebas.hpp"
 
 void PruebasPrestamos(Usuario* usuario){
-    std::cout << "Realizando pruebas de los metodos de Prestamos..." << std::endl;
+    std::cout << "\nRealizando pruebas de los metodos de Prestamos..." << std::endl;
 
     std::cout << "\nEscoja el tipo de prestamo a realizar: " << std::endl
               << "1. Personal" << std::endl

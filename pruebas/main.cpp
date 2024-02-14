@@ -6,8 +6,7 @@
 */
 
 #include "pruebas.hpp"
-#include "cdp.hpp"
-# include "Usuario.hpp"
+#include "Usuario.hpp"
 // Main encargado de llamar a las funcion que realiza las pruebas con la clase
 int main() {
 

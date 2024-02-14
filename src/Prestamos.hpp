@@ -8,11 +8,11 @@
 
 class Prestamos{
     private:
-        int duracionMeses;
-        int cuotasPagadas = 0;
         double monto, cuotaMensual;
         float tasaInteres;
+        int duracionMeses;
         std::string tipo;
+        int cuotasPagadas = 0;
 
     public:
         std::string estado = "En proceso de pago.";
