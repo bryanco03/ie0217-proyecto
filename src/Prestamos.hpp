@@ -15,7 +15,7 @@ class Prestamos{
         int cuotasPagadas = 0;
 
     public:
-        std::string estado = "En proceso de pago.";
+        std::string estado;
         std::string ID;
         Prestamos(double monto, float tasaInteres, int duracionMeses,
                   std::string tipo, std::string ID);
