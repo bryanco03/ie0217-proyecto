@@ -3,6 +3,8 @@
 Prestamos::Prestamos(double monto, float tasaInteres, int duracionMeses, std::string tipo, std::string ID)
     : monto(monto), tasaInteres(tasaInteres), duracionMeses(duracionMeses), tipo(tipo), ID(ID) {
 
+    this->estado = "En proceso de pago.";
+
     /* Se definen variables por medio de fórmulas. */
     double tasaMensual = tasaInteres/(12*100);
     this->cuotaMensual = (monto * tasaMensual)/(1 - std::pow(1 + tasaMensual,-duracionMeses));
