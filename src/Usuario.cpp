@@ -6,14 +6,14 @@ unsigned long int Usuario::getIdentificacion(){
     return identificacion;
 }
 
-vector<Prestamos>  Usuario::getPrestamos(){
+std::vector<Prestamos>  Usuario::getPrestamos(){
     return prestamos;
 }
-vector<CDP> Usuario::getCdps(){
+std::vector<CDP> Usuario::getCdps(){
     return cdps;
 }
 
-vector<Cuenta> Usuario::getCuentas(){
+std::vector<Cuenta> Usuario::getCuentas(){
     return cuentas;
 }
 
