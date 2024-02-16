@@ -1,21 +1,31 @@
 #include "Prestamos.hpp"
 
-Prestamos::Prestamos(double monto, float tasaInteres, int duracionMeses, std::string tipo, std::string ID)
-    : monto(monto), tasaInteres(tasaInteres), duracionMeses(duracionMeses), tipo(tipo), ID(ID) {
+Prestamos::Prestamos(double monto, float tasaInteres, int duracionMeses, std::string tipo, std::string ID, int cuotasPagadas)
+    : monto(monto), tasaInteres(tasaInteres), duracionMeses(duracionMeses), tipo(tipo), ID(ID), cuotasPagadas(cuotasPagadas) {
 
-    this->estado = "En proceso de pago.";
+    /* Se define el estado del prestamo. */
+    if(this->cuotasPagadas >= duracionMeses){
+        this->estado = "Pagado";
+    } else {
+        this->estado = "En proceso de pago.";
+    }
 
     /* Se definen variables por medio de fórmulas. */
-    double tasaMensual = tasaInteres/(12*100);
-    this->cuotaMensual = (monto * tasaMensual)/(1 - std::pow(1 + tasaMensual,-duracionMeses));
-    double montoRestante = monto;
+    double tasaMensual = this->tasaInteres/(12*100);
+    this->cuotaMensual = (this->monto * tasaMensual)/(1 - std::pow(1 + tasaMensual,-this->duracionMeses));
+}
+
+void Prestamos::generarCSV(){
+    /* Se definen variables por medio de fórmulas. */
+    double tasaMensual = this->tasaInteres/(12*100);
+    double montoRestante = this->monto;
 
     /* Se abre el archivo .csv */
-    std::ofstream archivo (ID + ".csv");
+    std::ofstream archivo (this->ID + ".csv");
     archivo << "Mes,Cuota Mensual,Intereses,Amortizacion,Monto Restante,Estado\n";
 
     /* Se escribe linea por linea lo necesario. */
-    for(int i = 0; i < duracionMeses; i++){
+    for(int i = 0; i < this->duracionMeses; i++){
         float intereses = montoRestante * tasaMensual;
         float amortizacion = this->cuotaMensual - intereses;
         montoRestante -= amortizacion;

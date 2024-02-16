@@ -35,9 +35,16 @@ class Prestamos{
          * @param duracionMeses Cantidad de meses a pagar de cuotas.
          * @param tipo Tipo de prestamo: Personal, Prendario o Hipotecario.
          * @param ID Número ID del prestamo.
+         * @param cuotasPagadas Cantidad de cuotas ya pagadas, default = 0.
          */
         Prestamos(double monto, float tasaInteres, int duracionMeses,
-                  std::string tipo, std::string ID);
+                  std::string tipo, std::string ID, int cuotasPagadas = 0);
+
+        /**
+         * @brief Método para generar el CSV de un prestamo.
+         * 
+         */
+        void generarCSV();
 
         /**
          * @brief Método para pagar una cuota del prestamo.

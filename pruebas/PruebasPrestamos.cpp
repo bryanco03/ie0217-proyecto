@@ -17,6 +17,7 @@ void PruebasPrestamos(Usuario* usuario){
     switch (opcion) {
     case 1:{
         Prestamos inst = personal(monto);
+        inst.generarCSV();
         usuario->setPrestamo(inst);
         prestamo = &inst;
         break;
@@ -24,18 +25,21 @@ void PruebasPrestamos(Usuario* usuario){
 
     case 2:{
         Prestamos inst = hipotecario(monto);
+        inst.generarCSV();
         usuario->setPrestamo(inst);
         prestamo = &inst;
         break;
         }
     case 3:{
         Prestamos inst = prendario(monto);
+        inst.generarCSV();
         usuario->setPrestamo(inst);
         prestamo = &inst;
         break;
         }
     default:{
         Prestamos inst = personal(monto);
+        inst.generarCSV();
         usuario->setPrestamo(inst);
         prestamo = &inst;
         break;
