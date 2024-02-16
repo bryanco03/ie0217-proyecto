@@ -1,5 +1,6 @@
 #include "Banco.hpp"
 
+<<<<<<< HEAD
 void Banco::menuAtencionCliente(){
     int opcion;
 
@@ -20,4 +21,15 @@ void Banco::menuAtencionCliente(){
         std::cout<<"Error, no se pudo loggear ningun usuario"<<std::endl;
     }
     delete usuarioActual;
+=======
+void Banco::iniciarContadores(){
+    /* Se obtiene el contador de prestamo. */
+    /* https://stackoverflow.com/questions/3072795/how-to-count-lines-of-a-file-in-c */
+    std::ifstream inFile("datos//Prestamos.csv"); 
+    this->contadorPrestamos = std::count(std::istreambuf_iterator<char>(inFile), 
+                                         std::istreambuf_iterator<char>(), '\n') - 1;
+    inFile.close();
+
+    /* PARA AGREGAR LOS SUYOS SOLO COPIEN EL CÓDIGO Y CAMBIAN EL PATH DE inFile y el contador al que lo guardan. */
+>>>>>>> prestamo
 }

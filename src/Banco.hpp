@@ -7,7 +7,7 @@
 
 #ifndef BANCO_HPP
 #define BANCO_HPP
-
+#include <algorithm>
 #include "Prestamos.hpp"
 #include "Usuario.hpp"
 
@@ -26,6 +26,7 @@ class Banco{
     bool verificarIdentificacionNombreEnCSV(unsigned long int identificacionBuscada, std::string nombreBuscar);
     void menuAtencionCliente();
     bool verificarIdentificacioEnCSV(unsigned long int identificacionBuscada);
+    void iniciarContadores();
 };
 
 #endif
