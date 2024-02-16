@@ -22,8 +22,9 @@ class CDP {
         * @param tasaIntereses tasa de interes que se pagara
         * @param duracionAnnos tiempo que durara el dinero en el CDP
         * @param montoGanado monto que ganara una vez terminado el contrato
+        * @param ID ID del usuario
         */
-        CDP( double monto, float tasaIntereses, double duracionAnnos);
+        CDP(double monto, float tasaIntereses, double duracionAnnos, std::string ID);
         
         /**
         * @brief calcularGanancia: Metodo que calculara la ganancia lograda con el CDP
@@ -40,6 +41,7 @@ class CDP {
         float tasaIntereses; /**< Se almacenara la tasa de intereses que se ganara. */
         double duracionAnnos; /**< Se almacenara la cantidad de meses que durara el CDP */
         double montoGanado; /**< Se almacenara el monto que ganara el cliente. */
+        std::string ID;         /**< Número ID del CDP. */
 };
 
 #endif

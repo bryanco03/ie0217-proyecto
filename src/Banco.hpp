@@ -12,17 +12,23 @@
 
 #include "Prestamos.hpp"
 #include "Usuario.hpp"
+#include "Cdp.hpp"
 
 
 class Banco{
     public:
     int contadorPrestamos = 0;  /**< Contador para ID de prestamos. */
+    public:
+    int contadorPrestamos = 0;  /**< Contador par ID de prestamos. */
+    int contadorCDP = 0; /**Contador para ID de los CDP*/
     Usuario* usuarioActual;      /**< Puntero a usuario que esta iniciado en la sesión. */
 
     public:
     void crearPrestamo();
     void mostrarInfoPrestamos();
     void iniciarContadores();
+    void crearCDP();
+    void mostrarInfoCDP();
 };
 
 #endif

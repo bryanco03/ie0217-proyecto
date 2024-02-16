@@ -1,11 +1,12 @@
 # include "Cdp.hpp"
 
-CDP::CDP(double monto, float tasaIntereses, double duracionAnnos){
+CDP::CDP(double monto, float tasaIntereses, double duracionAnnos, std::string ID){
 
     // Se almacenan los valores recibidos por parte del usuario
     this->monto = monto;
     this->tasaIntereses = tasaIntereses;
     this->duracionAnnos = duracionAnnos;
+    this->ID = ID;
 
 }
 
