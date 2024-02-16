@@ -17,11 +17,15 @@ class Banco{
 
     int contadorPrestamos = 0;  /**< Contador par ID de prestamos. */
     Usuario* usuarioActual;      /**< Puntero a usuario que esta iniciado en la sesión. */
+    bool usuarioLogeado;
 
     public:
     void loggearUsuario();
     void crearPrestamo();
     void mostrarInfoPrestamos();
+    bool verificarIdentificacionNombreEnCSV(unsigned long int identificacionBuscada, std::string nombreBuscar);
+    void menuAtencionCliente();
+    bool verificarIdentificacioEnCSV(unsigned long int identificacionBuscada);
 };
 
 #endif

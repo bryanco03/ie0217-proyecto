@@ -92,5 +92,7 @@ class Usuario{
 
         void registrarUsuario();
 
+        std::string getNombre();
+
 };
 #endif

@@ -1,7 +1,7 @@
 #include "Usuario.hpp"
 
 Usuario::Usuario(unsigned long int identificacion, std::string nombre): identificacion(identificacion), nombre(nombre){
-    registrarUsuario();
+    // registrarUsuario();
 }
 
 unsigned long int Usuario::getIdentificacion(){
@@ -59,4 +59,8 @@ void Usuario::registrarUsuario(){
         archivo << nombre << "," << identificacion << "," << " "<< "," << 0 << "," << " "<< "," << 0 << "," << " "<< "," << " " << "\n";
     }
     archivo.close();
+}
+
+std::string Usuario::getNombre(){
+    return nombre;
 }
