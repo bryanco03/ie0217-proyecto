@@ -9,6 +9,7 @@
 #define BANCO_HPP
 
 #include <algorithm>
+#include <sstream>
 
 #include "Prestamos.hpp"
 #include "Usuario.hpp"
@@ -23,6 +24,7 @@ class Banco{
     void crearPrestamo();
     void mostrarInfoPrestamos();
     void iniciarContadores();
+    void pagarPrestamos();
 };
 
 #endif

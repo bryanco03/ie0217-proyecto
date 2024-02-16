@@ -35,14 +35,6 @@ void Banco::crearPrestamo(){
     this->usuarioActual->setPrestamo(prestamo);
 }
 
-
-void Banco::mostrarInfoPrestamos(){
-    for(auto& prestamo: (*this->usuarioActual).prestamos){
-        prestamo.mostrarInfo();
-    }
-}
-
-
 Prestamos opcionesPrestamo(const double monto, const int tipo, const std::string ID){
     /* Se definen los meses e intereses dependiendo del tipo de prestamo. */
     std::vector<std::string> tipos = {"Personal", "Hipotecario", "Prendario"};
@@ -84,6 +76,59 @@ Prestamos opcionesPrestamo(const double monto, const int tipo, const std::string
     }
 }
 
+void Banco::mostrarInfoPrestamos(/*unsigned long int usuarioConPrestamos*/){
+    /*
+    if(usuarioConPrestamos == NULL){
+        usuarioConPrestamos = (*this->usuarioActual).identificacion;
+    }*/
+    std::cout << "\n-----Información de sus prestamos-----" << std::endl;
+    for(auto& prestamo: (*this->usuarioActual).prestamos){
+        prestamo.mostrarInfo();
+    }
+}
+
+void Banco::pagarPrestamos(){
+    /* Se crean variables a usar. */
+    std::string ID_P, ID_CSV, linea;                /*String de IDs y linea a leer del csv. */
+    std::ifstream database("datos\\Prestamos.csv"); /* Se lee el archivo csv. */
+    std::vector<std::string> infoP;                 /* Vector con la informacion del prestamo. */
+
+    /* Se imprime el menu y se recibe el ID del prestamo a pagar. */
+    std::cout << "\n-----Menu de pago de prestamos-----" << std::endl;
+    std::cout << "Puede pagar cualquier prestamo (suyo o no) con el ID, estos tienen la forma \"P-123-0\". " << std::endl;
+    std::cout << "Ingrese el ID del prestamo al que quiere pagar una cuota: ";
+    std::cin >> ID_P;
+
+    /* Se busca el prestamo. */
+    while(std::getline(database, linea)){
+        ID_CSV = linea.substr(0, linea.find(','));
+
+        /* Si se encuentra se lee la linea y se guarda en infoP. */
+        if(ID_P == ID_CSV){
+            std::stringstream datos(linea);
+            while(datos.good()){
+                std::string columna;
+                std::getline(datos, columna, ',');
+                infoP.push_back(columna);
+            }
+        }
+    }
+
+    /* Se cierra el archivo, IMPORTANTE.*/
+    database.close();
+
+    /* Si no se encontró el prestamo se imprime el error. */
+    if(infoP.size() == 0){
+        std::cout << "No se encontró ningún prestamo con ese Id" << std::endl;
+        return;
+    }
+
+    /* Si se encontró se crea el objeto y se paga el prestamo. */
+    Prestamos prestamo(ID_P, infoP[1], std::stod(infoP[2]), std::stof(infoP[3]),
+                       std::stoi(infoP[4]), std::stoi(infoP[5]));
+    prestamo.pagarCuota();
+}
+
 int main(){
     Banco inst;
     inst.iniciarContadores();
@@ -91,6 +136,6 @@ int main(){
     inst.usuarioActual = &(instUsuario);
     inst.crearPrestamo();
     inst.crearPrestamo();
-    inst.mostrarInfoPrestamos();
+    inst.pagarPrestamos();
     return 0;
 }
