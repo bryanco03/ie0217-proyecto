@@ -88,3 +88,12 @@ void Prestamos::calcular(){
     << ",  Cuota mensual: " << this->cuotaMensual
     << ",  Estado: " << this->estado << std::endl;
 }
+
+/**
+ * @brief Método para retornar el ID del prestamo.
+ * 
+ * @return std::string ID del prestamo.
+ */
+std::string Prestamos::getID(){
+    return this->ID;
+}

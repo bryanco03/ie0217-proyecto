@@ -22,10 +22,10 @@ class Prestamos{
         int duracionMeses;      /**< Cantidad de meses a pagar de cuotas. */
         std::string tipo;       /**< Tipo de prestamo: Personal, Prendario o Hipotecario. */
         int cuotasPagadas = 0;  /**< Cantidad de cuotas ya pagadas del Prestamo. */
+        std::string ID;         /**< Número ID del prestamo. */
 
     public:
         std::string estado;     /**< Estado del Prestamo: En proceso de pago o Pagado. */
-        std::string ID;         /**< Número ID del prestamo. */
 
         /**
          * @brief Constructor que inicializa un prestamo.
@@ -57,6 +57,10 @@ class Prestamos{
          * 
          */
         void calcular();
+
+        std::string getID();
+
+
 };
 
 #endif

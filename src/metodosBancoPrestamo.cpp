@@ -7,7 +7,7 @@
 
 #include "Banco.hpp"
 
-Prestamos opcionesPrestamo(const double monto, const std::string tipo, const std::string ID);
+Prestamos opcionesPrestamo(const double monto, const int tipo, const std::string ID);
 
 void Banco::crearPrestamo(){
     /* Se obtiene la opción de prestamo a crear. */
@@ -16,7 +16,7 @@ void Banco::crearPrestamo(){
               << "2. Hipotecario" << std::endl
               << "3. Prendario" << std::endl;
     std::cout << "Ingrese la opcion: ";
-    int opcion; std::cin >> opcion;
+    int tipo; std::cin >> tipo;
 
     /* Se obtiene el monto del prestamo. */
     std::cout << "\nIngrese el monto del prestamo: ";
@@ -29,30 +29,10 @@ void Banco::crearPrestamo(){
     /* Se aumenta contador de prestamos. */
     this->contadorPrestamos += 1;
 
-    Prestamos* prestamo;
-    switch (opcion) {
-    case 1:{
-        Prestamos inst =  opcionesPrestamo(monto, "Personal", ID);
-        prestamo = &inst;
-        break;
-        }
-    case 2:{
-        Prestamos inst = opcionesPrestamo(monto, "Hipotecario", ID);
-        prestamo = &inst;
-        break;
-        }
-    case 3:{
-        Prestamos inst = opcionesPrestamo(monto, "Prendario", ID);
-        prestamo = &inst;
-        break;
-        }
-    default:{
-        break;
-        }
-    }
-
-    (*prestamo).generarCSV();
-    this->usuarioActual->setPrestamo(*prestamo);
+    /* Se crea el prestamo. */
+    Prestamos prestamo = opcionesPrestamo(monto, tipo, ID);
+    prestamo.generarCSV();
+    this->usuarioActual->setPrestamo(prestamo);
 }
 
 
@@ -61,18 +41,19 @@ void Banco::mostrarInfoPrestamos(){
 }
 
 
-Prestamos opcionesPrestamo(const double monto, const std::string tipo, const std::string ID){
+Prestamos opcionesPrestamo(const double monto, const int tipo, const std::string ID){
     /* Se definen los meses e intereses dependiendo del tipo de prestamo. */
+    std::vector<std::string> tipos = {"Personal", "Hipotecario", "Prendario"};
     std::vector<int> meses;
     std::vector<int> intereses;
 
-    if(tipo == "Personal"){
+    if(tipo == 1){
         meses.insert(meses.end(), {5, 10, 12});
         intereses.insert(intereses.end(), {15, 7, 5});
-    } else if (tipo == "Hipotecario") {
+    } else if (tipo == 2) {
         meses.insert(meses.end(), {12, 24, 36});
         intereses.insert(intereses.end(), {15, 10, 5});
-    } else if (tipo == "Prendario"){
+    } else if (tipo == 3){
         meses.insert(meses.end(), {10, 20, 30});
         intereses.insert(intereses.end(), {13, 7, 5});
     }
@@ -86,15 +67,15 @@ Prestamos opcionesPrestamo(const double monto, const std::string tipo, const std
 
     switch (opcion) {
     case 1:
-        return Prestamos(monto, intereses[0], meses[0], tipo, ID);
+        return Prestamos(monto, intereses[0], meses[0], tipos[0], ID);
         break;
 
     case 2:
-        return Prestamos(monto, intereses[1], meses[1], tipo, ID);
+        return Prestamos(monto, intereses[1], meses[1], tipos[1], ID);
         break;
 
     case 3:
-        return Prestamos(monto, intereses[2], meses[2], tipo, ID);
+        return Prestamos(monto, intereses[2], meses[2], tipos[2], ID);
         break;
     default:
         break;
@@ -105,6 +86,7 @@ int main(){
     Banco inst;
     Usuario instUsuario(12345678);
     inst.usuarioActual = &(instUsuario);
+    inst.crearPrestamo();
     inst.crearPrestamo();
     return 0;
 }
