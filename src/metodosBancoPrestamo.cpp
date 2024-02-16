@@ -37,7 +37,9 @@ void Banco::crearPrestamo(){
 
 
 void Banco::mostrarInfoPrestamos(){
-    
+    for(auto& prestamo: (*this->usuarioActual).prestamos){
+        prestamo.mostrarInfo();
+    }
 }
 
 
@@ -89,5 +91,6 @@ int main(){
     inst.usuarioActual = &(instUsuario);
     inst.crearPrestamo();
     inst.crearPrestamo();
+    inst.mostrarInfoPrestamos();
     return 0;
 }

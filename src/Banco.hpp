@@ -16,7 +16,7 @@
 
 class Banco{
     public:
-    int contadorPrestamos = 0;  /**< Contador para ID de prestamos. */
+    int contadorPrestamos;  /**< Contador para ID de prestamos. */
     Usuario* usuarioActual;      /**< Puntero a usuario que esta iniciado en la sesión. */
 
     public:
