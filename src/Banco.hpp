@@ -8,18 +8,21 @@
 #ifndef BANCO_HPP
 #define BANCO_HPP
 
+#include <algorithm>
+
 #include "Prestamos.hpp"
 #include "Usuario.hpp"
 
 
 class Banco{
-    private:
-    int contadorPrestamos = 0;  /**< Contador par ID de prestamos. */
+    public:
+    int contadorPrestamos = 0;  /**< Contador para ID de prestamos. */
     Usuario* usuarioActual;      /**< Puntero a usuario que esta iniciado en la sesión. */
 
     public:
     void crearPrestamo();
     void mostrarInfoPrestamos();
+    void iniciarContadores();
 };
 
 #endif

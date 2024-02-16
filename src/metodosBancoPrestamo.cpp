@@ -25,7 +25,7 @@ void Banco::crearPrestamo(){
     /* Se genera el ID del prestamo. */
     std::string primeros3 = std::to_string((*this->usuarioActual).identificacion).substr(0, 3);
     std::string ID = "P-" + primeros3 + "-" + std::to_string(this->contadorPrestamos);
-    
+
     /* Se aumenta contador de prestamos. */
     this->contadorPrestamos += 1;
 
@@ -57,7 +57,7 @@ Prestamos opcionesPrestamo(const double monto, const int tipo, const std::string
         meses.insert(meses.end(), {10, 20, 30});
         intereses.insert(intereses.end(), {13, 7, 5});
     }
-    
+
     std::cout << "Escoja una de las siguientes opciones:" << std::endl
               << "1. " << meses[0] << " meses a " << intereses[0] << "% de interes." << std::endl
               << "2. " << meses[1] << " meses a " << intereses[1] << "% de interes." << std::endl
@@ -67,15 +67,15 @@ Prestamos opcionesPrestamo(const double monto, const int tipo, const std::string
 
     switch (opcion) {
     case 1:
-        return Prestamos(monto, intereses[0], meses[0], tipos[0], ID);
+        return Prestamos(ID, tipos[0], monto, intereses[0], meses[0]);
         break;
 
     case 2:
-        return Prestamos(monto, intereses[1], meses[1], tipos[1], ID);
+        return Prestamos(ID, tipos[1], monto, intereses[1], meses[1]);
         break;
 
     case 3:
-        return Prestamos(monto, intereses[2], meses[2], tipos[2], ID);
+        return Prestamos(ID, tipos[2], monto, intereses[2], meses[2]);
         break;
     default:
         break;
@@ -84,6 +84,7 @@ Prestamos opcionesPrestamo(const double monto, const int tipo, const std::string
 
 int main(){
     Banco inst;
+    inst.iniciarContadores();
     Usuario instUsuario(12345678);
     inst.usuarioActual = &(instUsuario);
     inst.crearPrestamo();

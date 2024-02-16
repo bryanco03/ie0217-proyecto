@@ -30,15 +30,15 @@ class Prestamos{
         /**
          * @brief Constructor que inicializa un prestamo.
          * 
+         * @param ID Número ID del prestamo.
+         * @param tipo Tipo de prestamo: Personal, Prendario o Hipotecario.
          * @param monto Monto a pedir del Prestamo.
          * @param tasaInteres Tasa de interés anual del Prestamo.
          * @param duracionMeses Cantidad de meses a pagar de cuotas.
-         * @param tipo Tipo de prestamo: Personal, Prendario o Hipotecario.
-         * @param ID Número ID del prestamo.
          * @param cuotasPagadas Cantidad de cuotas ya pagadas, default = 0.
          */
-        Prestamos(double monto, float tasaInteres, int duracionMeses,
-                  std::string tipo, std::string ID, int cuotasPagadas = 0);
+        Prestamos(std::string ID, std::string tipo, double monto, float tasaInteres,
+                  int duracionMeses, int cuotasPagadas = 0);
 
         /**
          * @brief Método para generar el CSV de un prestamo.
@@ -47,17 +47,28 @@ class Prestamos{
         void generarCSV();
 
         /**
+         * @brief Método para guardar información del CSV en un archivo de registro.
+         * 
+         */
+        void guardarCSV();
+
+        /**
          * @brief Método para pagar una cuota del prestamo.
          * 
          */
         void pagarCuota();
 
         /**
-         * @brief Método para calcular/retornar información del Prestamo.
+         * @brief Método para mostrar información del Prestamo.
          * 
          */
-        void calcular();
+        void mostrarInfo();
 
+        /**
+         * @brief Método para retornar el ID del prestamo.
+         * 
+         * @return std::string ID del prestamo.
+         */
         std::string getID();
 
 
