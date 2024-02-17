@@ -1,21 +1,33 @@
 #include "Prestamos.hpp"
 
-Prestamos::Prestamos(double monto, float tasaInteres, int duracionMeses, std::string tipo, std::string ID)
-    : monto(monto), tasaInteres(tasaInteres), duracionMeses(duracionMeses), tipo(tipo), ID(ID) {
+Prestamos::Prestamos(std::string ID, std::string tipo, double monto, float tasaInteres, int duracionMeses, int cuotasPagadas /*= 0*/)
+    : ID(ID), tipo(tipo), monto(monto), tasaInteres(tasaInteres), duracionMeses(duracionMeses), cuotasPagadas(cuotasPagadas) {
 
-    this->estado = "En proceso de pago.";
+    /* Se define el estado del prestamo. */
+    if(this->cuotasPagadas >= duracionMeses){
+        this->estado = "Pagado";
+    } else {
+        this->estado = "En proceso de pago.";
+    }
 
     /* Se definen variables por medio de fórmulas. */
-    double tasaMensual = tasaInteres/(12*100);
-    this->cuotaMensual = (monto * tasaMensual)/(1 - std::pow(1 + tasaMensual,-duracionMeses));
-    double montoRestante = monto;
+    double tasaMensual = this->tasaInteres/(12*100);
+    this->cuotaMensual = (this->monto * tasaMensual)/(1 - std::pow(1 + tasaMensual,-this->duracionMeses));
+
+    guardarCSV();
+}
+
+void Prestamos::generarCSV(){
+    /* Se definen variables por medio de fórmulas. */
+    double tasaMensual = this->tasaInteres/(12*100);
+    double montoRestante = this->monto;
 
     /* Se abre el archivo .csv */
-    std::ofstream archivo (ID + ".csv");
+    std::ofstream archivo ("datos\\" + this->ID + ".csv");
     archivo << "Mes,Cuota Mensual,Intereses,Amortizacion,Monto Restante,Estado\n";
 
     /* Se escribe linea por linea lo necesario. */
-    for(int i = 0; i < duracionMeses; i++){
+    for(int i = 0; i < this->duracionMeses; i++){
         float intereses = montoRestante * tasaMensual;
         float amortizacion = this->cuotaMensual - intereses;
         montoRestante -= amortizacion;
@@ -26,11 +38,47 @@ Prestamos::Prestamos(double monto, float tasaInteres, int duracionMeses, std::st
     archivo.close();
 }
 
+void Prestamos::guardarCSV(){
+    /* Se abre el archivo de registro. */
+    std::string nombreArchivo = "datos\\Prestamos.csv";
+    std::ifstream viejo(nombreArchivo);
+    std::ofstream nuevo("temp1.csv");
+
+    std::string linea, ID_CSV;
+    bool encontrado = false;
+
+    while(std::getline(viejo, linea)){
+        ID_CSV = linea.substr(0, linea.find(','));
+        if(ID_CSV == this->ID){
+            nuevo << this->ID << "," << this->tipo << ","
+                  << this->monto << "," << this->tasaInteres << ","
+                  << this->duracionMeses << "," << this->cuotasPagadas << std::endl;
+            encontrado = true;
+        } else {
+        nuevo << linea << std::endl;
+        }
+    }
+
+    if(!encontrado){
+        nuevo << this->ID << "," << this->tipo << ","
+            << this->monto << "," << this->tasaInteres << ","
+            << this->duracionMeses << "," << this->cuotasPagadas << std::endl;
+    }
+
+    /* Se guardan ambos archivos. */
+    viejo.close();
+    nuevo.close();
+
+    /* Se remueve el archivo viejo y se renombra al nuevo como el csv original. */
+    remove(nombreArchivo.c_str());
+    rename("temp1.csv", nombreArchivo.c_str());
+}
+
 void Prestamos::pagarCuota(){
     /* Por compatibilidad se guarda el nombre como const char*. */
-    const char * nombreArchivo = (ID + ".csv").c_str();
+    std::string nombreArchivo = "datos\\" + this->ID + ".csv";
     std::ifstream viejo(nombreArchivo);
-    std::ofstream nuevo("temp.csv");
+    std::ofstream nuevo("temp2.csv");
     std::string temp, linea, palabra;
     int mesActual = 0;
     int cantidadLineas = 0;
@@ -64,11 +112,13 @@ void Prestamos::pagarCuota(){
     nuevo.close();
 
     /* Se remueve el archivo viejo y se renombra al nuevo como el csv original. */
-    remove(nombreArchivo);
-    rename("temp.csv", nombreArchivo);
+    remove(nombreArchivo.c_str());
+    rename("temp2.csv", nombreArchivo.c_str());
+
+    guardarCSV();
 }
 
-void Prestamos::calcular(){
+void Prestamos::mostrarInfo(){
     /* Se imprime la información del prestamo. */
     std::cout << "ID del prestamo: " << this->ID
     << ",  Tipo: " << this->tipo
@@ -77,4 +127,8 @@ void Prestamos::calcular(){
     << ",  Cantidad de meses: " << this->duracionMeses
     << ",  Cuota mensual: " << this->cuotaMensual
     << ",  Estado: " << this->estado << std::endl;
+}
+
+std::string Prestamos::getID(){
+    return this->ID;
 }

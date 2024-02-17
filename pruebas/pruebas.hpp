@@ -7,7 +7,7 @@
 
 #ifndef PRUEBAS_HPP
 #define PRUEBAS_HPP
-#include "cdp.hpp"
+#include "Cdp.hpp"
 #include "Usuario.hpp"
 #include "Prestamos.hpp"
 

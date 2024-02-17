@@ -1,25 +1,28 @@
 #include "Usuario.hpp"
 
-Usuario::Usuario(unsigned long int identificacion): identificacion(identificacion){}
+Usuario::Usuario(unsigned long int identificacion, std::string nombre): identificacion(identificacion), nombre(nombre){
+    // registrarUsuario();
+}
 
 unsigned long int Usuario::getIdentificacion(){
     return identificacion;
 }
 
-vector<Prestamos>  Usuario::getPrestamos(){
+std::vector<Prestamos>  Usuario::getPrestamos(){
     return prestamos;
 }
-vector<CDP> Usuario::getCdps(){
+std::vector<CDP> Usuario::getCdps(){
     return cdps;
 }
 
-vector<Cuenta> Usuario::getCuentas(){
+std::vector<Cuenta> Usuario::getCuentas(){
     return cuentas;
 }
 
 
 void Usuario::setCuentas(Cuenta cuenta){
     cuentas.push_back(cuenta);
+
 }
 
 void Usuario::setPrestamo(Prestamos prestamo){
@@ -36,4 +39,21 @@ bool Usuario::verificarDinero(double dinero){
         }
     }
     return false;
+}
+
+void Usuario::registrarUsuario(){
+        std::ofstream archivo("datos/usuarios.csv", std::ios_base::app); // Modo de apertura para añadir al final del archivo
+    if (!archivo.is_open()) {
+        std::cerr << "Error al abrir el archivo "<< std::endl;
+        return;
+    }
+
+    if (cuentas.size() == 0 ){
+        archivo << nombre << "," << identificacion << "," << " "<< "," << 0 << "," << " "<< "," << 0 << "," << " "<< "," << " " << "\n";
+    }
+    archivo.close();
+}
+
+std::string Usuario::getNombre(){
+    return nombre;
 }
