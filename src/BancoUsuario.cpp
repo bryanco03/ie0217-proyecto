@@ -356,8 +356,51 @@ void Banco::cargarCuentas(std::string tipoCuenta1, double dineroCuenta1, std::st
         cuentaColon2.dinero = dineroCuenta2;
         usuarioActual->setCuentas(cuentaColon2);
     }
+}
 
+void Banco::realizarDeposito(){
+    if (usuarioActual->getCuentas().size() == 0){
+        std::cout<< "No Tienes ninguna Cuenta, necesitas hacer una cuenta para realizar un deposito"<< std::endl;
+        return ;
+    }
+    int opcion;
+    std::cout<< "Como deseas realizar el deposito:"<< std::endl;
+    std::cout<< "1. Efectivo"<< std::endl;
+    std::cout<< "2. Entre cuentas"<< std::endl;
+    std::cout<< "3. Atras"<< std::endl;
+    std::cout<< "Elige una opcion: "<< std::endl;
+    std::cin >> opcion;
+    
+    if (opcion == 1){
+        if (usuarioActual->getCuentas().size()== 1){
+            Cuenta cuenta = usuarioActual->getCuentas()[0];
+            if (cuenta.esDolar){
+                int opcionEfectivo;
+                std::cout << "Vas a realizar un deposito a tu cuenta en Dolares"<< std::endl;
+                std::cout << "Con que monedas vas a realizar el deposito: " << std::endl;
+                std::cout << "1. Dolares"<< std::endl;
+                std::cout << "2. Colones"<< std::endl;
+                std::cout << "Ingrese una opcion: " ;
+                std:: cin >> opcionEfectivo;
+                if (opcionEfectivo == 1){
+                    double montoDolar;
+                    std::cout << "Ingrese el monto a depositar: ";
+                    std::cin >> montoDolar;
+                    cuenta.dinero += montoDolar;
 
+                }
+            }
+        }
+    }
+    else if (opcion == 2){
+
+    }
+    else if (opcion == 3){
+
+    }
+    else{
+
+    }
 
 
 }

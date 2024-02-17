@@ -32,6 +32,9 @@ class Banco{
     void cargarDatosUsuario();
     std::vector<std::string> obtenerDatos();
     void cargarCuentas(std::string tipoCuenta1, double dineroCuenta1, std::string tipoCuenta2, double dineroCuenta2);
+    void realizarDeposito();
+    //double convertirMoneda(double monto, bool enDolar);
+    //void registrarDeposito();
 };
 
 #endif
