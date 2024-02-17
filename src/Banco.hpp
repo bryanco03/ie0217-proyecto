@@ -25,6 +25,7 @@ class Banco{
     void mostrarInfoPrestamos();
     void iniciarContadores();
     void pagarPrestamos();
+    void loggearUsuario();
 };
 
 #endif

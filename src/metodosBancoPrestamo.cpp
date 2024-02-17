@@ -23,7 +23,7 @@ void Banco::crearPrestamo(){
     double monto; std::cin >> monto;
 
     /* Se genera el ID del prestamo. */
-    std::string primeros3 = std::to_string((*this->usuarioActual).identificacion).substr(0, 3);
+    std::string primeros3 = std::to_string(this->usuarioActual->identificacion).substr(0, 3);
     std::string ID = "P-" + primeros3 + "-" + std::to_string(this->contadorPrestamos);
 
     /* Se aumenta contador de prestamos. */
@@ -76,13 +76,15 @@ Prestamos opcionesPrestamo(const double monto, const int tipo, const std::string
     }
 }
 
-void Banco::mostrarInfoPrestamos(/*unsigned long int usuarioConPrestamos*/){
+void Banco::mostrarInfoPrestamos(){
     /*
-    if(usuarioConPrestamos == NULL){
-        usuarioConPrestamos = (*this->usuarioActual).identificacion;
-    }*/
-    std::cout << "\n-----Información de sus prestamos-----" << std::endl;
-    for(auto& prestamo: (*this->usuarioActual).prestamos){
+    std::cout << "\n-----Menu de mostrar prestamos-----" << std::endl;
+    std::cout << "Ingrese identificacion de usuario para mostrar sus prestamos: ";
+    unsigned long int id; std::cin >> id;
+    */
+
+    std::cout << "\n-----Información de prestamos-----" << std::endl;
+    for(auto& prestamo: this->usuarioActual->prestamos){
         prestamo.mostrarInfo();
     }
 }
@@ -132,8 +134,7 @@ void Banco::pagarPrestamos(){
 int main(){
     Banco inst;
     inst.iniciarContadores();
-    Usuario instUsuario(12345678);
-    inst.usuarioActual = &(instUsuario);
+    inst.loggearUsuario();
     inst.crearPrestamo();
     inst.crearPrestamo();
     inst.pagarPrestamos();
