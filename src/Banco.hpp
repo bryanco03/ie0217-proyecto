@@ -29,6 +29,9 @@ class Banco{
     void iniciarContadores();
     void crearCuenta();
     void registrarCuenta(bool esDolar);
+    void cargarDatosUsuario();
+    std::vector<std::string> obtenerDatos();
+    void cargarCuentas(std::string tipoCuenta1, double dineroCuenta1, std::string tipoCuenta2, double dineroCuenta2);
 };
 
 #endif

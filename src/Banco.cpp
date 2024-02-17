@@ -5,6 +5,7 @@ void Banco::menuAtencionCliente(){
     int opcion;
     while (1){
         if (usuarioLogeado){
+            cargarDatosUsuario();
             std::cout << "Bienvenido, " << usuarioActual->getNombre() << std::endl;
             std::cout << "1. Crear una cuenta"<< std::endl;
             std::cout << "2. Realizar un deposito"<< std::endl;
@@ -22,7 +23,6 @@ void Banco::menuAtencionCliente(){
             case 1:
                 crearCuenta();
                 break;
-
             case 8:
                 delete usuarioActual;
                 return;

@@ -266,3 +266,100 @@ void Banco::registrarCuenta(bool esDolar) {
     std::remove("datos/usuarios.csv");
     std::rename("datos/usuarios_temp.csv", "datos/usuarios.csv");
 }
+
+void Banco::cargarDatosUsuario(){
+    std::vector<std::string> datos = obtenerDatos();
+    //for (auto dato : datos){
+    //    std::cout << dato << std::endl;
+    //}
+    std::string tipoCuenta1, dineroCuenta1Str, tipoCuenta2, dineroCuenta2Str;
+    tipoCuenta1 = datos[0];
+    tipoCuenta2 = datos[2];
+    dineroCuenta1Str = datos[1];
+    dineroCuenta2Str = datos[3];
+    double dineroCuenta1 = std::stod(dineroCuenta1Str);
+    double dineroCuenta2 = std::stod(dineroCuenta2Str);
+
+    cargarCuentas(tipoCuenta1, dineroCuenta1, tipoCuenta2, dineroCuenta2);
+    
+
+    
+
+}
+
+std::vector<std::string> Banco::obtenerDatos() {
+    std::ifstream archivoEntrada("datos/usuarios.csv");
+    if (!archivoEntrada.is_open()) {
+        std::cerr << "Error al abrir el archivo " << std::endl;
+        return {};
+    }
+
+    std::string linea;
+    std::string resultado;
+    // Ignorar la primera línea
+    std::getline(archivoEntrada, resultado);
+
+    while (std::getline(archivoEntrada, linea)) {
+        std::istringstream iss(linea);
+        std::string nombre, identificacionStr, tipoCuenta1, dineroCuenta, tipoCuenta2, dineroCuenta2, idPrestamos, idCdps;
+        if (std::getline(iss, nombre, ',') && std::getline(iss, identificacionStr, ',') &&
+            std::getline(iss, tipoCuenta1, ',') && std::getline(iss, dineroCuenta, ',') &&
+            std::getline(iss, tipoCuenta2, ',') && std::getline(iss, dineroCuenta2, ',') &&
+            std::getline(iss, idPrestamos, ',') && std::getline(iss, idCdps)) {
+            unsigned long int identificacion = std::stoul(identificacionStr);
+            if (identificacion == usuarioActual->getIdentificacion()) {
+                resultado = linea;
+                break;
+            }
+        }
+    }
+
+    archivoEntrada.close();
+
+    std::vector<std::string> datos;
+    std::istringstream tokenStream(resultado);
+    std::string token;
+    int contador = 0;
+    while (std::getline(tokenStream, token, ',')) {
+        if (contador == 2 || contador == 3 || contador == 4 || contador == 5 || contador == 6 || contador == 7) {
+            datos.push_back(token);
+        }
+        contador++;
+}
+
+    return datos;
+}
+
+void Banco::cargarCuentas(std::string tipoCuenta1, double dineroCuenta1, std::string tipoCuenta2, double dineroCuenta2){
+
+    if (tipoCuenta1 == "dolar"){
+        Cuenta cuentaDolar;
+        cuentaDolar.esDolar = true;
+        cuentaDolar.dinero = dineroCuenta1;
+        usuarioActual->setCuentas(cuentaDolar);
+    }
+    else if (tipoCuenta1 == "colon"){
+        Cuenta cuentaColon;
+        cuentaColon.esDolar = false;
+        cuentaColon.dinero = dineroCuenta1;
+        usuarioActual->setCuentas(cuentaColon);
+    }
+    if (tipoCuenta2 == "dolar"){
+        Cuenta cuentaDolar2;
+        cuentaDolar2.esDolar = true;
+        cuentaDolar2.dinero = dineroCuenta2;
+        usuarioActual->setCuentas(cuentaDolar2);
+    }
+    else if (tipoCuenta2 == "colon"){
+        Cuenta cuentaColon2;
+        cuentaColon2.esDolar = false;
+        cuentaColon2.dinero = dineroCuenta2;
+        usuarioActual->setCuentas(cuentaColon2);
+    }
+
+
+
+
+}
+
+
