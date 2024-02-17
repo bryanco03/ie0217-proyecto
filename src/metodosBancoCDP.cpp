@@ -1,7 +1,7 @@
 /**
  * \copyright Copyright 2024 Diego Alfaro, Bryan Cortes, Heiner Obando. All right reserved. This project is released under the MIT License
- * @file metodosBancoPrestamo.cpp
- * @date 15/02/2024
+ * @file metodosBancoCDP.cpp
+ * @date 17/02/2024
  * @author Diego Alfaro, Bryan Cortes, Heiner Obando
 */
 
@@ -60,6 +60,31 @@ CDP opcionesCDP(const double monto, const int opcion, const std::string ID){
     }
 }
 
+void Banco::mostrarInfoCDP(){
+    int opcion; // Almacena la opcion de la prueba que se desea realizar
+    std::cout << "\nSe dispone de 3 diferentes tipos de certificados a plazo" << std::endl;
+    std::cout << "1. Si desea un certificado a plazo de 1 anno con 4.5% de intereses" << std::endl;
+    std::cout << "2. Si desea un certificado a plazo de 2 annos con 7% de intereses" << std::endl;
+    std::cout << "3. Si desea un certificado a plazo de 3 annos con 9% de intereses" << std::endl;
+    
+    // Se recibe la opcion elegida
+    std::cout << "Ingrese una opcion: " << std::endl;
+    std::cin >> opcion; 
+
+    /* Se obtiene el monto para el CDP. */
+    std::cout << "\nIngrese el monto que desea depositar en el CDP: ";
+    double monto; std::cin >> monto;
+
+    std::string ID = "MOSTRARINFO";
+
+    CDP cdp = opcionesCDP(monto, opcion, ID);
+
+    std::cout << "Para un certificado de " << cdp.getMonto() <<
+    " a un plazo de " << cdp.getDuracion() << " annos, la tasa utilizada es " <<
+    cdp.getInteres()*100 << "%, recibiendo al final del plazo " << cdp.getMontoGanado() <<std::endl;
+
+}
+
 int main(){
     Banco inst;
     inst.iniciarContadores();
@@ -67,5 +92,6 @@ int main(){
     inst.usuarioActual = &(instUsuario);
     inst.crearCDP();
     inst.crearCDP();
+    inst.mostrarInfoCDP();
     return 0;
 }

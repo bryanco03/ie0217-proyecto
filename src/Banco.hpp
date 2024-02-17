@@ -30,6 +30,7 @@ class Banco{
     void mostrarInfoCDP();
     void pagarPrestamos();
     void loggearUsuario();
+    void registrarTrasaccion();
 };
 
 #endif
