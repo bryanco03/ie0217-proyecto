@@ -8,14 +8,18 @@
 #ifndef BANCO_HPP
 #define BANCO_HPP
 #include <algorithm>
+#include <sstream>
 #include "Prestamos.hpp"
 #include "Usuario.hpp"
+#include "Cdp.hpp"
 
 
 class Banco{
     private:
 
-    int contadorPrestamos = 0;  /**< Contador par ID de prestamos. */
+    public:
+    int contadorCDP; /**Contador para ID de los CDP*/
+    int contadorPrestamos;  /**< Contador para ID de prestamos. */
     Usuario* usuarioActual;      /**< Puntero a usuario que esta iniciado en la sesión. */
     bool usuarioLogeado;
 
@@ -33,8 +37,12 @@ class Banco{
     std::vector<std::string> obtenerDatos();
     void cargarCuentas(std::string tipoCuenta1, double dineroCuenta1, std::string tipoCuenta2, double dineroCuenta2);
     void realizarDeposito();
-    //double convertirMoneda(double monto, bool enDolar);
-    //void registrarDeposito();
+    double convertirMoneda(double monto, bool enDolar);
+    void registrarDeposito();
+    void crearCDP();
+    void mostrarInfoCDP();
+    void pagarPrestamos();
+
 };
 
 #endif

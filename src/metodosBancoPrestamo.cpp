@@ -23,7 +23,7 @@ void Banco::crearPrestamo(){
     double monto; std::cin >> monto;
 
     /* Se genera el ID del prestamo. */
-    std::string primeros3 = std::to_string((*this->usuarioActual).identificacion).substr(0, 3);
+    std::string primeros3 = std::to_string(this->usuarioActual->identificacion).substr(0, 3);
     std::string ID = "P-" + primeros3 + "-" + std::to_string(this->contadorPrestamos);
 
     /* Se aumenta contador de prestamos. */
@@ -34,12 +34,6 @@ void Banco::crearPrestamo(){
     prestamo.generarCSV();
     this->usuarioActual->setPrestamo(prestamo);
 }
-
-
-void Banco::mostrarInfoPrestamos(){
-    
-}
-
 
 Prestamos opcionesPrestamo(const double monto, const int tipo, const std::string ID){
     /* Se definen los meses e intereses dependiendo del tipo de prestamo. */

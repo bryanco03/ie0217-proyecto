@@ -3,9 +3,11 @@
 
 void Banco::menuAtencionCliente(){
     int opcion;
+    if (usuarioLogeado){
+        cargarDatosUsuario();
+    }
     while (1){
         if (usuarioLogeado){
-            cargarDatosUsuario();
             std::cout << "Bienvenido, " << usuarioActual->getNombre() << std::endl;
             std::cout << "1. Crear una cuenta"<< std::endl;
             std::cout << "2. Realizar un deposito"<< std::endl;
@@ -46,6 +48,12 @@ void Banco::iniciarContadores(){
                                          std::istreambuf_iterator<char>(), '\n') - 1;
     inFile.close();
 
+    /* Se obtiene el contador de CDP. */
+    /* https://stackoverflow.com/questions/3072795/how-to-count-lines-of-a-file-in-c */
+    std::ifstream inFileCDP("datos//CDP.csv"); 
+    this->contadorCDP = std::count(std::istreambuf_iterator<char>(inFileCDP), 
+                                         std::istreambuf_iterator<char>(), '\n') - 1;
+    inFileCDP.close();
+
     /* PARA AGREGAR LOS SUYOS SOLO COPIEN EL CÓDIGO Y CAMBIAN EL PATH DE inFile y el contador al que lo guardan. */
 }
-
