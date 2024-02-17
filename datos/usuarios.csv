@@ -1,7 +1,9 @@
-Nombre,Identificacion,TipoCuenta1,DineroCuenta,TipoCuenta1,DineroCuenta1,IdPrestamos,IdCdps
-Bryan,402610887, ,0, ,0, , 
+Nombre,Identificacion,TipoCuenta1,DineroCuenta1,TipoCuenta2,DineroCuenta2,IdPrestamos,IdCdps
+Bryan,402610887,dolar,0,colon,0, , 
 Hola,52525252, ,0, ,0, , 
 usuario,22336363, ,0, ,0, ,  
-hola,66363636, ,0, ,0, ,
-Daniel,207890678, ,0, ,0, ,
 nidia,608760345, ,0, ,0, , 
+hol,3455, ,0,colon,0, , 
+asd,8888,colon,0, ,0, , 
+diego,123456,colon,0, ,0, , 
+yo,12345678,dolar,0,colon,0, , 
