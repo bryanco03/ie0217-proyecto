@@ -27,6 +27,8 @@ class Banco{
     void menuAtencionCliente();
     bool verificarIdentificacioEnCSV(unsigned long int identificacionBuscada);
     void iniciarContadores();
+    void crearCuenta();
+    void registrarCuenta(bool esDolar);
 };
 
 #endif

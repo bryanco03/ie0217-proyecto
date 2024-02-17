@@ -82,12 +82,3 @@ Prestamos opcionesPrestamo(const double monto, const int tipo, const std::string
     }
 }
 
-int main(){
-    Banco inst;
-    inst.iniciarContadores();
-    Usuario instUsuario(12345678);
-    inst.usuarioActual = &(instUsuario);
-    inst.crearPrestamo();
-    inst.crearPrestamo();
-    return 0;
-}

@@ -21,14 +21,7 @@ std::vector<Cuenta> Usuario::getCuentas(){
 
 
 void Usuario::setCuentas(Cuenta cuenta){
-    if (!cuentas.empty()) {
-        // Modificar la última cuenta
-        cuentas.back() = cuenta;
-    } else {
-        // Si el vector de cuentas está vacío, agregar la cuenta
-        cuentas.push_back(cuenta);
-    }
-    registrarUsuario(); // Actualizar el archivo CSV después de modificar las cuentas
+    cuentas.push_back(cuenta);
 
 }
 
