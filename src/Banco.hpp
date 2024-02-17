@@ -9,6 +9,7 @@
 #define BANCO_HPP
 
 #include <algorithm>
+#include <sstream>
 
 #include "Prestamos.hpp"
 #include "Usuario.hpp"
@@ -17,10 +18,8 @@
 
 class Banco{
     public:
-    int contadorPrestamos = 0;  /**< Contador para ID de prestamos. */
-    public:
-    int contadorPrestamos = 0;  /**< Contador par ID de prestamos. */
-    int contadorCDP = 0; /**Contador para ID de los CDP*/
+    int contadorCDP; /**Contador para ID de los CDP*/
+    int contadorPrestamos;  /**< Contador para ID de prestamos. */
     Usuario* usuarioActual;      /**< Puntero a usuario que esta iniciado en la sesión. */
 
     public:
@@ -29,6 +28,8 @@ class Banco{
     void iniciarContadores();
     void crearCDP();
     void mostrarInfoCDP();
+    void pagarPrestamos();
+    void loggearUsuario();
 };
 
 #endif

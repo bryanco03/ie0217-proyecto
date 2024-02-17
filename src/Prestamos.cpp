@@ -13,6 +13,8 @@ Prestamos::Prestamos(std::string ID, std::string tipo, double monto, float tasaI
     /* Se definen variables por medio de fórmulas. */
     double tasaMensual = this->tasaInteres/(12*100);
     this->cuotaMensual = (this->monto * tasaMensual)/(1 - std::pow(1 + tasaMensual,-this->duracionMeses));
+
+    guardarCSV();
 }
 
 void Prestamos::generarCSV(){
@@ -34,39 +36,49 @@ void Prestamos::generarCSV(){
         << montoRestante << ",NO PAGADO" << std::endl;
     }
     archivo.close();
-    this->guardarCSV();
 }
 
 void Prestamos::guardarCSV(){
     /* Se abre el archivo de registro. */
-    std::ifstream viejo("datos\\Prestamos.csv");
-    std::ofstream nuevo("temp.csv");
+    std::string nombreArchivo = "datos\\Prestamos.csv";
+    std::ifstream viejo(nombreArchivo);
+    std::ofstream nuevo("temp1.csv");
 
-    std::string linea;
+    std::string linea, ID_CSV;
+    bool encontrado = false;
 
     while(std::getline(viejo, linea)){
+        ID_CSV = linea.substr(0, linea.find(','));
+        if(ID_CSV == this->ID){
+            nuevo << this->ID << "," << this->tipo << ","
+                  << this->monto << "," << this->tasaInteres << ","
+                  << this->duracionMeses << "," << this->cuotasPagadas << std::endl;
+            encontrado = true;
+        } else {
         nuevo << linea << std::endl;
+        }
     }
 
-    nuevo << this->ID << "," << this->tipo << ","
-          << this->monto << "," << this->tasaInteres << ","
-          << this->duracionMeses << "," << this->cuotasPagadas << std::endl;
+    if(!encontrado){
+        nuevo << this->ID << "," << this->tipo << ","
+            << this->monto << "," << this->tasaInteres << ","
+            << this->duracionMeses << "," << this->cuotasPagadas << std::endl;
+    }
 
     /* Se guardan ambos archivos. */
     viejo.close();
     nuevo.close();
 
     /* Se remueve el archivo viejo y se renombra al nuevo como el csv original. */
-    remove("datos\\Prestamos.csv");
-    rename("temp.csv", "datos\\Prestamos.csv");
+    remove(nombreArchivo.c_str());
+    rename("temp1.csv", nombreArchivo.c_str());
 }
 
 void Prestamos::pagarCuota(){
     /* Por compatibilidad se guarda el nombre como const char*. */
-    const char path[7] = "datos\\";
-    const char * nombreArchivo =  path + *(ID + ".csv").c_str();
+    std::string nombreArchivo = "datos\\" + this->ID + ".csv";
     std::ifstream viejo(nombreArchivo);
-    std::ofstream nuevo("temp.csv");
+    std::ofstream nuevo("temp2.csv");
     std::string temp, linea, palabra;
     int mesActual = 0;
     int cantidadLineas = 0;
@@ -100,8 +112,10 @@ void Prestamos::pagarCuota(){
     nuevo.close();
 
     /* Se remueve el archivo viejo y se renombra al nuevo como el csv original. */
-    remove(nombreArchivo);
-    rename("temp.csv", nombreArchivo);
+    remove(nombreArchivo.c_str());
+    rename("temp2.csv", nombreArchivo.c_str());
+
+    guardarCSV();
 }
 
 void Prestamos::mostrarInfo(){

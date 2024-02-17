@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <cmath>
+#include <fstream>
 
 /**
  * @brief CDP: Clase que recibe los atributos para calcular las ganacias por un CDP
@@ -17,7 +18,7 @@
 class CDP {
     public:
         /**
-        * @brief CDP: Constructor de la clase CDP
+        * @brief CDP: Constructor de la clase CDP, el mismo constructor calcula el monto final
         * @param monto monto que se ingresara en el CDP
         * @param tasaIntereses tasa de interes que se pagara
         * @param duracionAnnos tiempo que durara el dinero en el CDP
@@ -27,14 +28,16 @@ class CDP {
         CDP(double monto, float tasaIntereses, double duracionAnnos, std::string ID);
         
         /**
-        * @brief calcularGanancia: Metodo que calculara la ganancia lograda con el CDP
-        */
-        void calcularGanancia();
-        
+         * @brief Método para generar el CSV de un CDP.
+         * 
+         */
+        void generarCSV();
+
         /**
-        * @brief Metodo provisional para mostrar en el avance del proyecto
-        */
-        double getCdp();
+         * @brief Método para guardar información del CSV en un archivo de registro de los CDPs.
+         * 
+         */
+        void guardarCSV();
 
     protected:
         double monto; /**< Se almacenara el monto a invertir en el CDP. */
