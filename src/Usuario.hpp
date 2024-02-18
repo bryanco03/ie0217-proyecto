@@ -94,5 +94,7 @@ class Usuario{
 
         std::string getNombre();
 
+        void limpiarCuentas();
+
 };
 #endif

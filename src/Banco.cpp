@@ -5,6 +5,7 @@ void Banco::menuAtencionCliente(){
     int opcion;
     if (usuarioLogeado){
         cargarDatosUsuario();
+        iniciarContadores();
     }
     while (1){
         if (usuarioLogeado){
@@ -16,7 +17,9 @@ void Banco::menuAtencionCliente(){
             std::cout << "5. Pagar Cuotas de prestamo"<< std::endl;
             std::cout << "6. Solicitar Prestamo"<< std::endl;
             std::cout << "7. Solicitar certificado de plazo"<< std::endl;
-            std::cout << "8. Atras"<< std::endl; 
+            std::cout << "8. Mostrar información de prestamos" << std::endl;
+            std::cout << "9. Mostrar información de Cuentas" << std::endl;
+            std::cout << "10. Atras"<< std::endl; 
             std::cout << "Ingrese una opcion: ";
             std::cin >> opcion;
 
@@ -27,7 +30,20 @@ void Banco::menuAtencionCliente(){
             case 2:
                 realizarDeposito();
                 break;
+            case 5:
+                pagarPrestamos();
+                break;
+            case 6:
+                crearPrestamo();
+                actualizarUsuarios();
+                break;
             case 8:
+                mostrarInfoPrestamos();
+                break;
+            case 9:
+                mostrarInfoCuentas();
+                break;
+            case 10:
                 delete usuarioActual;
                 return;
                 break;
@@ -35,9 +51,10 @@ void Banco::menuAtencionCliente(){
                 break;
             }
         }
-    else{
+        else{
         std::cout<<"Error, no se pudo loggear ningun usuario"<<std::endl;
-    }
+        break;
+        }
     }
     delete usuarioActual;
 
@@ -58,13 +75,15 @@ void Banco::iniciarContadores(){
     inFileCDP.close();
 
     /* PARA AGREGAR LOS SUYOS SOLO COPIEN EL CÓDIGO Y CAMBIAN EL PATH DE inFile y el contador al que lo guardan. */
+
 }
 
 double Banco::convertirMoneda(double monto, bool enDolares){
     if (enDolares){
-        return (monto * (1/515));
+        return monto / 515 ;
     }
     else{
-        return (monto * 515);
+        return monto * 515;
     }
 }
+

@@ -39,6 +39,11 @@ class CDP {
          */
         void guardarCSV();
 
+        /**
+         * @brief Metodo para obtener el monto ingresado en el CDP
+        */
+        std::string getID();
+
     protected:
         double monto; /**< Se almacenara el monto a invertir en el CDP. */
         float tasaIntereses; /**< Se almacenara la tasa de intereses que se ganara. */

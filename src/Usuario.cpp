@@ -57,3 +57,7 @@ void Usuario::registrarUsuario(){
 std::string Usuario::getNombre(){
     return nombre;
 }
+
+void Usuario::limpiarCuentas(){
+    cuentas.clear();
+}

@@ -128,48 +128,6 @@ void Banco::registrarCuenta(bool esDolar) {
     std::rename("datos/usuarios_temp.csv", "datos/usuarios.csv");
 }
 
-std::vector<std::string> Banco::obtenerDatos() {
-    std::ifstream archivoEntrada("datos/usuarios.csv");
-    if (!archivoEntrada.is_open()) {
-        std::cerr << "Error al abrir el archivo " << std::endl;
-        return {};
-    }
-    std::string linea;
-    std::string resultado;
-    // Ignorar la primera línea
-    std::getline(archivoEntrada, resultado);
-
-    while (std::getline(archivoEntrada, linea)) {
-        std::istringstream iss(linea);
-        std::string nombre, identificacionStr, tipoCuenta1, dineroCuenta, tipoCuenta2, dineroCuenta2, idPrestamos, idCdps;
-        if (std::getline(iss, nombre, ',') && std::getline(iss, identificacionStr, ',') &&
-            std::getline(iss, tipoCuenta1, ',') && std::getline(iss, dineroCuenta, ',') &&
-            std::getline(iss, tipoCuenta2, ',') && std::getline(iss, dineroCuenta2, ',') &&
-            std::getline(iss, idPrestamos, ',') && std::getline(iss, idCdps)) {
-            unsigned long int identificacion = std::stoul(identificacionStr);
-            if (identificacion == usuarioActual->getIdentificacion()) {
-                resultado = linea;
-                break;
-            }
-        }
-    }
-
-    archivoEntrada.close();
-
-    std::vector<std::string> datos;
-    std::istringstream tokenStream(resultado);
-    std::string token;
-    int contador = 0;
-    while (std::getline(tokenStream, token, ',')) {
-        if (contador == 2 || contador == 3 || contador == 4 || contador == 5 || contador == 6 || contador == 7) {
-            datos.push_back(token);
-        }
-        contador++;
-}
-
-    return datos;
-}
-
 void Banco::registrarDeposito(double monto, std::string tipoCuenta){
     std::ifstream archivoEntrada("datos/usuarios.csv");
     if (!archivoEntrada.is_open()) {
