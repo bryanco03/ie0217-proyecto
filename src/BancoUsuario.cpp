@@ -412,9 +412,8 @@ void Banco::actualizarUsuarios(){
     std::ofstream nuevo("temp1.csv");
     Usuario user = *this->usuarioActual;
 
-    std::string linea, nombreCSV, idPrestamos = " ", idCDPs = " ";
+    std::string linea, sinNombre, idCSV, idPrestamos = " ", idCDPs = " ";
     std::vector<std::string> cuentas = {" ", "0", " ", "0"};
-    bool encontrado = false;
 
     for(auto& prestamo: user.getPrestamos()){
         idPrestamos += prestamo.getID() + " ";
@@ -440,13 +439,13 @@ void Banco::actualizarUsuarios(){
     }
 
     while(std::getline(viejo, linea)){
-        nombreCSV = linea.substr(0, linea.find(','));
-        if(nombreCSV == user.getNombre()){
+        sinNombre = linea.substr(linea.find(',') + 1);
+        idCSV = sinNombre.substr(0, sinNombre.find(','));
+        if(idCSV == std::to_string(user.getIdentificacion())){
             nuevo << user.getNombre() << "," << user.getIdentificacion() << ","
                   << cuentas[0] << "," << cuentas[1] << ","
                   << cuentas[2] << "," << cuentas[3] << ","
                   << idPrestamos << "," << idCDPs << std::endl;
-            encontrado = true;
         } else {
         nuevo << linea << std::endl;
         }

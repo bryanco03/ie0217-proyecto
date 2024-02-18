@@ -8,7 +8,7 @@
 #include "Banco.hpp"
 
 /* Funciones usadas por los métodos, que no son miembros de banco. */
-Prestamos opcionesPrestamo(const double monto, const int tipo, const std::string ID){
+Prestamos opcionesPrestamo(const double monto, std::string moneda, const int tipo, const std::string ID){
     /* Se definen los meses e intereses dependiendo del tipo de prestamo. */
     std::vector<std::string> tipos = {"Personal", "Hipotecario", "Prendario"};
     std::vector<int> meses;
@@ -34,15 +34,15 @@ Prestamos opcionesPrestamo(const double monto, const int tipo, const std::string
 
     switch (opcion) {
     case 1:
-        return Prestamos(ID, tipos[tipo - 1], monto, intereses[0], meses[0]);
+        return Prestamos(ID, tipos[tipo - 1], monto, moneda, intereses[0], meses[0]);
         break;
 
     case 2:
-        return Prestamos(ID, tipos[tipo - 1], monto, intereses[1], meses[1]);
+        return Prestamos(ID, tipos[tipo - 1], monto, moneda, intereses[1], meses[1]);
         break;
 
     case 3:
-        return Prestamos(ID, tipos[tipo - 1], monto, intereses[2], meses[2]);
+        return Prestamos(ID, tipos[tipo - 1], monto, moneda, intereses[2], meses[2]);
         break;
     default:
         break;
@@ -75,12 +75,12 @@ Prestamos Banco::leerPrestamo(std::string idPrestamo){
 
     /* Si no se encontró el prestamo se imprime el error. */
     if(infoP.size() == 0){
-        return Prestamos("ERROR", "", 1, 1, 1);
+        return Prestamos("ERROR", "", 1, "", 1, 1);
     }
 
     /* Si se encontró se crea el objeto y se paga el prestamo. */
-    Prestamos prestamo(infoP[0], infoP[1], std::stod(infoP[2]), std::stof(infoP[3]),
-                       std::stoi(infoP[4]), std::stoi(infoP[5]));
+    Prestamos prestamo(infoP[0], infoP[1], std::stod(infoP[2]), infoP[3], std::stof(infoP[4]),
+                       std::stoi(infoP[5]), std::stoi(infoP[6]));
     
     return prestamo;
 }
@@ -111,8 +111,12 @@ void Banco::crearPrestamo(bool generico){
     std::cout << "Ingrese la opcion: ";
     int tipo; std::cin >> tipo;
 
+    /* Se obtiene el tipo de moneda. */
+    std::cout << "\nIngrese el tipo de moneda \"dolar\" o \"colon\": ";
+    std::string moneda; std::cin >> moneda;
+
     /* Se obtiene el monto del prestamo. */
-    std::cout << "\nIngrese el monto del prestamo: ";
+    std::cout << "Ingrese el monto del prestamo: ";
     double monto; std::cin >> monto;
 
     /* Se genera el ID del prestamo. */
@@ -128,8 +132,9 @@ void Banco::crearPrestamo(bool generico){
     this->contadorPrestamos += 1;
 
     /* Se crea el prestamo. */
-    Prestamos prestamo = opcionesPrestamo(monto, tipo, ID);
+    Prestamos prestamo = opcionesPrestamo(monto, moneda, tipo, ID);
     prestamo.generarCSV();
+    std::cout << "Tabla de prestamo generada en " << ID << ".csv." << std::endl;
 
     if (!generico) {
         this->usuarioActual->setPrestamo(prestamo);
@@ -139,26 +144,27 @@ void Banco::crearPrestamo(bool generico){
 void Banco::mostrarInfoPrestamos(){
     /* Se imprimen instrucciones del menu. */
     std::cout << "\n-----Menu de mostrar prestamos-----" << std::endl;
-    std::cout << "Ingrese nombre de usuario para mostrar sus prestamos\nAlternativamente, ingrese \"Yo\" para ver los suyos: ";
-    std::string name; std::cin >> name;
+    std::cout << "Ingrese la identificacion del usuario para mostrar sus prestamos\nAlternativamente, ingrese \"Yo\" para ver los suyos: ";
+    std::string idUsuario; std::cin >> idUsuario;
 
     /* Caso donde se ven los prestamos propios. */
-    if(name == "Yo"){
+    if(idUsuario == "Yo"){
         std::cout << "\n-----Información de sus prestamos-----" << std::endl;
-        for(auto& prestamo: this->usuarioActual->prestamos){
+        for(auto& prestamo: this->usuarioActual->getPrestamos()){
             prestamo.mostrarInfo();
         }
         return;
     }
 
     /* Prestamos del nombre dado. */
-    std::string nombreCSV, linea, columna, idPrestamos, id;
+    std::string idCSV, linea, sinNombre, columna, idPrestamos, id;
     std::ifstream database("datos\\usuarios.csv");
     bool encontrado = false;
 
     while(std::getline(database, linea)){
-        nombreCSV = linea.substr(0, linea.find(','));
-        if(nombreCSV == name){
+        sinNombre = linea.substr(linea.find(',') + 1);
+        idCSV = sinNombre.substr(0, sinNombre.find(','));
+        if(idCSV == idUsuario){
             encontrado = true;
             int i = 0;
             std::stringstream datos(linea);
@@ -173,7 +179,7 @@ void Banco::mostrarInfoPrestamos(){
     database.close();
 
     if(!encontrado){
-        std::cout << "Nombre no encontrado." << std::endl;
+        std::cout << "Id de usuario no encontrado." << std::endl;
         return;
     }
 

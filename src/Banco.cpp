@@ -66,7 +66,6 @@ void Banco::menuInformacionGeneral(){
         switch (opcion) {
         case '1':{
             this->crearPrestamo(generico);
-            std::cout << "\nSe ha generado su tabla en el archivo \"TABLA.csv\"" << std::endl;
             break;}
         case '2':{
             std::cout << "Información del prestamo generado: ";
