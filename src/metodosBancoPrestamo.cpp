@@ -195,16 +195,3 @@ void Banco::pagarPrestamos(){
         std::cout << "No se encontró ningún prestamo con ese Id" << std::endl;
     }
 }
-
-/*
-int main(){
-    Banco inst;
-    inst.iniciarContadores();
-    Usuario instUsuario(555555555, "Prueba");
-    inst.usuarioActual = &(instUsuario);
-    inst.crearPrestamo();
-    inst.crearPrestamo();
-    inst.pagarPrestamos();
-    return 0;
-}
-*/

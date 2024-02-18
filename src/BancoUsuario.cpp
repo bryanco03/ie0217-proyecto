@@ -405,7 +405,6 @@ void Banco::realizarDeposito(){
 
 }
 
-
 void Banco::actualizarUsuarios(){
     /* Se abre el archivo de registro. */
     std::string nombreArchivo = "datos\\usuarios.csv";
@@ -413,7 +412,8 @@ void Banco::actualizarUsuarios(){
     std::ofstream nuevo("temp1.csv");
     Usuario user = *this->usuarioActual;
 
-    std::string linea, nombreCSV, idPrestamos = "", idCDPs = "";
+    std::string linea, nombreCSV, idPrestamos = " ", idCDPs = " ";
+    std::vector<std::string> cuentas = {" ", "0", " ", "0"};
     bool encontrado = false;
 
     for(auto& prestamo: user.getPrestamos()){
@@ -421,27 +421,35 @@ void Banco::actualizarUsuarios(){
     }
 
     for(auto& cdp: user.getCdps()){
-        // idCDPs += cdp.getID() + " ";   Aquí faltaría este miembro.
+        idCDPs += cdp.getID() + " ";
+    }
+
+    int i = 0;
+    for(auto& cuenta : user.getCuentas()){
+        /* Se establece el tipo de la cuenta. */
+        if(cuenta.esDolar){
+            cuentas[i] = "dolar";
+        } else {
+            cuentas[i] = "colon";
+        }
+            i++;
+
+        /* Se establece el monto. */
+        cuentas[i] = std::to_string(cuenta.dinero);
+        i++;
     }
 
     while(std::getline(viejo, linea)){
         nombreCSV = linea.substr(0, linea.find(','));
         if(nombreCSV == user.getNombre()){
             nuevo << user.getNombre() << "," << user.getIdentificacion() << ","
-                  << "TIPOCUENTA1" << "," << "DINEROCUENTA1" << ","
-                  << "TIPOCUENTA2" << "," << "DINEROCUENTA2" << ","
+                  << cuentas[0] << "," << cuentas[1] << ","
+                  << cuentas[2] << "," << cuentas[3] << ","
                   << idPrestamos << "," << idCDPs << std::endl;
             encontrado = true;
         } else {
         nuevo << linea << std::endl;
         }
-    }
-
-    if(!encontrado){
-            nuevo << user.getNombre() << "," << user.getIdentificacion() << ","
-                  << "TIPOCUENTA1" << "," << "DINEROCUENTA1" << ","
-                  << "TIPOCUENTA2" << "," << "DINEROCUENTA2"
-                  << idPrestamos << "," << idCDPs << std::endl;
     }
 
     /* Se guardan ambos archivos. */

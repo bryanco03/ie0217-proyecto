@@ -76,3 +76,7 @@ void CDP::guardarCSV(){
     remove(nombreArchivo.c_str());
     rename("temp1.csv", nombreArchivo.c_str());
 }
+
+std::string CDP::getID(){
+    return this->ID;
+}

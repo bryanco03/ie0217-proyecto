@@ -32,6 +32,7 @@ void Banco::menuAtencionCliente(){
                 break;
             case 6:
                 crearPrestamo();
+                actualizarUsuarios();
                 break;
             case 8:
                 mostrarInfoPrestamos();
