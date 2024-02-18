@@ -10,6 +10,9 @@
 #include <algorithm>
 #include <sstream>
 #include <stdexcept>
+#include <fstream>
+#include <chrono>
+#include <iomanip>
 
 #include "Prestamos.hpp"
 #include "Usuario.hpp"
@@ -48,6 +51,8 @@ class Banco{
     void cargarPrestamos(std::string idPrestamos);
     void actualizarUsuarios();
     void menuInformacionGeneral();
+    void registrarTrasaccion(const std::string& informacion);
+    void mostrarInfoUsuario();
 };
 
 #endif

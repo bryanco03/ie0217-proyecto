@@ -16,7 +16,9 @@ CDP::CDP(double monto, float tasaIntereses, double duracionAnnos, std::string ID
     */
     this->montoGanado = this->monto * pow((1 + (this->tasaIntereses / 1)), 1 * this->duracionAnnos);
 
-    guardarCSV();
+    if(this->ID != "MOSTRARINFO"){
+        guardarCSV();
+    }
 
 }
 
@@ -77,6 +79,23 @@ void CDP::guardarCSV(){
     rename("temp1.csv", nombreArchivo.c_str());
 }
 
+double CDP::getMonto(){
+    return this->monto;
+}
+
+float CDP::getInteres(){
+    return this->tasaIntereses;
+}
+
+double CDP::getDuracion(){
+    return this->duracionAnnos;
+}
+
+double CDP::getMontoGanado(){
+    return this->montoGanado;
+}
+
 std::string CDP::getID(){
     return this->ID;
 }
+

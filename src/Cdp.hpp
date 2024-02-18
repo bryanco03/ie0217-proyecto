@@ -28,16 +28,36 @@ class CDP {
         CDP(double monto, float tasaIntereses, double duracionAnnos, std::string ID);
         
         /**
-         * @brief Método para generar el CSV de un CDP.
+         * @brief Metodo para generar el CSV de un CDP.
          * 
          */
         void generarCSV();
 
         /**
-         * @brief Método para guardar información del CSV en un archivo de registro de los CDPs.
+         * @brief Metodo para guardar información del CSV en un archivo de registro de los CDPs.
          * 
          */
         void guardarCSV();
+
+        /**
+         * @brief Metodo para obtener el monto ingresado en el CDP
+        */
+        double getMonto();
+
+        /**
+         * @brief Metodo para obtener el monto ingresado en el CDP
+        */
+        float getInteres();
+
+        /**
+         * @brief Metodo para obtener el monto ingresado en el CDP
+        */
+        double getDuracion();
+
+        /**
+         * @brief Metodo para obtener el monto ingresado en el CDP
+        */
+        double getMontoGanado();
 
         /**
          * @brief Metodo para obtener el monto ingresado en el CDP
