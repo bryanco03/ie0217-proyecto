@@ -406,3 +406,49 @@ void Banco::realizarDeposito(){
 }
 
 
+void Banco::actualizarUsuarios(){
+    /* Se abre el archivo de registro. */
+    std::string nombreArchivo = "datos\\usuarios.csv";
+    std::ifstream viejo(nombreArchivo);
+    std::ofstream nuevo("temp1.csv");
+    Usuario user = *this->usuarioActual;
+
+    std::string linea, nombreCSV, idPrestamos = "", idCDPs = "";
+    bool encontrado = false;
+
+    for(auto& prestamo: user.getPrestamos()){
+        idPrestamos += prestamo.getID() + " ";
+    }
+
+    for(auto& cdp: user.getCdps()){
+        // idCDPs += cdp.getID() + " ";   Aquí faltaría este miembro.
+    }
+
+    while(std::getline(viejo, linea)){
+        nombreCSV = linea.substr(0, linea.find(','));
+        if(nombreCSV == user.getNombre()){
+            nuevo << user.getNombre() << "," << user.getIdentificacion() << ","
+                  << "TIPOCUENTA1" << "," << "DINEROCUENTA1" << ","
+                  << "TIPOCUENTA2" << "," << "DINEROCUENTA2" << ","
+                  << idPrestamos << "," << idCDPs << std::endl;
+            encontrado = true;
+        } else {
+        nuevo << linea << std::endl;
+        }
+    }
+
+    if(!encontrado){
+            nuevo << user.getNombre() << "," << user.getIdentificacion() << ","
+                  << "TIPOCUENTA1" << "," << "DINEROCUENTA1" << ","
+                  << "TIPOCUENTA2" << "," << "DINEROCUENTA2"
+                  << idPrestamos << "," << idCDPs << std::endl;
+    }
+
+    /* Se guardan ambos archivos. */
+    viejo.close();
+    nuevo.close();
+
+    /* Se remueve el archivo viejo y se renombra al nuevo como el csv original. */
+    remove(nombreArchivo.c_str());
+    rename("temp1.csv", nombreArchivo.c_str());
+}

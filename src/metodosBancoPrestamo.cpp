@@ -75,7 +75,6 @@ Prestamos leerPrestamo(std::string idPrestamo){
 
     /* Si no se encontró el prestamo se imprime el error. */
     if(infoP.size() == 0){
-        std::cout << "No se encontró ningún prestamo con ese Id" << std::endl;
         return Prestamos("ERROR", "", 1, 1, 1);
     }
 
@@ -130,15 +129,52 @@ void Banco::crearPrestamo(){
 }
 
 void Banco::mostrarInfoPrestamos(){
-    /*
+    /* Se imprimen instrucciones del menu. */
     std::cout << "\n-----Menu de mostrar prestamos-----" << std::endl;
-    std::cout << "Ingrese identificacion de usuario para mostrar sus prestamos: ";
-    unsigned long int id; std::cin >> id;
-    */
+    std::cout << "Ingrese nombre de usuario para mostrar sus prestamos\nAlternativamente, ingrese \"Yo\" para ver los suyos: ";
+    std::string name; std::cin >> name;
 
-    std::cout << "\n-----Información de prestamos-----" << std::endl;
-    for(auto& prestamo: this->usuarioActual->prestamos){
-        prestamo.mostrarInfo();
+    /* Caso donde se ven los prestamos propios. */
+    if(name == "Yo"){
+        std::cout << "\n-----Información de sus prestamos-----" << std::endl;
+        for(auto& prestamo: this->usuarioActual->prestamos){
+            prestamo.mostrarInfo();
+        }
+        return;
+    }
+
+    /* Prestamos del nombre dado. */
+    std::string nombreCSV, linea, columna, idPrestamos, id;
+    std::ifstream database("datos\\usuarios.csv");
+    bool encontrado = false;
+
+    while(std::getline(database, linea)){
+        nombreCSV = linea.substr(0, linea.find(','));
+        if(nombreCSV == name){
+            encontrado = true;
+            int i = 0;
+            std::stringstream datos(linea);
+            while(std::getline(datos, columna, ',')){
+                if(i == 6){
+                    idPrestamos = columna;
+                }
+                i++;
+            }
+        }
+    }
+    database.close();
+
+    if(!encontrado){
+        std::cout << "Nombre no encontrado." << std::endl;
+        return;
+    }
+
+    std::stringstream idParseados(idPrestamos);
+    while(std::getline(idParseados, id, ' ')){
+        Prestamos prestamo = leerPrestamo(id);
+        if(prestamo.getID() != "ERROR"){
+            prestamo.mostrarInfo();
+        }
     }
 }
 
@@ -155,6 +191,8 @@ void Banco::pagarPrestamos(){
     Prestamos prestamo = leerPrestamo(ID_P);
     if(prestamo.getID() != "ERROR"){
         prestamo.pagarCuota();
+    } else {
+        std::cout << "No se encontró ningún prestamo con ese Id" << std::endl;
     }
 }
 

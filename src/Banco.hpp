@@ -43,6 +43,7 @@ class Banco{
     void mostrarInfoCDP();
     void pagarPrestamos();
     void cargarPrestamos(std::string idPrestamos);
+    void actualizarUsuarios();
 };
 
 #endif

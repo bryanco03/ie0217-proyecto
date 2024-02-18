@@ -5,6 +5,7 @@ void Banco::menuAtencionCliente(){
     int opcion;
     if (usuarioLogeado){
         cargarDatosUsuario();
+        iniciarContadores();
     }
     while (1){
         if (usuarioLogeado){
@@ -16,7 +17,8 @@ void Banco::menuAtencionCliente(){
             std::cout << "5. Pagar Cuotas de prestamo"<< std::endl;
             std::cout << "6. Solicitar Prestamo"<< std::endl;
             std::cout << "7. Solicitar certificado de plazo"<< std::endl;
-            std::cout << "8. Atras"<< std::endl; 
+            std::cout << "8. Mostrar información de prestamos" << std::endl;
+            std::cout << "9. Atras"<< std::endl; 
             std::cout << "Ingrese una opcion: ";
             std::cin >> opcion;
 
@@ -27,9 +29,14 @@ void Banco::menuAtencionCliente(){
                 break;
             case 5:
                 pagarPrestamos();
+                break;
             case 6:
                 crearPrestamo();
+                break;
             case 8:
+                mostrarInfoPrestamos();
+                break;
+            case 9:
                 delete usuarioActual;
                 return;
                 break;
