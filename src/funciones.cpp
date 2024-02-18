@@ -18,6 +18,7 @@ void menuEntrada(Banco* banco){
         banco->menuAtencionCliente();
         break;
     case 2:
+        banco->menuInformacionGeneral();
         break;
     case 3:
         exit(0);

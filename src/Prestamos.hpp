@@ -16,13 +16,14 @@
 
 class Prestamos{
     private:
+        std::string ID;         /**< Número ID del prestamo. */
+        std::string tipo;       /**< Tipo de prestamo: Personal, Prendario o Hipotecario. */
         double monto;           /**< Monto a pedir del Prestamo. */
-        double cuotaMensual;    /**< Cuota mensual a pagar. */
         float tasaInteres;      /**< Tasa de interés anual del Prestamo. */
         int duracionMeses;      /**< Cantidad de meses a pagar de cuotas. */
-        std::string tipo;       /**< Tipo de prestamo: Personal, Prendario o Hipotecario. */
         int cuotasPagadas = 0;  /**< Cantidad de cuotas ya pagadas del Prestamo. */
-        std::string ID;         /**< Número ID del prestamo. */
+        double cuotaMensual;    /**< Cuota mensual a pagar. */
+        
 
     public:
         std::string estado;     /**< Estado del Prestamo: En proceso de pago o Pagado. */
@@ -62,7 +63,7 @@ class Prestamos{
          * @brief Método para mostrar información del Prestamo.
          * 
          */
-        void mostrarInfo();
+        void mostrarInfo(bool generico = false);
 
         /**
          * @brief Método para retornar el ID del prestamo.

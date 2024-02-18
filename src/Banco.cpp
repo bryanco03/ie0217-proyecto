@@ -52,6 +52,33 @@ void Banco::menuAtencionCliente(){
     delete usuarioActual;
 
 }
+
+void Banco::menuInformacionGeneral(){
+    bool generico = true;
+    while (1) {
+        std::cout << "\nBienvenido al menu de informacion general" << std::endl
+              << "1. Generar un prestamo y su tabla. " << std::endl
+              << "2. Mostrar informacion del prestamo." << std::endl
+              << "3. Atras." << std::endl
+              << "Digite una opcion: ";
+        char opcion; std::cin >> opcion;
+
+        switch (opcion) {
+        case '1':{
+            this->crearPrestamo(generico);
+            std::cout << "\nSe ha generado su tabla en el archivo \"TABLA.csv\"" << std::endl;
+            break;}
+        case '2':{
+            std::cout << "Información del prestamo generado: ";
+            this->leerPrestamo("TABLA").mostrarInfo(generico);
+            break;}
+        default:
+            return;
+            break;
+        }
+    }
+}
+
 void Banco::iniciarContadores(){
     /* Se obtiene el contador de prestamo. */
     /* https://stackoverflow.com/questions/3072795/how-to-count-lines-of-a-file-in-c */

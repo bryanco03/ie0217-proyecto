@@ -25,7 +25,7 @@ class Banco{
 
     public:
     void loggearUsuario();
-    void crearPrestamo();
+    void crearPrestamo(bool generico = false);
     void mostrarInfoPrestamos();
     bool verificarIdentificacionNombreEnCSV(unsigned long int identificacionBuscada, std::string nombreBuscar);
     void menuAtencionCliente();
@@ -42,8 +42,10 @@ class Banco{
     void crearCDP();
     void mostrarInfoCDP();
     void pagarPrestamos();
+    Prestamos leerPrestamo(std::string idPrestamo);
     void cargarPrestamos(std::string idPrestamos);
     void actualizarUsuarios();
+    void menuInformacionGeneral();
 };
 
 #endif
