@@ -8,19 +8,19 @@
 #include "Banco.hpp"
 
 /* Funciones usadas por los métodos, que no son miembros de banco. */
-Prestamos opcionesPrestamo(const double monto, std::string moneda, const int tipo, const std::string ID){
+Prestamos opcionesPrestamo(const double monto, std::string moneda, const char tipo, const std::string ID){
     /* Se definen los meses e intereses dependiendo del tipo de prestamo. */
     std::vector<std::string> tipos = {"Personal", "Hipotecario", "Prendario"};
     std::vector<int> meses;
     std::vector<int> intereses;
 
-    if(tipo == 1){
+    if(tipo == '1'){
         meses.insert(meses.end(), {5, 10, 12});
         intereses.insert(intereses.end(), {15, 7, 5});
-    } else if (tipo == 2) {
+    } else if (tipo == '2') {
         meses.insert(meses.end(), {12, 24, 36});
         intereses.insert(intereses.end(), {15, 10, 5});
-    } else if (tipo == 3){
+    } else if (tipo == '3'){
         meses.insert(meses.end(), {10, 20, 30});
         intereses.insert(intereses.end(), {13, 7, 5});
     }
@@ -103,17 +103,27 @@ void Banco::cargarPrestamos(std::string idPrestamos){
 }
 
 void Banco::crearPrestamo(bool generico){
-    /* Se obtiene la opción de prestamo a crear. */
+    /* Se imprime el menú. */
     std::cout << "\nEscoja el tipo de prestamo a realizar: " << std::endl
               << "1. Personal" << std::endl
               << "2. Hipotecario" << std::endl
               << "3. Prendario" << std::endl;
     std::cout << "Ingrese la opcion: ";
-    int tipo; std::cin >> tipo;
+
+    /* Se obtiene la opción de prestamo a crear. */
+    char tipo; std::cin >> tipo;
+    if((tipo != '1') && (tipo != '2') && (tipo != '3')){
+        std::cout << "Opcion dada no es valida" << std::endl;
+        return;
+    }
 
     /* Se obtiene el tipo de moneda. */
     std::cout << "\nIngrese el tipo de moneda \"dolar\" o \"colon\": ";
     std::string moneda; std::cin >> moneda;
+    if((moneda != "dolar") && (moneda != "colon")){
+        std::cout << "Opcion dada no es valida" << std::endl;
+        return;
+    }
 
     /* Se obtiene el monto del prestamo. */
     std::cout << "Ingrese el monto del prestamo: ";

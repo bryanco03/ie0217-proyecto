@@ -5,7 +5,7 @@
 #include <string>
 void menuEntrada(Banco* banco){
     int opcion;
-    std::cout << "Bienvenido al sistema " << std::endl;
+    std::cout << "\nBienvenido al sistema " << std::endl;
     std::cout << "1. Atencion al cliente " << std::endl;
     std::cout << "2. Informacion General " << std::endl;
     std::cout << "3. Salir " << std::endl;

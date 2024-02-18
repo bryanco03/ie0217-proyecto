@@ -9,7 +9,7 @@ void Banco::menuAtencionCliente(){
     }
     while (1){
         if (usuarioLogeado){
-            std::cout << "Bienvenido, " << usuarioActual->getNombre() << std::endl;
+            std::cout << "\nBienvenido, " << usuarioActual->getNombre() << std::endl;
             std::cout << "1. Crear una cuenta"<< std::endl;
             std::cout << "2. Realizar un deposito"<< std::endl;
             std::cout << "3. Realizar un retiro"<< std::endl;
@@ -68,11 +68,19 @@ void Banco::menuInformacionGeneral(){
             this->crearPrestamo(generico);
             break;}
         case '2':{
-            std::cout << "Información del prestamo generado: ";
-            this->leerPrestamo("TABLA").mostrarInfo(generico);
+            Prestamos prestamo = this->leerPrestamo("TABLA");
+            if(prestamo.getID() != "ERROR"){
+                std::cout << "Informacion del prestamo generado: ";
+                prestamo.mostrarInfo(generico);
+            } else {
+                std::cout << "No se ha generado el prestamo." << std::endl;
+            }
             break;}
-        default:
+        case '3':
             return;
+            break;
+        default:
+            std::cout << "Opcion no valida, intente de nuevo." << std::endl;
             break;
         }
     }

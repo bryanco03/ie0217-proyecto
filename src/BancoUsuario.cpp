@@ -8,7 +8,7 @@
 
 void Banco::loggearUsuario(){
     int opcion;
-    std::cout << "Bienvenido a atencion a cliente " << std::endl;
+    std::cout << "\nBienvenido a atencion a cliente " << std::endl;
     std::cout << "1. Loggearse " << std::endl;
     std::cout << "2. Registrarse " << std::endl;
     std::cout << "Elige una opcion: ";

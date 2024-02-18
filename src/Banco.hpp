@@ -9,6 +9,8 @@
 #define BANCO_HPP
 #include <algorithm>
 #include <sstream>
+#include <stdexcept>
+
 #include "Prestamos.hpp"
 #include "Usuario.hpp"
 #include "Cdp.hpp"
