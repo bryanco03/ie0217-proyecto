@@ -20,10 +20,12 @@ void Banco::menuAtencionCliente(){
             std::cout << "Ingrese una opcion: ";
             std::cin >> opcion;
 
-            switch (opcion)
-            {
+            switch (opcion){
             case 1:
                 crearCuenta();
+                break;
+            case 2:
+                realizarDeposito();
                 break;
             case 8:
                 delete usuarioActual;
@@ -56,4 +58,13 @@ void Banco::iniciarContadores(){
     inFileCDP.close();
 
     /* PARA AGREGAR LOS SUYOS SOLO COPIEN EL CÓDIGO Y CAMBIAN EL PATH DE inFile y el contador al que lo guardan. */
+}
+
+double Banco::convertirMoneda(double monto, bool enDolares){
+    if (enDolares){
+        return (monto * (1/515));
+    }
+    else{
+        return (monto * 515);
+    }
 }

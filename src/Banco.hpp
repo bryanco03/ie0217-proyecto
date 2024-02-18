@@ -16,11 +16,11 @@
 
 class Banco{
     private:
-
+    Usuario* usuarioActual;      /**< Puntero a usuario que esta iniciado en la sesión. */
     public:
     int contadorCDP; /**Contador para ID de los CDP*/
     int contadorPrestamos;  /**< Contador para ID de prestamos. */
-    Usuario* usuarioActual;      /**< Puntero a usuario que esta iniciado en la sesión. */
+    //Usuario* usuarioActual;      /**< Puntero a usuario que esta iniciado en la sesión. */
     bool usuarioLogeado;
 
     public:
@@ -38,7 +38,7 @@ class Banco{
     void cargarCuentas(std::string tipoCuenta1, double dineroCuenta1, std::string tipoCuenta2, double dineroCuenta2);
     void realizarDeposito();
     double convertirMoneda(double monto, bool enDolar);
-    void registrarDeposito();
+    void registrarDeposito(double monto, std::string tipoCuenta);
     void crearCDP();
     void mostrarInfoCDP();
     void pagarPrestamos();

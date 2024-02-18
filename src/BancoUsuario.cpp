@@ -51,63 +51,6 @@ void Banco::loggearUsuario(){
     }
 }
 
-bool Banco::verificarIdentificacionNombreEnCSV(unsigned long int identificacionBuscada, std::string nombreBuscar) {
-    std::ifstream archivo("datos/usuarios.csv");
-    if (!archivo.is_open()) {
-        std::cerr << "Error al abrir el archivo " << std::endl;
-        return false;
-    }
-
-    // Ignorar la primera línea
-    std::string primeraLinea;
-    std::getline(archivo, primeraLinea);
-
-
-    std::string linea;
-    while (std::getline(archivo, linea)) {
-        std::istringstream iss(linea);
-        std::string nombre, identificacionStr, restoLinea;
-        if (std::getline(iss, nombre, ',') && std::getline(iss, identificacionStr, ',') && std::getline(iss, restoLinea)) {
-            unsigned long int identificacion = std::stoul(identificacionStr);
-            if (identificacion == identificacionBuscada && nombre == nombreBuscar) {
-                archivo.close();
-                return true;
-            }
-        }
-    }
-
-    archivo.close();
-    return false;
-}
-
-bool Banco:: verificarIdentificacioEnCSV(unsigned long int identificacionBuscada) {
-    std::ifstream archivo("datos/usuarios.csv");
-    if (!archivo.is_open()) {
-        std::cerr << "Error al abrir el archivo " << std::endl;
-        return false;
-    }
-
-    // Ignorar la primera línea
-    std::string primeraLinea;
-    std::getline(archivo, primeraLinea);
-
-
-    std::string linea;
-    while (std::getline(archivo, linea)) {
-        std::istringstream iss(linea);
-        std::string nombre, identificacionStr, restoLinea;
-        if (std::getline(iss, nombre, ',') && std::getline(iss, identificacionStr, ',') && std::getline(iss, restoLinea)) {
-            unsigned long int identificacion = std::stoul(identificacionStr);
-            if (identificacion == identificacionBuscada) {
-                archivo.close();
-                return true;
-            }
-        }
-    }
-
-    archivo.close();
-    return false;
-}
 
 void Banco::crearCuenta(){
     std::vector<Cuenta> cuentasUsuario = usuarioActual->getCuentas();
@@ -200,78 +143,11 @@ void Banco::crearCuenta(){
     
 }
 
-void Banco::registrarCuenta(bool esDolar) {
-    std::ifstream archivoEntrada("datos/usuarios.csv");
-    if (!archivoEntrada.is_open()) {
-        std::cerr << "Error al abrir el archivo " << std::endl;
-        return;
-    }
-
-    std::string linea;
-    std::ostringstream nuevoContenido;
-    // Ignorar la primera línea
-    std::string primeraLinea;
-    std::getline(archivoEntrada, primeraLinea);
-    nuevoContenido << primeraLinea << "\n";
-
-    while (std::getline(archivoEntrada, linea)) {
-        std::istringstream iss(linea);
-        std::string nombre, identificacionStr, tipoCuenta1, dineroCuenta, tipoCuenta2, dineroCuenta2, idPrestamos, idCdps;
-        if (std::getline(iss, nombre, ',') && std::getline(iss, identificacionStr, ',') &&
-            std::getline(iss, tipoCuenta1, ',') && std::getline(iss, dineroCuenta, ',') &&
-            std::getline(iss, tipoCuenta2, ',') && std::getline(iss, dineroCuenta2, ',') &&
-            std::getline(iss, idPrestamos, ',') && std::getline(iss, idCdps)) {
-            unsigned long int identificacion = std::stoul(identificacionStr);
-            if (identificacion == usuarioActual->getIdentificacion()) {
-                if (esDolar && usuarioActual->getCuentas().size() == 1) {
-                    // Modificar la moneda de la cuenta
-                    nuevoContenido << nombre << "," << identificacionStr << "," << "dolar" << ","
-                                   << dineroCuenta << "," << tipoCuenta2 << "," << dineroCuenta2 << ","
-                                   << idPrestamos << "," << idCdps << "\n";
-                } else if (!esDolar && usuarioActual->getCuentas().size() == 1) {
-                    nuevoContenido << nombre << "," << identificacionStr << "," << "colon" << ","
-                                   << dineroCuenta << "," << tipoCuenta2 << "," << dineroCuenta2 << ","
-                                   << idPrestamos << "," << idCdps << "\n";
-                } else if (esDolar && usuarioActual->getCuentas().size() == 2) {
-                    nuevoContenido << nombre << "," << identificacionStr << "," << tipoCuenta1 << ","
-                                   << dineroCuenta << "," << "dolar" << "," << dineroCuenta2 << ","
-                                   << idPrestamos << "," << idCdps << "\n";
-                } else if (!esDolar && usuarioActual->getCuentas().size() == 2) {
-                    nuevoContenido << nombre << "," << identificacionStr << "," << tipoCuenta1 << ","
-                                   << dineroCuenta << "," << "colon" << "," << dineroCuenta2 << ","
-                                   << idPrestamos << "," << idCdps << "\n";
-                } else {
-                    // Conservar la línea original si no se cumplen las condiciones
-                    nuevoContenido << linea << "\n";
-                }
-            } else {
-                // Conservar la línea original si la identificación no coincide
-                nuevoContenido << linea << "\n";
-            }
-        }
-    }
-
-    archivoEntrada.close();
-
-    std::ofstream archivoSalida("datos/usuarios_temp.csv");
-    if (!archivoSalida.is_open()) {
-        std::cerr << "Error al abrir el archivo para escritura" << std::endl;
-        return;
-    }
-
-    archivoSalida << nuevoContenido.str();
-    archivoSalida.close();
-
-    // Eliminar el archivo original y renombrar el temporal
-    std::remove("datos/usuarios.csv");
-    std::rename("datos/usuarios_temp.csv", "datos/usuarios.csv");
-}
-
 void Banco::cargarDatosUsuario(){
     std::vector<std::string> datos = obtenerDatos();
-    //for (auto dato : datos){
-    //    std::cout << dato << std::endl;
-    //}
+    for (auto dato : datos){
+        std::cout << dato << std::endl;
+    }
     std::string tipoCuenta1, dineroCuenta1Str, tipoCuenta2, dineroCuenta2Str;
     tipoCuenta1 = datos[0];
     tipoCuenta2 = datos[2];
@@ -281,54 +157,9 @@ void Banco::cargarDatosUsuario(){
     double dineroCuenta2 = std::stod(dineroCuenta2Str);
 
     cargarCuentas(tipoCuenta1, dineroCuenta1, tipoCuenta2, dineroCuenta2);
-    
-
-    
 
 }
 
-std::vector<std::string> Banco::obtenerDatos() {
-    std::ifstream archivoEntrada("datos/usuarios.csv");
-    if (!archivoEntrada.is_open()) {
-        std::cerr << "Error al abrir el archivo " << std::endl;
-        return {};
-    }
-
-    std::string linea;
-    std::string resultado;
-    // Ignorar la primera línea
-    std::getline(archivoEntrada, resultado);
-
-    while (std::getline(archivoEntrada, linea)) {
-        std::istringstream iss(linea);
-        std::string nombre, identificacionStr, tipoCuenta1, dineroCuenta, tipoCuenta2, dineroCuenta2, idPrestamos, idCdps;
-        if (std::getline(iss, nombre, ',') && std::getline(iss, identificacionStr, ',') &&
-            std::getline(iss, tipoCuenta1, ',') && std::getline(iss, dineroCuenta, ',') &&
-            std::getline(iss, tipoCuenta2, ',') && std::getline(iss, dineroCuenta2, ',') &&
-            std::getline(iss, idPrestamos, ',') && std::getline(iss, idCdps)) {
-            unsigned long int identificacion = std::stoul(identificacionStr);
-            if (identificacion == usuarioActual->getIdentificacion()) {
-                resultado = linea;
-                break;
-            }
-        }
-    }
-
-    archivoEntrada.close();
-
-    std::vector<std::string> datos;
-    std::istringstream tokenStream(resultado);
-    std::string token;
-    int contador = 0;
-    while (std::getline(tokenStream, token, ',')) {
-        if (contador == 2 || contador == 3 || contador == 4 || contador == 5 || contador == 6 || contador == 7) {
-            datos.push_back(token);
-        }
-        contador++;
-}
-
-    return datos;
-}
 
 void Banco::cargarCuentas(std::string tipoCuenta1, double dineroCuenta1, std::string tipoCuenta2, double dineroCuenta2){
 
@@ -373,8 +204,10 @@ void Banco::realizarDeposito(){
     
     if (opcion == 1){
         if (usuarioActual->getCuentas().size()== 1){
-            Cuenta cuenta = usuarioActual->getCuentas()[0];
-            if (cuenta.esDolar){
+            Cuenta cuenta1 = usuarioActual->getCuentas()[0];
+            Cuenta* cuenta = &usuarioActual->getCuentas()[0];
+            cuenta->dinero = cuenta1.dinero;
+            if (cuenta->esDolar){
                 int opcionEfectivo;
                 std::cout << "Vas a realizar un deposito a tu cuenta en Dolares"<< std::endl;
                 std::cout << "Con que monedas vas a realizar el deposito: " << std::endl;
@@ -386,10 +219,25 @@ void Banco::realizarDeposito(){
                     double montoDolar;
                     std::cout << "Ingrese el monto a depositar: ";
                     std::cin >> montoDolar;
-                    cuenta.dinero += montoDolar;
+                    std::cout<<montoDolar<< std::endl;
+                    std::cout<<cuenta->dinero<< std::endl;
+                    cuenta->dinero += montoDolar;
+                    std::cout<<cuenta->dinero<< std::endl;
+                    registrarDeposito(cuenta->dinero, "dolar");
+                }
+                else if (opcionEfectivo == 2){
+                    double montoDolar, montoColon;
+                    std::cout << "Ingrese el monto a depositar: ";
+                    std::cin >> montoColon;
+                    montoDolar = convertirMoneda(montoColon, true);
+                    std::cout << montoDolar << std::endl;
+                    std::cout << cuenta->dinero << std::endl;
+                    cuenta->dinero += montoDolar;
+                    registrarDeposito(cuenta->dinero, "dolar");
 
                 }
             }
+            else{
         }
     }
     else if (opcion == 2){
@@ -404,5 +252,7 @@ void Banco::realizarDeposito(){
 
 
 }
+}
+
 
 
