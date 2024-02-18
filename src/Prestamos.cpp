@@ -14,7 +14,9 @@ Prestamos::Prestamos(std::string ID, std::string tipo, double monto, float tasaI
     double tasaMensual = this->tasaInteres/(12*100);
     this->cuotaMensual = (this->monto * tasaMensual)/(1 - std::pow(1 + tasaMensual,-this->duracionMeses));
 
-    guardarCSV();
+    if(ID != "ERROR"){
+        guardarCSV();
+    }
 }
 
 void Prestamos::generarCSV(){

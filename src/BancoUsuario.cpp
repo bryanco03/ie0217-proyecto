@@ -272,18 +272,18 @@ void Banco::cargarDatosUsuario(){
     //for (auto dato : datos){
     //    std::cout << dato << std::endl;
     //}
-    std::string tipoCuenta1, dineroCuenta1Str, tipoCuenta2, dineroCuenta2Str;
+    std::string tipoCuenta1, dineroCuenta1Str, tipoCuenta2, dineroCuenta2Str, idPrestamos;
     tipoCuenta1 = datos[0];
     tipoCuenta2 = datos[2];
     dineroCuenta1Str = datos[1];
     dineroCuenta2Str = datos[3];
+    idPrestamos = datos[4];
     double dineroCuenta1 = std::stod(dineroCuenta1Str);
     double dineroCuenta2 = std::stod(dineroCuenta2Str);
 
-    cargarCuentas(tipoCuenta1, dineroCuenta1, tipoCuenta2, dineroCuenta2);
-    
 
-    
+    cargarCuentas(tipoCuenta1, dineroCuenta1, tipoCuenta2, dineroCuenta2);
+    cargarPrestamos(idPrestamos);
 
 }
 

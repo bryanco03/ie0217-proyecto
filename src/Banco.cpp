@@ -25,6 +25,10 @@ void Banco::menuAtencionCliente(){
             case 1:
                 crearCuenta();
                 break;
+            case 5:
+                pagarPrestamos();
+            case 6:
+                crearPrestamo();
             case 8:
                 delete usuarioActual;
                 return;
@@ -57,25 +61,3 @@ void Banco::iniciarContadores(){
 
     /* PARA AGREGAR LOS SUYOS SOLO COPIEN EL CÓDIGO Y CAMBIAN EL PATH DE inFile y el contador al que lo guardan. */
 }
-
-/*
-    void Banco::loggearUsuario(){
-        std::cout << "Ingrese identificación del usuario a loggear: ";
-        std::string id; std::cin >> id;
-
-        std::string id_csv, linea, sinNombre;
-        std::ifstream database("datos\\usuarios.csv");
-        std::vector<std::string> infoP, columnas;
-
-        while(std::getline(database, linea)){
-            sinNombre = linea.substr(linea.find(',') + 1);
-            id_csv = sinNombre.substr(0, sinNombre.find(','));
-            std::cout << id_csv << ',';
-            if(id_csv == id){   
-                Usuario user(std::stoul(id));
-                this->usuarioActual = &user;
-            }
-        }
-        database.close();
-}
-*/
