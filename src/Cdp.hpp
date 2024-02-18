@@ -63,7 +63,6 @@ class CDP {
          * @brief Metodo para obtener el monto ingresado en el CDP
         */
         std::string getID();
-        
 
     protected:
         double monto; /**< Se almacenara el monto a invertir en el CDP. */

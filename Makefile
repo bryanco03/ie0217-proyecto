@@ -56,4 +56,4 @@ run:
 # Regla para limpiar los archivos generados.
 .PHONY: clean
 clean:
-	$(cleanCommand) $(TARGET) $(OBJECTS_PR)
+	$(cleanCommand) $(TARGET) $(OBJECTS_SRC)

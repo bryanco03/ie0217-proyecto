@@ -14,7 +14,9 @@ Prestamos::Prestamos(std::string ID, std::string tipo, double monto, float tasaI
     double tasaMensual = this->tasaInteres/(12*100);
     this->cuotaMensual = (this->monto * tasaMensual)/(1 - std::pow(1 + tasaMensual,-this->duracionMeses));
 
-    guardarCSV();
+    if(ID != "ERROR"){
+        guardarCSV();
+    }
 }
 
 void Prestamos::generarCSV(){
@@ -118,15 +120,23 @@ void Prestamos::pagarCuota(){
     guardarCSV();
 }
 
-void Prestamos::mostrarInfo(){
+void Prestamos::mostrarInfo(bool generico){
     /* Se imprime la información del prestamo. */
-    std::cout << "ID del prestamo: " << this->ID
-    << ",  Tipo: " << this->tipo
+    if(!generico){
+        std::cout << "ID del prestamo: " << this->ID << ",  ";
+    }
+
+    std::cout << "Tipo: " << this->tipo
     << ",  Monto: " << this->monto
     << ",  Tasa de interes anual: " << this->tasaInteres
     << ",  Cantidad de meses: " << this->duracionMeses
-    << ",  Cuota mensual: " << this->cuotaMensual
-    << ",  Estado: " << this->estado << std::endl;
+    << ",  Cuota mensual: " << this->cuotaMensual;
+
+    if(!generico){
+        std::cout << ",  Estado: " << this->estado << std::endl;
+    } else {
+        std::cout << std::endl;
+    }
 }
 
 std::string Prestamos::getID(){
