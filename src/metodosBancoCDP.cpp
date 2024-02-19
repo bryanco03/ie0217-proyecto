@@ -83,7 +83,7 @@ CDP opcionesCDP(const double monto, const int opcion, const std::string ID){
     }
 }
 
-void Banco::mostrarInfoCDP(){
+void Banco::InfoGeneralCDP(){
     int opcion; // Almacena la opcion de la prueba que se desea realizar
     
     std::cout << "\nSe dispone de 3 diferentes tipos de certificados a plazo" << std::endl;
@@ -112,7 +112,7 @@ void Banco::mostrarInfoCDP(){
 
 }
 
-void Banco::mostrarInfoUsuario(){
+void Banco::mostrarInfoCDP(){
 
     /* Se imprimen los CDPs propios. */
     
@@ -127,18 +127,3 @@ void Banco::mostrarInfoUsuario(){
     }
     return;
 }    
-
-
-int main(){
-    Banco inst;
-    inst.iniciarContadores();
-    Usuario instUsuario(2769427, "mario");
-    inst.usuarioActual = &(instUsuario);
-    inst.crearCDP();
-    inst.actualizarUsuarios();
-    inst.crearCDP();
-    inst.actualizarUsuarios();
-    inst.mostrarInfoCDP();
-    inst.mostrarInfoUsuario();
-    return 0;
-}

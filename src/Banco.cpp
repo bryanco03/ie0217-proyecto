@@ -19,7 +19,8 @@ void Banco::menuAtencionCliente(){
             std::cout << "6. Solicitar Prestamo"<< std::endl;
             std::cout << "7. Solicitar certificado de plazo"<< std::endl;
             std::cout << "8. Mostrar información de prestamos" << std::endl;
-            std::cout << "9. Atras"<< std::endl; 
+            std::cout << "9. Mostrar información de CDP" << std::endl;
+            std::cout << "10. Atras"<< std::endl; 
             std::cout << "Ingrese una opcion: ";
             std::cin >> opcion;
 
@@ -35,10 +36,16 @@ void Banco::menuAtencionCliente(){
                 crearPrestamo();
                 actualizarUsuarios();
                 break;
+            case 7:
+                crearCDP();
+                actualizarUsuarios();
             case 8:
                 mostrarInfoPrestamos();
                 break;
             case 9:
+                mostrarInfoCDP();
+                break;
+            case 10:
                 delete usuarioActual;
                 return;
                 break;
@@ -60,15 +67,25 @@ void Banco::menuInformacionGeneral(){
         std::cout << "\nBienvenido al menu de informacion general" << std::endl
               << "1. Generar un prestamo y su tabla. " << std::endl
               << "2. Mostrar informacion del prestamo." << std::endl
-              << "3. Atras." << std::endl
+              << "3. Generar un CDP y su informacion." << std::endl
+              << "4. Atras." << std::endl
               << "Digite una opcion: ";
-        char opcion; std::cin >> opcion;
+
+        std::string input; std::cin >> input;
+        int opcion = -1;
+
+        if(isNum(input)){
+            opcion = std::stoi(input);
+        }
 
         switch (opcion) {
-        case '1':{
-            this->crearPrestamo(generico);
+        case -1:
+            std::cout << "Debe ingresar un entero entre 1 y 4." << std::endl;
+            break;
+        case 1:{
+            crearPrestamo(generico);
             break;}
-        case '2':{
+        case 2:{
             Prestamos prestamo = this->leerPrestamo("TABLA");
             if(prestamo.getID() != "ERROR"){
                 std::cout << "Informacion del prestamo generado: ";
@@ -77,7 +94,10 @@ void Banco::menuInformacionGeneral(){
                 std::cout << "No se ha generado el prestamo." << std::endl;
             }
             break;}
-        case '3':
+        case 3:
+            InfoGeneralCDP();
+            break;
+        case 4:
             return;
             break;
         default:
@@ -137,4 +157,9 @@ std::string HoraActual(){
     tiempoActual << std::put_time(std::localtime(&horaActualFormato), "%d-%m-%Y %H:%M:%S");
     
     return tiempoActual.str();
+}
+
+bool isNum(const std::string input){
+    const std::regex numerico("^([0-9]+)$");
+    return (std::regex_match(input, numerico));
 }

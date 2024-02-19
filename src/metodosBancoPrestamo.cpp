@@ -121,13 +121,19 @@ void Banco::crearPrestamo(bool generico){
     std::cout << "\nIngrese el tipo de moneda \"dolar\" o \"colon\": ";
     std::string moneda; std::cin >> moneda;
     if((moneda != "dolar") && (moneda != "colon")){
-        std::cout << "Opcion dada no es valida" << std::endl;
+        std::cout << "Moneda ingresada no es valida" << std::endl;  
         return;
     }
 
     /* Se obtiene el monto del prestamo. */
     std::cout << "Ingrese el monto del prestamo: ";
     double monto; std::cin >> monto;
+    if(monto <= 0){
+        std::cin.clear();
+        std::cin.ignore(1, '\n');
+        std::cout << "Monto debe ser un numero mayor a 0" << std::endl;
+        return;
+    }
 
     /* Se genera el ID del prestamo. */
     std::string ID;
@@ -146,6 +152,7 @@ void Banco::crearPrestamo(bool generico){
     prestamo.generarCSV();
     std::cout << "Tabla de prestamo generada en " << ID << ".csv." << std::endl;
 
+    /* Si no es generado por modo información general se guarda en el usuario. */
     if (!generico) {
         this->usuarioActual->setPrestamo(prestamo);
     }
