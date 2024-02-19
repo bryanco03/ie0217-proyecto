@@ -7,15 +7,20 @@
 
 #ifndef BANCO_HPP
 #define BANCO_HPP
+
 #include <algorithm>
 #include <sstream>
+#include <stdexcept>
 #include <fstream>
 #include <chrono>
 #include <iomanip>
+#include <regex>
+
 #include "Prestamos.hpp"
 #include "Usuario.hpp"
 #include "Cdp.hpp"
 
+bool isNum(std::string input);
 
 class Banco{
     private:
@@ -55,7 +60,7 @@ class Banco{
     void realizarRetiro();
     void menuInformacionGeneral();
     void registrarTrasaccion(const std::string& informacion);
-    void mostrarInfoUsuario();
+    void InfoGeneralCDP();
 };
 
 #endif

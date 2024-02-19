@@ -10,7 +10,7 @@ void Banco::menuAtencionCliente(){
     }
     while (1){
         if (usuarioLogeado){
-            std::cout << "Bienvenido, " << usuarioActual->getNombre() << std::endl;
+            std::cout << "\nBienvenido, " << usuarioActual->getNombre() << std::endl;
             std::cout << "1. Crear una cuenta"<< std::endl;
             std::cout << "2. Realizar un deposito"<< std::endl;
             std::cout << "3. Realizar un retiro"<< std::endl;
@@ -20,7 +20,8 @@ void Banco::menuAtencionCliente(){
             std::cout << "7. Solicitar certificado de plazo"<< std::endl;
             std::cout << "8. Mostrar información de prestamos" << std::endl;
             std::cout << "9. Mostrar información de Cuentas" << std::endl;
-            std::cout << "10. Atras"<< std::endl; 
+            std::cout << "10. Mostrar información de CDP" << std::endl;
+            std::cout << "11. Atras"<< std::endl; 
             std::cout << "Ingrese una opcion: ";
             std::cin >> opcion;
 
@@ -41,13 +42,20 @@ void Banco::menuAtencionCliente(){
                 crearPrestamo();
                 actualizarUsuarios();
                 break;
+            case 7:
+                crearCDP();
+                actualizarUsuarios();
             case 8:
                 mostrarInfoPrestamos();
                 break;
             case 9:
+
                 mostrarInfoCuentas();
                 break;
             case 10:
+                mostrarInfoCDP();
+                break;
+            case 11:
                 delete usuarioActual;
                 return;
                 break;
@@ -70,21 +78,41 @@ void Banco::menuInformacionGeneral(){
         std::cout << "\nBienvenido al menu de informacion general" << std::endl
               << "1. Generar un prestamo y su tabla. " << std::endl
               << "2. Mostrar informacion del prestamo." << std::endl
-              << "3. Atras." << std::endl
+              << "3. Generar un CDP y su informacion." << std::endl
+              << "4. Atras." << std::endl
               << "Digite una opcion: ";
-        char opcion; std::cin >> opcion;
+
+        std::string input; std::cin >> input;
+        int opcion = -1;
+
+        if(isNum(input)){
+            opcion = std::stoi(input);
+        }
 
         switch (opcion) {
-        case '1':{
-            this->crearPrestamo(generico);
-            std::cout << "\nSe ha generado su tabla en el archivo \"TABLA.csv\"" << std::endl;
+        case -1:
+            std::cout << "Debe ingresar un entero entre 1 y 4." << std::endl;
+            break;
+        case 1:{
+            crearPrestamo(generico);
             break;}
-        case '2':{
-            std::cout << "Información del prestamo generado: ";
-            this->leerPrestamo("TABLA").mostrarInfo(generico);
+        case 2:{
+            Prestamos prestamo = this->leerPrestamo("TABLA");
+            if(prestamo.getID() != "ERROR"){
+                std::cout << "Informacion del prestamo generado: ";
+                prestamo.mostrarInfo(generico);
+            } else {
+                std::cout << "No se ha generado el prestamo." << std::endl;
+            }
             break;}
-        default:
+        case 3:
+            InfoGeneralCDP();
+            break;
+        case 4:
             return;
+            break;
+        default:
+            std::cout << "Opcion no valida, intente de nuevo." << std::endl;
             break;
         }
     }
@@ -152,4 +180,9 @@ std::string HoraActual(){
     tiempoActual << std::put_time(std::localtime(&horaActualFormato), "%d-%m-%Y %H:%M:%S");
     
     return tiempoActual.str();
+}
+
+bool isNum(const std::string input){
+    const std::regex numerico("^([0-9]+)$");
+    return (std::regex_match(input, numerico));
 }
