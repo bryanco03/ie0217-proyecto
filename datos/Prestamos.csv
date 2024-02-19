@@ -1,3 +1,4 @@
 ID,Tipo,Monto,Tasa Interes,Duracion Meses,Cuotas Pagadas
 P-678-0,Personal,1e+006,7,10,1
 P-1-1,Personal,1e+006,15,5,0
+P-1-2,Hipotecario,1e+007,5,36,0

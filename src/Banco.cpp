@@ -30,6 +30,9 @@ void Banco::menuAtencionCliente(){
             case 2:
                 realizarDeposito();
                 break;
+            case 3:
+                realizarRetiro();
+                break;
             case 5:
                 pagarPrestamos();
                 break;

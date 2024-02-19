@@ -46,6 +46,9 @@ class Banco{
     void actualizarUsuarios();
     void mostrarInfoCuentas();
     void actualizarCuentas();
+    void depositarCuentaColon(double dinero);
+    void depositarCuentaDolar(double dinero);
+    void realizarRetiro();
 };
 
 #endif
