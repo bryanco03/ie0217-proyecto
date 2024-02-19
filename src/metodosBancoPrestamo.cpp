@@ -8,31 +8,40 @@
 #include "Banco.hpp"
 
 /* Funciones usadas por los métodos, que no son miembros de banco. */
-Prestamos opcionesPrestamo(const double monto, std::string moneda, const char tipo, const std::string ID){
+Prestamos opcionesPrestamo(const double monto, std::string moneda, const int tipo, const std::string ID){
     /* Se definen los meses e intereses dependiendo del tipo de prestamo. */
     std::vector<std::string> tipos = {"Personal", "Hipotecario", "Prendario"};
     std::vector<int> meses;
     std::vector<int> intereses;
 
-    if(tipo == '1'){
+    if(tipo == 1){
         meses.insert(meses.end(), {5, 10, 12});
         intereses.insert(intereses.end(), {15, 7, 5});
-    } else if (tipo == '2') {
+    } else if (tipo == 2) {
         meses.insert(meses.end(), {12, 24, 36});
         intereses.insert(intereses.end(), {15, 10, 5});
-    } else if (tipo == '3'){
+    } else if (tipo == 3){
         meses.insert(meses.end(), {10, 20, 30});
         intereses.insert(intereses.end(), {13, 7, 5});
     }
 
+    /* Se imprime menu de opciones según el tipo. */
     std::cout << "Escoja una de las siguientes opciones:" << std::endl
               << "1. " << meses[0] << " meses a " << intereses[0] << "% de interes." << std::endl
               << "2. " << meses[1] << " meses a " << intereses[1] << "% de interes." << std::endl
               << "3. " << meses[2] << " meses a " << intereses[2] << "% de interes." << std::endl;
     std::cout << "Ingrese la opcion: ";
-    int opcion; std::cin >> opcion;
+    int opcion = -1; 
+    std::string input;
+    std::cin >> input;
+
+    if(isNum(input)){
+        opcion = std::stoi(input);
+    }
 
     switch (opcion) {
+    case -1:
+        return Prestamos("ERROR", "", 0, "", 0, 0);
     case 1:
         return Prestamos(ID, tipos[tipo - 1], monto, moneda, intereses[0], meses[0]);
         break;
@@ -45,6 +54,7 @@ Prestamos opcionesPrestamo(const double monto, std::string moneda, const char ti
         return Prestamos(ID, tipos[tipo - 1], monto, moneda, intereses[2], meses[2]);
         break;
     default:
+        return Prestamos("ERROR", "", 0, "", 0, 0);
         break;
     }
 }
@@ -111,17 +121,19 @@ void Banco::crearPrestamo(bool generico){
     std::cout << "Ingrese la opcion: ";
 
     /* Se obtiene la opción de prestamo a crear. */
-    char tipo; std::cin >> tipo;
-    if((tipo != '1') && (tipo != '2') && (tipo != '3')){
-        std::cout << "Opcion dada no es valida" << std::endl;
+    std::string tipoInput; std::cin >> tipoInput;
+    int tipo;
+    if(!isNum(tipoInput) || std::stoi(tipoInput) > 3 || std::stoi(tipoInput) < 0){
+        std::cout << "ERROR: Opcion dada debe ser entero entre 1 y 3." << std::endl;
         return;
     }
+    tipo = std::stoi(tipoInput);
 
     /* Se obtiene el tipo de moneda. */
     std::cout << "\nIngrese el tipo de moneda \"dolar\" o \"colon\": ";
     std::string moneda; std::cin >> moneda;
     if((moneda != "dolar") && (moneda != "colon")){
-        std::cout << "Moneda ingresada no es valida" << std::endl;  
+        std::cout << "ERROR: Moneda ingresada no es valida." << std::endl;  
         return;
     }
 
@@ -131,7 +143,7 @@ void Banco::crearPrestamo(bool generico){
     if(monto <= 0){
         std::cin.clear();
         std::cin.ignore(1, '\n');
-        std::cout << "Monto debe ser un numero mayor a 0" << std::endl;
+        std::cout << "ERROR: Monto debe ser un numero mayor a 0." << std::endl;
         return;
     }
 
@@ -149,12 +161,23 @@ void Banco::crearPrestamo(bool generico){
 
     /* Se crea el prestamo. */
     Prestamos prestamo = opcionesPrestamo(monto, moneda, tipo, ID);
+    if (prestamo.getID() == "ERROR") {
+        std::cout << "ERROR: Opcion debe ser un entero entre 1 y 3." << std::endl;
+        return;
+    }
+    
     prestamo.generarCSV();
     std::cout << "Tabla de prestamo generada en " << ID << ".csv." << std::endl;
 
     /* Si no es generado por modo información general se guarda en el usuario. */
     if (!generico) {
         this->usuarioActual->setPrestamo(prestamo);
+        std::string registro = "Creacion Prestamo, Usuario: " + std::to_string((*this->usuarioActual).identificacion) +
+                               ", ID del prestamo: " + ID;
+        registrarTrasaccion(registro);
+    } else {
+        std::string registro = "Creacion tabla de Prestamo en modo información general";
+        registrarTrasaccion(registro);
     }
 }
 
@@ -166,7 +189,13 @@ void Banco::mostrarInfoPrestamos(){
 
     /* Caso donde se ven los prestamos propios. */
     if(idUsuario == "Yo"){
-        std::cout << "\n-----Información de sus prestamos-----" << std::endl;
+
+        if(this->usuarioActual->getPrestamos().size() == 0){
+            std::cout << "\nUsted no posee prestamos actualmente." << std::endl;
+            return;
+        }
+
+        std::cout << "\n-----Informacion de sus prestamos-----" << std::endl;
         for(auto& prestamo: this->usuarioActual->getPrestamos()){
             prestamo.mostrarInfo();
         }
@@ -200,6 +229,11 @@ void Banco::mostrarInfoPrestamos(){
         return;
     }
 
+    if(idPrestamos == " "){
+        std::cout << "\nEste cliente no posee prestamos actualmente." << std::endl;
+        return;
+    }
+
     std::stringstream idParseados(idPrestamos);
     while(std::getline(idParseados, id, ' ')){
         Prestamos prestamo = this->leerPrestamo(id);
@@ -222,7 +256,10 @@ void Banco::pagarPrestamos(){
     Prestamos prestamo = this->leerPrestamo(ID_P);
     if(prestamo.getID() != "ERROR"){
         prestamo.pagarCuota();
+        std::string registro = "Pago de cuota de prestamo, Usuario: " + std::to_string((*this->usuarioActual).identificacion) +
+                               ", ID del prestamo: " + ID_P;
+        registrarTrasaccion(registro);
     } else {
-        std::cout << "No se encontró ningún prestamo con ese Id" << std::endl;
+        std::cout << "No se encontro ningun prestamo con ese Id" << std::endl;
     }
 }

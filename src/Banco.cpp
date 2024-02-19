@@ -18,9 +18,9 @@ void Banco::menuAtencionCliente(){
             std::cout << "5. Pagar Cuotas de prestamo"<< std::endl;
             std::cout << "6. Solicitar Prestamo"<< std::endl;
             std::cout << "7. Solicitar certificado de plazo"<< std::endl;
-            std::cout << "8. Mostrar información de prestamos" << std::endl;
-            std::cout << "9. Mostrar información de Cuentas" << std::endl;
-            std::cout << "10. Mostrar información de CDP" << std::endl;
+            std::cout << "8. Mostrar informacion de prestamos" << std::endl;
+            std::cout << "9. Mostrar informacion de Cuentas" << std::endl;
+            std::cout << "10. Mostrar informacion de CDP" << std::endl;
             std::cout << "11. Atras"<< std::endl; 
             std::cout << "Ingrese una opcion: ";
             std::cin >> opcion;
@@ -91,7 +91,7 @@ void Banco::menuInformacionGeneral(){
 
         switch (opcion) {
         case -1:
-            std::cout << "Debe ingresar un entero entre 1 y 4." << std::endl;
+            std::cout << "ERROR: Debe ingresar un entero entre 1 y 4." << std::endl;
             break;
         case 1:{
             crearPrestamo(generico);
