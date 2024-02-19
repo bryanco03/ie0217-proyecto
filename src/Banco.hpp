@@ -9,6 +9,9 @@
 #define BANCO_HPP
 #include <algorithm>
 #include <sstream>
+#include <fstream>
+#include <chrono>
+#include <iomanip>
 #include "Prestamos.hpp"
 #include "Usuario.hpp"
 #include "Cdp.hpp"
@@ -25,7 +28,7 @@ class Banco{
 
     public:
     void loggearUsuario();
-    void crearPrestamo();
+    void crearPrestamo(bool generico = false);
     void mostrarInfoPrestamos();
     bool verificarIdentificacionNombreEnCSV(unsigned long int identificacionBuscada, std::string nombreBuscar);
     void menuAtencionCliente();
@@ -42,6 +45,7 @@ class Banco{
     void crearCDP();
     void mostrarInfoCDP();
     void pagarPrestamos();
+    Prestamos leerPrestamo(std::string idPrestamo);
     void cargarPrestamos(std::string idPrestamos);
     void actualizarUsuarios();
     void mostrarInfoCuentas();
@@ -49,6 +53,9 @@ class Banco{
     void depositarCuentaColon(double dinero);
     void depositarCuentaDolar(double dinero);
     void realizarRetiro();
+    void menuInformacionGeneral();
+    void registrarTrasaccion(const std::string& informacion);
+    void mostrarInfoUsuario();
 };
 
 #endif

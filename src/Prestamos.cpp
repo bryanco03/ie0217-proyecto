@@ -120,15 +120,23 @@ void Prestamos::pagarCuota(){
     guardarCSV();
 }
 
-void Prestamos::mostrarInfo(){
+void Prestamos::mostrarInfo(bool generico){
     /* Se imprime la información del prestamo. */
-    std::cout << "ID del prestamo: " << this->ID
-    << ",  Tipo: " << this->tipo
+    if(!generico){
+        std::cout << "ID del prestamo: " << this->ID << ",  ";
+    }
+
+    std::cout << "Tipo: " << this->tipo
     << ",  Monto: " << this->monto
     << ",  Tasa de interes anual: " << this->tasaInteres
     << ",  Cantidad de meses: " << this->duracionMeses
-    << ",  Cuota mensual: " << this->cuotaMensual
-    << ",  Estado: " << this->estado << std::endl;
+    << ",  Cuota mensual: " << this->cuotaMensual;
+
+    if(!generico){
+        std::cout << ",  Estado: " << this->estado << std::endl;
+    } else {
+        std::cout << std::endl;
+    }
 }
 
 std::string Prestamos::getID(){

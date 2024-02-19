@@ -49,7 +49,7 @@ Prestamos opcionesPrestamo(const double monto, const int tipo, const std::string
     }
 }
 
-Prestamos leerPrestamo(std::string idPrestamo){
+Prestamos Banco::leerPrestamo(std::string idPrestamo){
     /* Se crean variables a usar. */
     std::string ID_CSV, linea;                      /*String de IDs y linea a leer del csv. */
     std::ifstream database("datos\\Prestamos.csv"); /* Se lee el archivo csv. */
@@ -95,14 +95,14 @@ void Banco::cargarPrestamos(std::string idPrestamos){
     std::string id;
 
     while(std::getline(streamID, id, ' ')){
-        Prestamos prestamo = leerPrestamo(id);
+        Prestamos prestamo = this->leerPrestamo(id);
         if(prestamo.getID() != "ERROR"){
             this->usuarioActual->setPrestamo(prestamo);
         }
     }
 }
 
-void Banco::crearPrestamo(){
+void Banco::crearPrestamo(bool generico){
     /* Se obtiene la opción de prestamo a crear. */
     std::cout << "\nEscoja el tipo de prestamo a realizar: " << std::endl
               << "1. Personal" << std::endl
@@ -116,8 +116,13 @@ void Banco::crearPrestamo(){
     double monto; std::cin >> monto;
 
     /* Se genera el ID del prestamo. */
-    std::string primeros3 = std::to_string(this->usuarioActual->identificacion).substr(0, 3);
-    std::string ID = "P-" + primeros3 + "-" + std::to_string(this->contadorPrestamos);
+    std::string ID;
+    if(!generico){
+        std::string primeros3 = std::to_string(this->usuarioActual->identificacion).substr(0, 3);
+        ID = "P-" + primeros3 + "-" + std::to_string(this->contadorPrestamos);
+    } else {
+        ID = "TABLA";
+    }
 
     /* Se aumenta contador de prestamos. */
     this->contadorPrestamos += 1;
@@ -125,7 +130,10 @@ void Banco::crearPrestamo(){
     /* Se crea el prestamo. */
     Prestamos prestamo = opcionesPrestamo(monto, tipo, ID);
     prestamo.generarCSV();
-    this->usuarioActual->setPrestamo(prestamo);
+
+    if (!generico) {
+        this->usuarioActual->setPrestamo(prestamo);
+    }
 }
 
 void Banco::mostrarInfoPrestamos(){
@@ -171,7 +179,7 @@ void Banco::mostrarInfoPrestamos(){
 
     std::stringstream idParseados(idPrestamos);
     while(std::getline(idParseados, id, ' ')){
-        Prestamos prestamo = leerPrestamo(id);
+        Prestamos prestamo = this->leerPrestamo(id);
         if(prestamo.getID() != "ERROR"){
             prestamo.mostrarInfo();
         }
@@ -188,7 +196,7 @@ void Banco::pagarPrestamos(){
     std::cout << "Ingrese el ID del prestamo al que quiere pagar una cuota: ";
     std::cin >> ID_P;
 
-    Prestamos prestamo = leerPrestamo(ID_P);
+    Prestamos prestamo = this->leerPrestamo(ID_P);
     if(prestamo.getID() != "ERROR"){
         prestamo.pagarCuota();
     } else {
