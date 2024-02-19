@@ -1,7 +1,7 @@
 #include "Prestamos.hpp"
 
-Prestamos::Prestamos(std::string ID, std::string tipo, double monto, float tasaInteres, int duracionMeses, int cuotasPagadas /*= 0*/)
-    : ID(ID), tipo(tipo), monto(monto), tasaInteres(tasaInteres), duracionMeses(duracionMeses), cuotasPagadas(cuotasPagadas) {
+Prestamos::Prestamos(std::string ID, std::string tipo, double monto, std::string moneda, float tasaInteres, int duracionMeses, int cuotasPagadas /*= 0*/)
+    : ID(ID), tipo(tipo), monto(monto), moneda(moneda), tasaInteres(tasaInteres), duracionMeses(duracionMeses), cuotasPagadas(cuotasPagadas) {
 
     /* Se define el estado del prestamo. */
     if(this->cuotasPagadas >= duracionMeses){
@@ -14,7 +14,9 @@ Prestamos::Prestamos(std::string ID, std::string tipo, double monto, float tasaI
     double tasaMensual = this->tasaInteres/(12*100);
     this->cuotaMensual = (this->monto * tasaMensual)/(1 - std::pow(1 + tasaMensual,-this->duracionMeses));
 
-    guardarCSV();
+    if(ID != "ERROR"){
+        guardarCSV();
+    }
 }
 
 void Prestamos::generarCSV(){
@@ -24,7 +26,12 @@ void Prestamos::generarCSV(){
 
     /* Se abre el archivo .csv */
     std::ofstream archivo ("datos\\" + this->ID + ".csv");
-    archivo << "Mes,Cuota Mensual,Intereses,Amortizacion,Monto Restante,Estado\n";
+    archivo << "Mes,Cuota Mensual,Intereses,Amortizacion,Monto Restante";
+    if(this->ID != "TABLA"){
+        archivo << ",Estado" << std::endl;
+    } else {
+        archivo << std::endl;
+    }
 
     /* Se escribe linea por linea lo necesario. */
     for(int i = 0; i < this->duracionMeses; i++){
@@ -33,7 +40,13 @@ void Prestamos::generarCSV(){
         montoRestante -= amortizacion;
         archivo << i + 1 << "," << this->cuotaMensual << ","
         << intereses << "," << amortizacion << ","
-        << montoRestante << ",NO PAGADO" << std::endl;
+        << montoRestante;
+
+        if(this->ID != "TABLA"){
+            archivo << ",NO PAGADO" << std::endl;
+        } else {
+            archivo << std::endl;
+        }
     }
     archivo.close();
 }
@@ -51,8 +64,9 @@ void Prestamos::guardarCSV(){
         ID_CSV = linea.substr(0, linea.find(','));
         if(ID_CSV == this->ID){
             nuevo << this->ID << "," << this->tipo << ","
-                  << this->monto << "," << this->tasaInteres << ","
-                  << this->duracionMeses << "," << this->cuotasPagadas << std::endl;
+                  << this->monto << "," << this->moneda << ","
+                  << this->tasaInteres << "," << this->duracionMeses << ","
+                  << this->cuotasPagadas << std::endl;
             encontrado = true;
         } else {
         nuevo << linea << std::endl;
@@ -61,8 +75,9 @@ void Prestamos::guardarCSV(){
 
     if(!encontrado){
         nuevo << this->ID << "," << this->tipo << ","
-            << this->monto << "," << this->tasaInteres << ","
-            << this->duracionMeses << "," << this->cuotasPagadas << std::endl;
+                << this->monto << "," << this->moneda << ","
+                << this->tasaInteres << "," << this->duracionMeses << ","
+                << this->cuotasPagadas << std::endl;
     }
 
     /* Se guardan ambos archivos. */
@@ -118,15 +133,24 @@ void Prestamos::pagarCuota(){
     guardarCSV();
 }
 
-void Prestamos::mostrarInfo(){
+void Prestamos::mostrarInfo(bool generico){
     /* Se imprime la información del prestamo. */
-    std::cout << "ID del prestamo: " << this->ID
-    << ",  Tipo: " << this->tipo
+    if(!generico){
+        std::cout << "ID del prestamo: " << this->ID << ",  ";
+    }
+
+    std::cout << "Tipo: " << this->tipo
     << ",  Monto: " << this->monto
+    << ",  Moneda: " << this->moneda
     << ",  Tasa de interes anual: " << this->tasaInteres
     << ",  Cantidad de meses: " << this->duracionMeses
-    << ",  Cuota mensual: " << this->cuotaMensual
-    << ",  Estado: " << this->estado << std::endl;
+    << ",  Cuota mensual: " << this->cuotaMensual;
+
+    if(!generico){
+        std::cout << ",  Estado: " << this->estado << std::endl;
+    } else {
+        std::cout << std::endl;
+    }
 }
 
 std::string Prestamos::getID(){

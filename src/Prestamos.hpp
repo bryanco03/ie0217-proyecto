@@ -16,13 +16,15 @@
 
 class Prestamos{
     private:
+        std::string ID;         /**< Número ID del prestamo. */
+        std::string tipo;       /**< Tipo de prestamo: Personal, Prendario o Hipotecario. */
         double monto;           /**< Monto a pedir del Prestamo. */
-        double cuotaMensual;    /**< Cuota mensual a pagar. */
+        std::string moneda;     /**< El tipo de moneda del monto. */
         float tasaInteres;      /**< Tasa de interés anual del Prestamo. */
         int duracionMeses;      /**< Cantidad de meses a pagar de cuotas. */
-        std::string tipo;       /**< Tipo de prestamo: Personal, Prendario o Hipotecario. */
         int cuotasPagadas = 0;  /**< Cantidad de cuotas ya pagadas del Prestamo. */
-        std::string ID;         /**< Número ID del prestamo. */
+        double cuotaMensual;    /**< Cuota mensual a pagar. */
+        
 
     public:
         std::string estado;     /**< Estado del Prestamo: En proceso de pago o Pagado. */
@@ -37,8 +39,8 @@ class Prestamos{
          * @param duracionMeses Cantidad de meses a pagar de cuotas.
          * @param cuotasPagadas Cantidad de cuotas ya pagadas, default = 0.
          */
-        Prestamos(std::string ID, std::string tipo, double monto, float tasaInteres,
-                  int duracionMeses, int cuotasPagadas = 0);
+        Prestamos(std::string ID, std::string tipo, double monto, std::string moneda,
+                  float tasaInteres, int duracionMeses, int cuotasPagadas = 0);
 
         /**
          * @brief Método para generar el CSV de un prestamo.
@@ -62,7 +64,7 @@ class Prestamos{
          * @brief Método para mostrar información del Prestamo.
          * 
          */
-        void mostrarInfo();
+        void mostrarInfo(bool generico = false);
 
         /**
          * @brief Método para retornar el ID del prestamo.
