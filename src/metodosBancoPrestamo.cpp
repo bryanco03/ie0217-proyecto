@@ -7,7 +7,7 @@
 
 #include "Banco.hpp"
 
-/* Funciones usadas por los métodos, que no son miembros de banco. */
+/* Funciones usadas por los métodos. */
 Prestamos opcionesPrestamo(const double monto, std::string moneda, const int tipo, const std::string ID){
     /* Se definen los meses e intereses dependiendo del tipo de prestamo. */
     std::vector<std::string> tipos = {"Personal", "Hipotecario", "Prendario"};
@@ -59,6 +59,8 @@ Prestamos opcionesPrestamo(const double monto, std::string moneda, const int tip
     }
 }
 
+/* Métodos de Banco. */
+
 Prestamos Banco::leerPrestamo(std::string idPrestamo){
     /* Se crean variables a usar. */
     std::string ID_CSV, linea;                      /*String de IDs y linea a leer del csv. */
@@ -94,8 +96,6 @@ Prestamos Banco::leerPrestamo(std::string idPrestamo){
     
     return prestamo;
 }
-
-/* Métodos de Banco. */
 
 void Banco::cargarPrestamos(std::string idPrestamos){
     if(idPrestamos == " "){

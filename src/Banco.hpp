@@ -61,6 +61,8 @@ class Banco{
     void menuInformacionGeneral();
     void registrarTrasaccion(const std::string& informacion);
     void InfoGeneralCDP();
+    void cargarCDPs(std::string idCDPs);
+    CDP leerCDP(std::string idCDP);
 };
 
 #endif

@@ -45,11 +45,11 @@ void Banco::menuAtencionCliente(){
             case 7:
                 crearCDP();
                 actualizarUsuarios();
+                break;
             case 8:
                 mostrarInfoPrestamos();
                 break;
             case 9:
-
                 mostrarInfoCuentas();
                 break;
             case 10:

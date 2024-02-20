@@ -16,7 +16,7 @@ CDP::CDP(double monto, float tasaIntereses, double duracionAnnos, std::string ID
     */
     this->montoGanado = this->monto * pow((1 + (this->tasaIntereses / 1)), 1 * this->duracionAnnos);
 
-    if(this->ID != "MOSTRARINFO"){
+    if(this->ID != "MOSTRARINFO" && this->ID != "ERROR"){
         guardarCSV();
     }
 
