@@ -35,6 +35,7 @@ class Prestamos{
          * @param ID Número ID del prestamo.
          * @param tipo Tipo de prestamo: Personal, Prendario o Hipotecario.
          * @param monto Monto a pedir del Prestamo.
+         * @param moneda El tipo de moneda del monto.
          * @param tasaInteres Tasa de interés anual del Prestamo.
          * @param duracionMeses Cantidad de meses a pagar de cuotas.
          * @param cuotasPagadas Cantidad de cuotas ya pagadas, default = 0.
@@ -73,7 +74,19 @@ class Prestamos{
          */
         std::string getID();
 
+        /**
+         * @brief Método para obtener la cuota a pagar del prestamo.
+         * 
+         * @return double Cuota mensual del prestamo, si ya fue pagado se retorna -1s.
+         */
+        double getCuota();
 
+        /**
+         * @brief Método para obtener el tipo de moneda del prestamo.
+         * 
+         * @return std::string dolares o colones.
+         */
+        std::string getMoneda();
 };
 
 #endif
