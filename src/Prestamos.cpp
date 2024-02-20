@@ -156,3 +156,15 @@ void Prestamos::mostrarInfo(bool generico){
 std::string Prestamos::getID(){
     return this->ID;
 }
+
+double Prestamos::getCuota(){
+    if(this->estado == "Pagado"){
+        return -1;
+    } else {
+        return this->cuotaMensual;
+    }
+}
+
+std::string Prestamos::getMoneda(){
+    return this->moneda;
+}

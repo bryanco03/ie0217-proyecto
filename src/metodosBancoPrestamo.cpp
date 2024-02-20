@@ -253,13 +253,59 @@ void Banco::pagarPrestamos(){
     std::cout << "Ingrese el ID del prestamo al que quiere pagar una cuota: ";
     std::cin >> ID_P;
 
+    /* Se busca el prestamo, si no se encuentra se muestra el error. */
     Prestamos prestamo = this->leerPrestamo(ID_P);
-    if(prestamo.getID() != "ERROR"){
+    if(prestamo.getID() == "ERROR"){
+        std::cout << "No se encontro ningun prestamo con ese Id" << std::endl;
+        return;
+    }
+
+    /* Se obtiene el monto, si ya ha sido pagado se retorna. */
+    double cuotaMensual = prestamo.getCuota();
+    if(cuotaMensual == -1){
+        std::cout << "Prestamo ya ha sido pagado completamente." << std::endl;
+        return;
+    }
+
+    /* Se maneja el pago. */
+    bool aprovado = false;
+    std::cout << "La cuota a pagar es: " << cuotaMensual << prestamo.getMoneda() << std::endl;
+    std::cout << "Ingrese el metodo de pago:" << std::endl
+                << "1. Efectivo. " << std::endl
+                << "2. Fondos en las cuentas. " << std::endl
+                << "3. Volver" << std::endl
+                << "Ingrese una opcion: ";
+    std::string input; std::cin >> input;
+    int opcion;
+
+    /* Manejo de errores. */
+    if(!isNum(input) || std::stoi(input) > 3 || std::stoi(input) < 0){
+        std::cout << "ERROR: Opcion debe ser entero entre 1 y 3. " << std::endl;
+        return;
+    }
+    opcion = std::stoi(input);
+
+    /* Métodos de pago. */
+    switch (opcion) {
+    case 1:
+        aprovado = true;
+        break;
+    case 2:
+        break;
+    case 3:
+        return;
+        break;
+    default:
+        break;
+    }
+
+    if(aprovado){
         prestamo.pagarCuota();
         std::string registro = "Pago de cuota de prestamo, Usuario: " + std::to_string((*this->usuarioActual).identificacion) +
-                               ", ID del prestamo: " + ID_P;
+                                ", ID del prestamo: " + ID_P;
         registrarTrasaccion(registro);
     } else {
-        std::cout << "No se encontro ningun prestamo con ese Id" << std::endl;
+        std::cout << "ERROR: Pago no fue aprobado." << std::endl;
+        return;
     }
 }
