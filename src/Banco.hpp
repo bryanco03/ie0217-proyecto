@@ -42,18 +42,18 @@ class Banco{
     void crearCuenta();
     void registrarCuenta(bool esDolar);
     void cargarDatosUsuario();
-    std::vector<std::string> obtenerDatos();
+    std::vector<std::string> obtenerDatos(unsigned long int identificacion);
     void cargarCuentas(std::string tipoCuenta1, double dineroCuenta1, std::string tipoCuenta2, double dineroCuenta2);
     void realizarDeposito();
     double convertirMoneda(double monto, bool enDolar);
-    void registrarDeposito(double monto, std::string tipoCuenta);
+    void registrarDeposito(double monto, std::string tipoCuenta, unsigned long int identificacion);
     void crearCDP();
     void mostrarInfoCDP();
     void pagarPrestamos();
     Prestamos leerPrestamo(std::string idPrestamo);
     void cargarPrestamos(std::string idPrestamos);
     void actualizarUsuarios();
-    void mostrarInfoCuentas();
+    void mostrarInfoCuentas(std::vector<Cuenta> cuentas);
     void actualizarCuentas();
     void depositarCuentaColon(double dinero);
     void depositarCuentaDolar(double dinero);
@@ -63,6 +63,7 @@ class Banco{
     void InfoGeneralCDP();
     void depositoEntreCuentas(Cuenta cuentaDepositar, Cuenta cuenaRetirar);
     void realizarTransaccion();
+    std::vector<Cuenta> cuentasTransferibles(unsigned long int identificacion);
 };
 
 

@@ -35,6 +35,9 @@ void Banco::menuAtencionCliente(){
             case 3:
                 realizarRetiro();
                 break;
+            case 4:
+                realizarTransaccion();
+                break;
             case 5:
                 pagarPrestamos();
                 break;
@@ -50,7 +53,7 @@ void Banco::menuAtencionCliente(){
                 break;
             case 9:
 
-                mostrarInfoCuentas();
+                mostrarInfoCuentas(usuarioActual->getCuentas());
                 break;
             case 10:
                 mostrarInfoCDP();
