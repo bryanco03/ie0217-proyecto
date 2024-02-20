@@ -269,7 +269,7 @@ void Banco::pagarPrestamos(){
 
     /* Se maneja el pago. */
     bool aprovado = false;
-    std::cout << "La cuota a pagar es: " << cuotaMensual << prestamo.getMoneda() << std::endl;
+    std::cout << "La cuota a pagar es: " << cuotaMensual << " " << prestamo.getMoneda() << "es." << std::endl;
     std::cout << "Ingrese el metodo de pago:" << std::endl
                 << "1. Efectivo. " << std::endl
                 << "2. Fondos en las cuentas. " << std::endl

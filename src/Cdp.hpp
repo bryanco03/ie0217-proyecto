@@ -24,8 +24,9 @@ class CDP {
         * @param duracionAnnos tiempo que durara el dinero en el CDP
         * @param montoGanado monto que ganara una vez terminado el contrato
         * @param ID ID del usuario
+        * @param moneda Tipo de moneda usada para el CDP.
         */
-        CDP(double monto, float tasaIntereses, double duracionAnnos, std::string ID);
+        CDP(double monto, float tasaIntereses, double duracionAnnos, std::string ID, std::string moneda);
         
         /**
          * @brief Metodo para generar el CSV de un CDP.
@@ -41,35 +42,55 @@ class CDP {
 
         /**
          * @brief Metodo para obtener el monto ingresado en el CDP
+         * 
+         * @return Monto pedido del CDP
         */
         double getMonto();
 
         /**
-         * @brief Metodo para obtener el monto ingresado en el CDP
+         * @brief Metodo para obtener el interes ingresado en el CDP
+         * 
+         * @return Tasa de interes del CDP.
         */
         float getInteres();
 
         /**
-         * @brief Metodo para obtener el monto ingresado en el CDP
+         * @brief Metodo para obtener la duracion ingresada en el CDP
+         * 
+         * @return Cantidad de años del CDP
         */
         double getDuracion();
 
         /**
-         * @brief Metodo para obtener el monto ingresado en el CDP
+         * @brief Metodo para obtener el monto ganado para el CDP
+         * 
+         * @return Monto a ganar del CDP
         */
         double getMontoGanado();
 
         /**
          * @brief Metodo para obtener el monto ingresado en el CDP
+         * 
+         * @return Id del prestamo
         */
         std::string getID();
 
+        /**
+         * @brief Metodo para obtener el tipo de moneda del CDP.
+         * 
+         * @return std::string "dolar" o "colon"
+         */
+        std::string getMoneda();
+
+        
+
     protected:
-        double monto; /**< Se almacenara el monto a invertir en el CDP. */
-        float tasaIntereses; /**< Se almacenara la tasa de intereses que se ganara. */
-        double duracionAnnos; /**< Se almacenara la cantidad de meses que durara el CDP */
-        double montoGanado; /**< Se almacenara el monto que ganara el cliente. */
+        double monto;           /**< Se almacenara el monto a invertir en el CDP. */
+        float tasaIntereses;    /**< Se almacenara la tasa de intereses que se ganara. */
+        double duracionAnnos;   /**< Se almacenara la cantidad de meses que durara el CDP */
+        double montoGanado;     /**< Se almacenara el monto que ganara el cliente. */
         std::string ID;         /**< Número ID del CDP. */
+        std::string moneda;     /**< Tipo de moneda usada para el CDP. */
 };
 
 #endif

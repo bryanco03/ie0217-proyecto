@@ -1,12 +1,13 @@
 # include "Cdp.hpp"
 
-CDP::CDP(double monto, float tasaIntereses, double duracionAnnos, std::string ID){
+CDP::CDP(double monto, float tasaIntereses, double duracionAnnos, std::string ID, std::string moneda){
 
     // Se almacenan los valores recibidos por parte del usuario
     this->monto = monto;
     this->tasaIntereses = tasaIntereses;
     this->duracionAnnos = duracionAnnos;
     this->ID = ID;
+    this->moneda = moneda;
     
     /* 
     A partir de los datos recibidos se calculara la ganancia que
@@ -26,11 +27,12 @@ void CDP::generarCSV(){
 
     /* Se abre el archivo .csv con el nombre del ID */
     std::ofstream archivo("datos\\" + this->ID + ".csv");
-    archivo << "Monto ingresado,Tasa de intereses,Tiempo del CDP (annos),Monto ganado\n";
+    archivo << "Monto ingresado,Tasa de intereses,Tiempo del CDP (annos),Monto ganado,Moneda\n";
 
     /* Se almacenan la informacion del CDP en una linea del CDP */
     archivo << this->monto << "," << this->tasaIntereses << ","
-    << this->duracionAnnos << "," << this->montoGanado << std::endl;
+            << this->duracionAnnos << "," << this->montoGanado
+            << "," << this->moneda << std::endl;
     
     /* Se cierra el archivo, evitando errores de esta manera */
     archivo.close();
@@ -57,7 +59,7 @@ void CDP::guardarCSV(){
         if(ID_CSV == this->ID){
             nuevo << this->ID << "," << this->monto << ","
                   << this->tasaIntereses << "," << this->duracionAnnos << ","
-                  << this->montoGanado << std::endl;
+                  << this->montoGanado << "," << this->moneda << std::endl;
             encontrado = true;
         } else {
         nuevo << linea << std::endl;
@@ -67,7 +69,7 @@ void CDP::guardarCSV(){
     if(!encontrado){
         nuevo << this->ID << "," << this->monto << ","
               << this->tasaIntereses << "," << this->duracionAnnos << ","
-              << this->montoGanado << std::endl;
+              << this->montoGanado << "," << this->moneda << std::endl;
     }
 
     /* Se guardan ambos archivos. */
@@ -97,5 +99,9 @@ double CDP::getMontoGanado(){
 
 std::string CDP::getID(){
     return this->ID;
+}
+
+std::string CDP::getMoneda(){
+    return this->moneda;
 }
 

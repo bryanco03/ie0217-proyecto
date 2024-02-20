@@ -8,7 +8,7 @@
 #include "Banco.hpp"
 
 /* Métodos usados por CDP. */
-CDP opcionesCDP(const double monto, const int opcion, const std::string ID){
+CDP opcionesCDP(const double monto, const int opcion, const std::string ID, const std::string moneda){
 
     double tasaIntereses;
     double duracionAnnos;
@@ -16,17 +16,17 @@ CDP opcionesCDP(const double monto, const int opcion, const std::string ID){
     if(opcion == 1){
         tasaIntereses = 0.045;
         duracionAnnos = 1;
-        return CDP(monto, tasaIntereses, duracionAnnos, ID);
+        return CDP(monto, tasaIntereses, duracionAnnos, ID, moneda);
     } else if (opcion == 2){
         tasaIntereses = 0.07;
         duracionAnnos = 2;
-        return CDP(monto, tasaIntereses, duracionAnnos, ID);
+        return CDP(monto, tasaIntereses, duracionAnnos, ID, moneda);
     } else if (opcion == 3){
         tasaIntereses = 0.09;
         duracionAnnos = 3;
-        return CDP(monto, tasaIntereses, duracionAnnos, ID);
+        return CDP(monto, tasaIntereses, duracionAnnos, ID, moneda);
     } else {
-        return CDP(1,1,1,"");
+        return CDP(1,1,1,"", "");
     }
 }
 
@@ -59,18 +59,66 @@ void Banco::crearCDP(){
         return;
     }
 
-    /* Se genera el ID del prestamo. */
+    /* Se obtiene el tipo de moneda. */
+    std::cout << "\nIngrese el tipo de moneda \"dolar\" o \"colon\": ";
+    std::string moneda; std::cin >> moneda;
+    if((moneda != "dolar") && (moneda != "colon")){
+        std::cout << "ERROR: Moneda ingresada no es valida." << std::endl;  
+        return;
+    }
+
+    /* EN ESTE CASO EL MONTO A PAGAR SE GUARDA EN monto Y EL TIPO DE MONEDA EN moneda. */
+    /* Se maneja el pago. */
+    bool aprovado = false;
+    std::cout << "Ingrese el metodo de pago:" << std::endl
+                << "1. Efectivo. " << std::endl
+                << "2. Fondos en las cuentas. " << std::endl
+                << "3. Volver" << std::endl
+                << "Ingrese una opcion: ";
+    std::string inputPago; std::cin >> inputPago;
+    int opcionPago;
+
+    /* Manejo de errores. */
+    if(!isNum(inputPago) || std::stoi(inputPago) > 3 || std::stoi(inputPago) < 0){
+        std::cout << "ERROR: Opcion debe ser entero entre 1 y 3. " << std::endl;
+        return;
+    }
+    opcionPago = std::stoi(inputPago);
+
+    /* Métodos de pago. */
+    switch (opcionPago) {
+    case 1:
+        aprovado = true;
+        break;
+    case 2:
+        break;
+    case 3:
+        return;
+        break;
+    default:
+        break;
+    }
+
+    if(!aprovado){
+        std::cout << "El pago no fue aprovado" << std::endl;
+        return;
+    }
+
+    /* Se genera el ID del CDP. */
     std::string primeros3 = std::to_string((*this->usuarioActual).identificacion).substr(0, 3);
     std::string ID = "C-" + primeros3 + "-" + std::to_string(this->contadorCDP);
 
-    /* Se aumenta contador de prestamos. */
+    /* Se aumenta contador de CDPs. */
     this->contadorCDP += 1;
 
     /* Se obtiene el objeto a partir de la funcion creada para este fin */
-    CDP cdp = opcionesCDP(monto, opcion, ID);
+    CDP cdp = opcionesCDP(monto, opcion, ID, moneda);
 
     /* Se crea el CSV que almacena la informacion del CDP */
     cdp.generarCSV();
+
+    /* Se hace feedback del cdp. */
+    std::cout << std::endl << "Se registro su CDP exitosamente." << std::endl;
 
     /* Se definen los decimales de salida de los elementos en el .log */
     std::ostringstream montoReducido;
@@ -87,8 +135,10 @@ void Banco::crearCDP(){
 
     /* Se crea el string que sera enviado para almacenar en el .log para el registro de transacciones */
     std::string registro = "Creacion CDP, Usuario: " + std::to_string((*this->usuarioActual).identificacion) + ", ID: " +
-    ID + ", Monto Ingresado: " + montoReducidoStr + ',' + " Tasa de interes: " + interesReducidoStr + ", Duracion del CDP: " +
-    tiempoReducidoStr + " annos.";
+    ID;
+    
+    /*", Monto Ingresado: " + montoReducidoStr + ',' + " Tasa de interes: " + interesReducidoStr + ", Duracion del CDP: " +
+    tiempoReducidoStr + " annos.";*/
     
     /* Se llama a la funcion que maneja el registro de transacciones */
     registrarTrasaccion(registro);
@@ -124,14 +174,22 @@ void Banco::InfoGeneralCDP(){
         return;
     }
 
+    /* Se obtiene el tipo de moneda. */
+    std::cout << "\nIngrese el tipo de moneda \"dolar\" o \"colon\": ";
+    std::string moneda; std::cin >> moneda;
+    if((moneda != "dolar") && (moneda != "colon")){
+        std::cout << "ERROR: Moneda ingresada no es valida." << std::endl;  
+        return;
+    }
+
     /* Se envia un ID predefinido para que no se cree un .csv del cdp */
     std::string ID = "MOSTRARINFO";
 
     /* Se crea el objeto */
-    CDP cdp = opcionesCDP(monto, opcion, ID);
+    CDP cdp = opcionesCDP(monto, opcion, ID, moneda);
 
     /* Se imprime la informacion del CDP */
-    std::cout << "Para un certificado de " << cdp.getMonto() <<
+    std::cout << "Para un certificado de " << cdp.getMonto() << " " << cdp.getMoneda() << "es" <<
     " a un plazo de " << cdp.getDuracion() << " annos, la tasa utilizada es " <<
     cdp.getInteres()*100 << "%, recibiendo al final del plazo " << cdp.getMontoGanado() <<std::endl;
 
@@ -161,7 +219,7 @@ CDP Banco::leerCDP(std::string idCDP){
 
     /* Se busca el CDP. */
     if(!database.good()){
-        return CDP(1, 1, 1, "ERROR");
+        return CDP(1, 1, 1, "ERROR", "");
     }
 
     /* Se ignora la primera linea. */
@@ -181,7 +239,7 @@ CDP Banco::leerCDP(std::string idCDP){
     /* Se cierra el archivo.*/
     database.close();
 
-    CDP cdp(std::stod(infoC[0]), std::stof(infoC[1]), std::stoi(infoC[2]), idCDP);
+    CDP cdp(std::stod(infoC[0]), std::stof(infoC[1]), std::stoi(infoC[2]), idCDP, infoC[4]);
     
     return cdp;
 }
