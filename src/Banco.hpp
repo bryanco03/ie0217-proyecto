@@ -61,6 +61,9 @@ class Banco{
     void menuInformacionGeneral();
     void registrarTrasaccion(const std::string& informacion);
     void InfoGeneralCDP();
+    void depositoEntreCuentas(Cuenta cuentaDepositar, Cuenta cuenaRetirar);
+    void realizarTransaccion();
 };
+
 
 #endif

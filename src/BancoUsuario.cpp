@@ -1,3 +1,4 @@
+
 #include "Banco.hpp"
 #include "Usuario.hpp"
 #include <iostream>
@@ -290,7 +291,19 @@ void Banco::realizarDeposito(){
             mostrarInfoCuentas();
             std::cout << "Ingrese una cuenta: ";
             std::cin >> opcionCuentas;
-
+            if (opcionCuentas == 1){
+                Cuenta cuentaDepositar = usuarioActual->getCuentas()[0];
+                Cuenta cuentaRetirar = usuarioActual->getCuentas()[1];
+                depositoEntreCuentas(cuentaDepositar, cuentaRetirar);
+            }
+            else if (opcionCuentas == 2){
+                Cuenta cuentaDepositar = usuarioActual->getCuentas()[1];
+                Cuenta cuentaRetirar = usuarioActual->getCuentas()[0];
+                depositoEntreCuentas(cuentaDepositar, cuentaRetirar);
+            }
+            else{
+                std::cout<< "Opcion desconocida" << std::endl;
+            }
         }
         else {
             std::cout << "Debes contar con dos cuentas" << std::endl;
@@ -516,5 +529,43 @@ void Banco::realizarRetiro(){
             }
             actualizarCuentas();
         }
-     }
+    }
 }
+
+void Banco::depositoEntreCuentas(Cuenta cuentaDepositar, Cuenta cuentaRetirar){
+    if (cuentaDepositar.esDolar){
+        double montoDolar, montoColon;
+        std::cout << "Vas a depositar a tu cuenta en dolares usando la cuenta en colones" << std::endl;
+        std::cout << "Ingrese la cantidad en dolares que deseas ingresar: ";
+        std::cin >> montoDolar;
+        montoColon = convertirMoneda(montoDolar, false);
+
+        if (montoColon > cuentaRetirar.dinero){
+            std::cout << "No cuentas con el suficiente dinero para realizar el deposito" << std::endl;
+            return;
+        }
+        cuentaDepositar.dinero += montoDolar;
+        cuentaRetirar.dinero -= montoColon;
+        std::cout << cuentaRetirar.dinero << std::endl;
+        registrarDeposito(cuentaDepositar.dinero, "dolar");
+        registrarDeposito(cuentaRetirar.dinero, "colon");
+        actualizarCuentas();
+        }
+        else{
+            double montoDolar, montoColon;
+            std::cout << "Vas a depositar a tu cuenta en colones usando la cuenta en dolares" << std::endl;
+            std::cout << "Ingrese la cantidad en colones que deseas ingresar: ";
+            std::cin >> montoColon;
+            montoDolar = convertirMoneda(montoColon, true);
+            if (montoDolar > cuentaRetirar.dinero){
+                std::cout << "No cuentas con el suficiente dinero para realizar el deposito" << std::endl;
+                return;
+            }
+            cuentaDepositar.dinero += montoColon;
+            cuentaRetirar.dinero -= montoDolar;
+            registrarDeposito(cuentaDepositar.dinero, "colon");
+            registrarDeposito(cuentaRetirar.dinero, "dolar");
+            actualizarCuentas();
+        }
+}
+
