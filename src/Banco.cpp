@@ -7,6 +7,7 @@ void Banco::menuAtencionCliente(){
     if (usuarioLogeado){
         cargarDatosUsuario();
         iniciarContadores();
+
     }
     while (1){
         if (usuarioLogeado){
@@ -119,22 +120,49 @@ void Banco::menuInformacionGeneral(){
 }
 
 void Banco::iniciarContadores(){
+    /*
+    Este método se basó en:
+    https://stackoverflow.com/questions/3072795/how-to-count-lines-of-a-file-in-c
+    */
+
     /* Se obtiene el contador de prestamo. */
-    /* https://stackoverflow.com/questions/3072795/how-to-count-lines-of-a-file-in-c */
     std::ifstream inFile("datos//Prestamos.csv"); 
     this->contadorPrestamos = std::count(std::istreambuf_iterator<char>(inFile), 
                                          std::istreambuf_iterator<char>(), '\n') - 1;
     inFile.close();
 
     /* Se obtiene el contador de CDP. */
-    /* https://stackoverflow.com/questions/3072795/how-to-count-lines-of-a-file-in-c */
     std::ifstream inFileCDP("datos//CDP.csv"); 
     this->contadorCDP = std::count(std::istreambuf_iterator<char>(inFileCDP), 
                                          std::istreambuf_iterator<char>(), '\n') - 1;
     inFileCDP.close();
+}
 
-    /* PARA AGREGAR LOS SUYOS SOLO COPIEN EL CÓDIGO Y CAMBIAN EL PATH DE inFile y el contador al que lo guardan. */
+void Banco::iniciarArchivos(){
 
+    if(!std::ifstream("datos//usuarios.csv")){
+        std::ofstream usuariosCrear("datos//usuarios.csv");
+        usuariosCrear << "Nombre,Identificacion,TipoCuenta1,DineroCuenta1,TipoCuenta2,DineroCuenta2,IdPrestamos,IdCdps" << std::endl;
+        usuariosCrear.close();
+    }
+
+    if(!std::ifstream("datos//Prestamos.csv")){
+        std::ofstream prestamosCrear("datos//Prestamos.csv");
+        prestamosCrear << "ID,Tipo,Monto,Moneda,Tasa Interes,Duracion Meses,Cuotas Pagadas" << std::endl;
+        prestamosCrear.close(); 
+    }
+
+    if(!std::ifstream("datos//CDP.csv")){
+        std::ofstream cdpCrear("datos//CDP.csv");
+        cdpCrear << "ID,Monto ingresado,Intereses Ganados,Duracion del CDP,Monto Ganado" << std::endl;
+        cdpCrear.close(); 
+    }
+
+    if(!std::ifstream("datos//registro.log")){
+        std::ofstream registroCrear("datos//registro.log");
+        registroCrear << "Registro de transacciones:" << std::endl;
+        registroCrear.close();
+    }
 }
 
 double Banco::convertirMoneda(double monto, bool enDolares){
@@ -145,8 +173,6 @@ double Banco::convertirMoneda(double monto, bool enDolares){
         return monto * 515;
     }
 }
-
-
 
 void Banco::registrarTrasaccion(const std::string& informacion){
     
@@ -182,6 +208,7 @@ std::string HoraActual(){
     return tiempoActual.str();
 }
 
+/* Determina si un input es numérico por medio de regex. */
 bool isNum(const std::string input){
     const std::regex numerico("^([0-9]+)$");
     return (std::regex_match(input, numerico));
