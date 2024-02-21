@@ -135,15 +135,14 @@ void Banco::crearCDP(){
     std::string tiempoReducidoStr = tiempoReducido.str();
 
     /* Se crea el string que sera enviado para almacenar en el .log para el registro de transacciones */
-    std::string registro = "Creacion CDP, Usuario: " + std::to_string((*this->usuarioActual).identificacion) + ", ID: " +
+    std::string registro = "Creacion CDP, Usuario: " + std::to_string(this->usuarioActual->getIdentificacion()) + ", ID: " +
     ID;
-    
+
     /*", Monto Ingresado: " + montoReducidoStr + ',' + " Tasa de interes: " + interesReducidoStr + ", Duracion del CDP: " +
     tiempoReducidoStr + " annos.";*/
     
     /* Se llama a la funcion que maneja el registro de transacciones */
     registrarTrasaccion(registro);
-
     this->usuarioActual->setCdp(cdp);
 }
 
