@@ -53,7 +53,7 @@ class Banco{
     Prestamos leerPrestamo(std::string idPrestamo);
     void cargarPrestamos(std::string idPrestamos);
     void actualizarUsuarios();
-    void mostrarInfoCuentas(std::vector<Cuenta> cuentas);
+    void mostrarInfoCuentas(std::vector<Cuenta> cuentas, bool mostrarDinero = true);
     void actualizarCuentas();
     void depositarCuentaColon(double dinero);
     void depositarCuentaDolar(double dinero);
@@ -64,7 +64,10 @@ class Banco{
     void depositoEntreCuentas(Cuenta cuentaDepositar, Cuenta cuenaRetirar);
     void realizarTransaccion();
     std::vector<Cuenta> cuentasTransferibles(unsigned long int identificacion);
+    void transferenciaEfectivo(Cuenta cuenta , unsigned long int identificacion);
+    void transfereciaEntreCuentas(Cuenta cuentaDepositar, Cuenta cuentaRetirar, unsigned long int identificacion);
 };
 
 
+    
 #endif

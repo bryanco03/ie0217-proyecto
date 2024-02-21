@@ -375,7 +375,7 @@ void Banco::actualizarUsuarios(){
 }
 
 
-    void Banco::mostrarInfoCuentas(std::vector<Cuenta> cuentas){
+    void Banco::mostrarInfoCuentas(std::vector<Cuenta> cuentas, bool mostrarDinero){
     if (cuentas.empty()){
         std::cout<< "No Tienes Ninguna Cuenta" << std::endl;
         return;
@@ -389,9 +389,10 @@ void Banco::actualizarUsuarios(){
         else{
             std::cout<< "Moneda: Colon"<< std::endl;
         }
+        if (mostrarDinero){
         std::cout <<"Dinero: "<<cuentas[i].dinero << std::endl;
+        }
     }   std::cout << "---------------------"<< std::endl;
-
 }
 
 void Banco::actualizarCuentas(){
@@ -574,61 +575,141 @@ void Banco::realizarTransaccion(){
     std::cin >> identificacionUsuarioTransferir;
     if (verificarIdentificacioEnCSV(identificacionUsuarioTransferir)){
         std::vector<Cuenta> cuentas = cuentasTransferibles(identificacionUsuarioTransferir);
-        mostrarInfoCuentas(cuentas);
         if (cuentas.size() == 0){
             std::cout<< "El usuario que deseas transferir no cuenta con ninguna cuenta" << std::endl;
             return;
         }
-
         if (cuentas.size() == 1){
-            int opcion;
-            std::cout<< "Como deseas realizar el deposito:"<< std::endl;
-            std::cout<< "1. Efectivo"<< std::endl;
-            std::cout<< "2. Cuentas"<< std::endl;
-            std::cout<< "Elige una opcion: ";
-            std::cin >> opcion;
-            if (opcion == 1){
+            int opcionTransferencia;
+            Cuenta cuenta = cuentas[0];
+            std::cout << "Como deseas realizar la transferencia: " << std::endl;
+            std::cout << "1. Efectivo " << std::endl;
+            std::cout << "2. Cuentas" << std::endl;
+            std::cin >> opcionTransferencia;
+            if (opcionTransferencia == 1){
+                transferenciaEfectivo(cuenta, identificacionUsuarioTransferir);
+            }
+            else if (opcionTransferencia == 2){
+                if (usuarioActual->getCuentas().size() == 0){
+                    std::cout << "No tienes ninguna cuenta para realizar la transferencia" << std::endl;
+                    return;
+                }
+                if (usuarioActual->getCuentas().size() == 1){
+                    Cuenta cuentaRetirar = usuarioActual->getCuentas()[0];
+                    transfereciaEntreCuentas(cuenta, cuentaRetirar, identificacionUsuarioTransferir);
+                }
+                else if (usuarioActual->getCuentas().size() == 2){
+                    int opcionCuentas;
+                    mostrarInfoCuentas(usuarioActual->getCuentas());
+                    std::cout << "Cual Cuenta deseas realizar la transferencia: ";
+                    std::cin >> opcionCuentas;
+                    if (opcionCuentas == 1){
+                        Cuenta cuentaRetirar = usuarioActual->getCuentas()[0];
+                        transfereciaEntreCuentas(cuenta, cuentaRetirar, identificacionUsuarioTransferir);
+                    }
+                    else if (opcionCuentas == 2){
+                        Cuenta cuentaRetirar = usuarioActual->getCuentas()[1];
+                        transfereciaEntreCuentas(cuenta, cuentaRetirar, identificacionUsuarioTransferir);
+                    }
+                    else{
+                        std::cout << "Opcion desconocida" << std::endl;
+                        return;
+                    }
+                }
+            }
+            else{
+                std::cout << "Opcion desconocida" << std::endl;
+            }
+        }
+        else if (cuentas.size() == 2){
+            int opcionCuenta;
+            mostrarInfoCuentas(cuentas, false);
+            std::cout << "A cual cuenta deseas realizar la transferecia: ";
+            std::cin >> opcionCuenta;
+            if (opcionCuenta == 1){
+                int opcionTransferencia;
                 Cuenta cuenta = cuentas[0];
-                int opcionEfectivo;
-                std::cout << "Con que  tipo de moneda vas a realizar la transferencia: " << std::endl;
-                std::cout << "1. Dolares"<< std::endl;
-                std::cout << "2. Colones"<< std::endl;
-                std::cout << "Ingrese una opcion: " ;
-                std:: cin >> opcionEfectivo;
-                if (opcionEfectivo == 1){
-                    double montoDolar;
-                    std::cout << "Ingrese el monto a depositar: ";
-                    std::cin >> montoDolar;
-                    if (cuenta.esDolar){
-                        cuenta.dinero += montoDolar;
-                        registrarDeposito(cuenta.dinero, "dolar", identificacionUsuarioTransferir);
+                std::cout << "Como deseas realizar la transferencia: " << std::endl;
+                std::cout << "1. Efectivo " << std::endl;
+                std::cout << "2. Cuentas" << std::endl;
+                std::cin >> opcionTransferencia;
+                if (opcionTransferencia == 1){
+                    transferenciaEfectivo(cuenta, identificacionUsuarioTransferir);
+                }
+                else if (opcionTransferencia == 2){ 
+                    if (usuarioActual->getCuentas().size() == 0){
+                        std::cout << "No tienes ninguna cuenta para realizar la transferencia" << std::endl;
                         return;
                     }
-                    else{
-                        double montoColon;
-                        montoColon = convertirMoneda(montoDolar, false);
-                        cuenta.dinero += montoColon;
-                        registrarDeposito(cuenta.dinero, "colon", identificacionUsuarioTransferir);
+                    if (usuarioActual->getCuentas().size() == 1){
+                        Cuenta cuentaRetirar = usuarioActual->getCuentas()[0];
+                        transfereciaEntreCuentas(cuenta, cuentaRetirar, identificacionUsuarioTransferir);
+                    }
+                    else if (usuarioActual->getCuentas().size() == 2){
+                        int opcionCuentas;
+                        mostrarInfoCuentas(usuarioActual->getCuentas());
+                        std::cout << "Cual Cuenta deseas realizar la transferencia: ";
+                        std::cin >> opcionCuentas;
+                        if (opcionCuentas == 1){
+                            Cuenta cuentaRetirar = usuarioActual->getCuentas()[0];
+                            transfereciaEntreCuentas(cuenta, cuentaRetirar, identificacionUsuarioTransferir);
+                        }
+                        else if (opcionCuentas == 2){
+                            Cuenta cuentaRetirar = usuarioActual->getCuentas()[1];
+                            transfereciaEntreCuentas(cuenta, cuentaRetirar, identificacionUsuarioTransferir);
+                        }
+                        else{
+                            std::cout << "Opcion desconocida" << std::endl;
+                            return;
+                        }
+                        }
+                        
+                }
+                else{
+                std::cout << "Opcion desconocida" << std::endl;
+                }            
+            }
+            else if (opcionCuenta == 2){
+                int opcionTransferencia;
+                Cuenta cuenta = cuentas[1];
+                std::cout << "Como deseas realizar la transferencia: " << std::endl;
+                std::cout << "1. Efectivo " << std::endl;
+                std::cout << "2. Cuentas" << std::endl;
+                std::cin >> opcionTransferencia;
+                if (opcionTransferencia == 1){
+                    transferenciaEfectivo(cuenta, identificacionUsuarioTransferir);
+                }
+                else if (opcionTransferencia == 2){
+                    if (usuarioActual->getCuentas().size() == 0){
+                        std::cout << "No tienes ninguna cuenta para realizar la transferencia" << std::endl;
                         return;
+                    }
+                    if (usuarioActual->getCuentas().size() == 1){
+                        Cuenta cuentaRetirar = usuarioActual->getCuentas()[0];
+                        transfereciaEntreCuentas(cuenta, cuentaRetirar, identificacionUsuarioTransferir);
+                    }
+                    else if (usuarioActual->getCuentas().size() == 2){
+                        int opcionCuentas;
+                        mostrarInfoCuentas(usuarioActual->getCuentas());
+                        std::cout << "Cual Cuenta deseas realizar la transferencia: ";
+                        std::cin >> opcionCuentas;
+                        if (opcionCuentas == 1){
+                            Cuenta cuentaRetirar = usuarioActual->getCuentas()[0];
+                            transfereciaEntreCuentas(cuenta, cuentaRetirar, identificacionUsuarioTransferir);
+                        }
+                        else if (opcionCuentas == 2){
+                            Cuenta cuentaRetirar = usuarioActual->getCuentas()[1];
+                            transfereciaEntreCuentas(cuenta, cuentaRetirar, identificacionUsuarioTransferir);
+                        }
+                        else{
+                            std::cout << "Opcion desconocida" << std::endl;
+                            return;
+                        }
                     }
                 }
-                else if (opcionEfectivo == 2){
-                    double montoColon;
-                    std::cout << "Ingrese el monto a depositar: ";
-                    std::cin >> montoColon;
-                    if (cuenta.esDolar){
-                        double montoDolar;
-                        montoDolar = convertirMoneda(montoColon, true);
-                        cuenta.dinero += montoDolar;
-                        registrarDeposito(cuenta.dinero, "dolar", identificacionUsuarioTransferir);
-                        return;
-                    }
-                    else{
-                        cuenta.dinero += montoColon;
-                        registrarDeposito(cuenta.dinero, "colon", identificacionUsuarioTransferir);
-                    }
-
-                }
+                else{
+                    std::cout << "Opcion desconocida" << std::endl;
+                }       
             }
         }
     }
@@ -636,3 +717,97 @@ void Banco::realizarTransaccion(){
         std::cout<< "La indentificacion ingresada no se encuentra registrada en el sistema " << std::endl;
     }
 }
+void Banco::transferenciaEfectivo(Cuenta cuenta, unsigned long int identificacionUsuarioTransferir){
+    int opcionEfectivo;
+    std::cout << "Con que  tipo de moneda vas a realizar la transferencia: " << std::endl;
+    std::cout << "1. Dolares"<< std::endl;
+    std::cout << "2. Colones"<< std::endl;
+    std::cout << "Ingrese una opcion: " ;
+    std:: cin >> opcionEfectivo;
+    if (opcionEfectivo == 1){
+        double montoDolar;
+        std::cout << "Ingrese el monto a depositar: ";
+        std::cin >> montoDolar;
+        if (cuenta.esDolar){
+            cuenta.dinero += montoDolar;
+            registrarDeposito(cuenta.dinero, "dolar", identificacionUsuarioTransferir);
+            return;
+        }
+        else{
+            double montoColon;
+            montoColon = convertirMoneda(montoDolar, false);
+            cuenta.dinero += montoColon;
+            registrarDeposito(cuenta.dinero, "colon", identificacionUsuarioTransferir);
+            return;
+        }
+    }
+    else if (opcionEfectivo == 2){
+        double montoColon;
+        std::cout << "Ingrese el monto a depositar: ";
+        std::cin >> montoColon;
+        if (cuenta.esDolar){
+            double montoDolar;
+            montoDolar = convertirMoneda(montoColon, true);
+            cuenta.dinero += montoDolar;
+            registrarDeposito(cuenta.dinero, "dolar", identificacionUsuarioTransferir);
+            return;
+        }
+        else{
+            cuenta.dinero += montoColon;
+            registrarDeposito(cuenta.dinero, "colon", identificacionUsuarioTransferir);
+        }
+    }
+}
+void Banco::transfereciaEntreCuentas(Cuenta cuentaDepositar, Cuenta cuentaRetirar, unsigned long int identificacionUsuarioTransferir){
+    if (cuentaRetirar.esDolar){
+        double montoDolar;
+        std::cout << "Vas a transferir el dinero de la cuenta en dolares" << std::endl;
+        std::cout << "Ingrese el monto en dolares que deseas transferir: " ;
+        std::cin >> montoDolar;
+        if (montoDolar > cuentaRetirar.dinero){
+            std::cout << "No cuentas con el suficiente dinero para realizar la transferencia" <<std::endl;
+            return; 
+        }
+        if (cuentaDepositar.esDolar){
+            cuentaDepositar.dinero += montoDolar;
+            cuentaRetirar.dinero -= montoDolar;
+            registrarDeposito(cuentaDepositar.dinero, "dolar", identificacionUsuarioTransferir);
+            registrarDeposito(cuentaRetirar.dinero, "dolar", usuarioActual->getIdentificacion());
+            actualizarCuentas();
+        }
+        else{
+            double montoColon = convertirMoneda(montoDolar, false);
+            cuentaDepositar.dinero +=montoColon;
+            cuentaRetirar.dinero -= montoDolar;
+            registrarDeposito(cuentaDepositar.dinero, "colon", identificacionUsuarioTransferir);
+            registrarDeposito(cuentaRetirar.dinero, "dolar", usuarioActual->getIdentificacion());
+            actualizarCuentas();
+        }
+    }
+    else{
+        double montoColon;
+        std::cout << "Vas a transferir el dinero de la cuenta en Colones" << std::endl;
+        std::cout << "Ingrese el monto en colones que deseas transferir: " ;
+        std::cin >> montoColon;
+        if (montoColon > cuentaRetirar.dinero){
+            std::cout << "No cuentas con el suficiente dinero para realizar la transferencia" <<std::endl;
+            return; 
+        }
+        if (cuentaDepositar.esDolar){
+            double  montoDolar = convertirMoneda(montoColon, true);
+            cuentaDepositar.dinero += montoDolar;
+            cuentaRetirar.dinero -= montoColon;
+            registrarDeposito(cuentaDepositar.dinero, "dolar", identificacionUsuarioTransferir);
+            registrarDeposito(cuentaRetirar.dinero, "colon", usuarioActual->getIdentificacion());
+            actualizarCuentas();
+        }
+        else{
+            cuentaDepositar.dinero +=montoColon;
+            cuentaRetirar.dinero -= montoColon;
+            registrarDeposito(cuentaDepositar.dinero, "colon", identificacionUsuarioTransferir);
+            registrarDeposito(cuentaRetirar.dinero, "colon", usuarioActual->getIdentificacion());
+            actualizarCuentas();
+        }
+    }
+}
+
