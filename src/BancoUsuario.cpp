@@ -146,21 +146,20 @@ void Banco::crearCuenta(){
 
 void Banco::cargarDatosUsuario(){
     std::vector<std::string> datos = obtenerDatos(usuarioActual->getIdentificacion());
-    std::string tipoCuenta1, dineroCuenta1Str, tipoCuenta2, dineroCuenta2Str, idPrestamos;
+    std::string tipoCuenta1, dineroCuenta1Str, tipoCuenta2, dineroCuenta2Str, idPrestamos, idCDPs;
     tipoCuenta1 = datos[0];
     tipoCuenta2 = datos[2];
     dineroCuenta1Str = datos[1];
     dineroCuenta2Str = datos[3];
     idPrestamos = datos[4];
+    idCDPs = datos[5];
     double dineroCuenta1 = std::stod(dineroCuenta1Str);
     double dineroCuenta2 = std::stod(dineroCuenta2Str);
 
 
     cargarCuentas(tipoCuenta1, dineroCuenta1, tipoCuenta2, dineroCuenta2);
     cargarPrestamos(idPrestamos);
-
-    
-
+    cargarCDPs(idCDPs);
 }
 
 std::vector<std::string> Banco::obtenerDatos(unsigned long int identificacionBuscar) {

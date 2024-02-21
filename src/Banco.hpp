@@ -12,6 +12,7 @@
 #include <sstream>
 #include <stdexcept>
 #include <fstream>
+
 #include <chrono>
 #include <iomanip>
 #include <regex>
@@ -66,6 +67,8 @@ class Banco{
     std::vector<Cuenta> cuentasTransferibles(unsigned long int identificacion);
     void transferenciaEfectivo(Cuenta cuenta , unsigned long int identificacion);
     void transfereciaEntreCuentas(Cuenta cuentaDepositar, Cuenta cuentaRetirar, unsigned long int identificacion);
+    void cargarCDPs(std::string idCDPs);
+    CDP leerCDP(std::string idCDP);
 };
 
 
