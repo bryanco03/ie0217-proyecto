@@ -189,3 +189,123 @@ bool isNum(const std::string input){
     const std::regex numerico("^([0-9]+)$");
     return (std::regex_match(input, numerico));
 }
+
+
+bool Banco::pagarCuotasCuentas(double monto, std::string moneda ){
+    if (usuarioActual->getCuentas().size() == 0){
+        std::cout<<"No posees ninguna cuenta para realizar el pago" << std::endl;
+        return false;
+    }
+    else if(usuarioActual->getCuentas().size() == 1){
+        Cuenta cuenta = usuarioActual->getCuentas()[0];
+        if (cuenta.esDolar){
+            if (moneda == "dolar"){
+                if( monto > cuenta.dinero){
+                    std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
+                    return false;
+                }
+                cuenta.dinero -= monto;
+                registrarDeposito(cuenta.dinero, "dolar", usuarioActual->getIdentificacion());
+                actualizarCuentas();
+                return true;
+            }
+            else if (moneda == "colon"){
+                double montoDolar =  convertirMoneda(monto, true);
+                if (montoDolar > cuenta.dinero){
+                    std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
+                    return false;
+                }
+                cuenta.dinero -= montoDolar;
+                registrarDeposito(cuenta.dinero, "dolar", usuarioActual->getIdentificacion());
+                actualizarCuentas();
+                return true;
+            }
+        }
+        else{
+            if (moneda == "dolar"){
+                double montoColon = convertirMoneda(monto, false);
+                if( montoColon > cuenta.dinero){
+                    std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
+                    return false;
+                }
+                cuenta.dinero -= montoColon;
+                registrarDeposito(cuenta.dinero, "colon", usuarioActual->getIdentificacion());
+                actualizarCuentas();
+                return true;
+            }
+            else if (moneda == "colon"){
+                if (monto > cuenta.dinero){
+                    std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
+                    return false;
+                }
+                cuenta.dinero -= monto;
+                registrarDeposito(cuenta.dinero, "colon", usuarioActual->getIdentificacion());
+                actualizarCuentas();
+                return true;
+            }
+        }
+    }
+    else if (usuarioActual->getCuentas().size() == 2){
+        int opcionCuenta;
+        mostrarInfoCuentas(usuarioActual->getCuentas());
+        std::cout << "Con Cual Cuenta deseas realizar el pago: ";
+        std::cin >> opcionCuenta;
+        Cuenta cuenta;
+        if (opcionCuenta == 1){
+            cuenta = usuarioActual->getCuentas()[0];
+        }
+        else if (opcionCuenta == 2){
+            cuenta = usuarioActual->getCuentas()[1];
+        }
+        else{
+            std::cout << "Opcion desconocida" << std::endl;
+            return false;
+        }
+        if (cuenta.esDolar){
+            if (moneda == "dolar"){
+                if( monto > cuenta.dinero){
+                    std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
+                    return false;
+                }
+                cuenta.dinero -= monto;
+                registrarDeposito(cuenta.dinero, "dolar", usuarioActual->getIdentificacion());
+                actualizarCuentas();
+                return true;
+            }
+            else if (moneda == "colon"){
+                double montoDolar =  convertirMoneda(monto, true);
+                if (montoDolar > cuenta.dinero){
+                    std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
+                    return false;
+                }
+                cuenta.dinero -= montoDolar;
+                registrarDeposito(cuenta.dinero, "dolar", usuarioActual->getIdentificacion());
+                actualizarCuentas();
+                return true;
+            }
+        }
+        else{
+            if (moneda == "dolar"){
+                double montoColon = convertirMoneda(monto, false);
+                if( montoColon > cuenta.dinero){
+                    std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
+                    return false;
+                }
+                cuenta.dinero -= montoColon;
+                registrarDeposito(cuenta.dinero, "colon", usuarioActual->getIdentificacion());
+                actualizarCuentas();
+                return true;
+            }
+            else if (moneda == "colon"){
+                if (monto > cuenta.dinero){
+                    std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
+                    return false;
+                }
+                cuenta.dinero -= monto;
+                registrarDeposito(cuenta.dinero, "colon", usuarioActual->getIdentificacion());
+                actualizarCuentas();
+                return true;
+            }
+        }
+    }
+}

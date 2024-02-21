@@ -69,6 +69,7 @@ class Banco{
     void transfereciaEntreCuentas(Cuenta cuentaDepositar, Cuenta cuentaRetirar, unsigned long int identificacion);
     void cargarCDPs(std::string idCDPs);
     CDP leerCDP(std::string idCDP);
+    bool pagarCuotasCuentas(double montoCuota, std::string moneda);
 };
 
 

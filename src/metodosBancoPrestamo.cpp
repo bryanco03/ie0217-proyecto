@@ -267,6 +267,9 @@ void Banco::pagarPrestamos(){
         return;
     }
 
+    /* Obtener el tipo de moneda del prestamo */
+    std::string moneda = prestamo.getMoneda();
+
     /* Se maneja el pago. */
     bool aprovado = false;
     std::cout << "La cuota a pagar es: " << cuotaMensual << " " << prestamo.getMoneda() << "es." << std::endl;
@@ -291,6 +294,7 @@ void Banco::pagarPrestamos(){
         aprovado = true;
         break;
     case 2:
+        aprovado = pagarCuotasCuentas(cuotaMensual, moneda);
         break;
     case 3:
         return;

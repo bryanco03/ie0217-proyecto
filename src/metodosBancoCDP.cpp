@@ -91,6 +91,7 @@ void Banco::crearCDP(){
         aprovado = true;
         break;
     case 2:
+        aprovado = pagarCuotasCuentas(monto, moneda);
         break;
     case 3:
         return;
