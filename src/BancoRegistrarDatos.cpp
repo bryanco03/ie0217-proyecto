@@ -128,7 +128,7 @@ void Banco::registrarCuenta(bool esDolar) {
     std::rename("datos/usuarios_temp.csv", "datos/usuarios.csv");
 }
 
-void Banco::registrarDeposito(double monto, std::string tipoCuenta){
+void Banco::registrarDeposito(double monto, std::string tipoCuenta, unsigned long int identificacionBuscar){
     std::ifstream archivoEntrada("datos/usuarios.csv");
     if (!archivoEntrada.is_open()) {
         std::cerr << "Error al abrir el archivo " << std::endl;
@@ -152,7 +152,7 @@ void Banco::registrarDeposito(double monto, std::string tipoCuenta){
             std::getline(iss, idPrestamos, ',') && std::getline(iss, idCdps)) {
             unsigned long int identificacion = std::stoul(identificacionStr);
             std::string montoStr = std::to_string(monto);
-            if (identificacion == usuarioActual->getIdentificacion()) {
+            if (identificacion == identificacionBuscar) {
                 if (tipoCuenta1 == tipoCuenta) {
                     // Modificar la moneda de la cuenta
                     nuevoContenido << nombre << "," << identificacionStr << "," << tipoCuenta1 << ","
@@ -186,4 +186,41 @@ void Banco::registrarDeposito(double monto, std::string tipoCuenta){
     std::remove("datos/usuarios.csv");
     std::rename("datos/usuarios_temp.csv", "datos/usuarios.csv");
     
+}
+
+std::vector<Cuenta> Banco::cuentasTransferibles(unsigned long int identificacion){
+    std::vector<Cuenta> cuentas;
+    std::vector<std::string> datos =  obtenerDatos(identificacion);
+    std::string tipoCuenta1, tipoCuenta2, dineroCuenta1Str, dineroCuenta2Str;
+    tipoCuenta1 = datos[0];
+    tipoCuenta2 = datos[2];
+    dineroCuenta1Str = datos[1];
+    dineroCuenta2Str = datos[3];
+    double dineroCuenta1 = std::stod(dineroCuenta1Str);
+    double dineroCuenta2 = std::stod(dineroCuenta2Str);
+    if (tipoCuenta1 == "dolar"){
+        Cuenta cuentaDolar;
+        cuentaDolar.esDolar = true;
+        cuentaDolar.dinero = dineroCuenta1;
+        cuentas.push_back(cuentaDolar);
+    }
+    else if (tipoCuenta1 == "colon"){
+        Cuenta cuentaColon;
+        cuentaColon.esDolar = false;
+        cuentaColon.dinero = dineroCuenta1;
+        cuentas.push_back(cuentaColon);
+    }
+    if (tipoCuenta2 == "dolar"){
+        Cuenta cuentaDolar2;
+        cuentaDolar2.esDolar = true;
+        cuentaDolar2.dinero = dineroCuenta2;
+        cuentas.push_back(cuentaDolar2);
+    }
+    else if (tipoCuenta2 == "colon"){
+        Cuenta cuentaColon2;
+        cuentaColon2.esDolar = false;
+        cuentaColon2.dinero = dineroCuenta2;
+        cuentas.push_back(cuentaColon2);
+    }
+    return cuentas;
 }

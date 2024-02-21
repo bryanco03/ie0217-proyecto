@@ -4,6 +4,7 @@
 
 int main(){
     Banco banco;
+    banco.iniciarArchivos();
     while (1){
     menuEntrada(&banco);
     }

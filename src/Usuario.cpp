@@ -28,6 +28,7 @@ void Usuario::setCuentas(Cuenta cuenta){
 void Usuario::setPrestamo(Prestamos prestamo){
     prestamos.push_back(prestamo);
 }
+
 void Usuario::setCdp(CDP cdp){
     cdps.push_back(cdp);
 }
