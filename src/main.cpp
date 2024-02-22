@@ -1,6 +1,5 @@
 #include "Usuario.hpp"
 #include "Banco.hpp"
-#include "funciones.hpp"
 
 int main(){
     Banco banco;
@@ -40,7 +39,6 @@ int main(){
             std::cout << "Opcion desconocida" << std::endl;
             break;
         }
-    // menuEntrada(&banco);
     }
 }
 
