@@ -28,6 +28,11 @@
 
 bool isNum(std::string input);
 
+
+/**
+ * @brief Clase que realiza las acciones del banco.
+ * 
+ */
 class Banco{
     public:
     /**
@@ -42,7 +47,7 @@ class Banco{
      */
     void loggearUsuario();
 
-    /*
+    /**
     * @brief Generar el menú del modo de información general.
     * 
     */

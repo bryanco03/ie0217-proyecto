@@ -17,7 +17,10 @@
 #include <cmath>
 #include <fstream>
 
-
+/**
+ * @brief Clase para representar un prestamo de un usuario.
+ * 
+ */
 class Prestamos{
     private:
         std::string ID;         /**< Número ID del prestamo. */
