@@ -6,52 +6,54 @@
 #include <fstream>
 #include <sstream>
 
-
-void Banco::loggearUsuario(){
+void Banco::loggearUsuario() {
     int opcion;
-    std::cout << "\nBienvenido a atencion a cliente " << std::endl;
+    std::cout << "\nBienvenido a atención al cliente " << std::endl;
     std::cout << "1. Loggearse " << std::endl;
     std::cout << "2. Registrarse " << std::endl;
-    std::cout << "Elige una opcion: ";
+    std::cout << "Elige una opción: ";
     std::cin >> opcion;
 
-    if (opcion == 1){
-        unsigned long int identificacion;
-        std::string nombre;
-        std::cout << "Ingrese su nombre: ";
-        std::cin >> nombre;
-        std::cout << "Ingrese su indentificacion: ";
-        std::cin >> identificacion;
-        if (verificarIdentificacionNombreEnCSV(identificacion, nombre)){
-            usuarioActual = new Usuario(identificacion,nombre);
-            usuarioLogeado = true;
-        }
-        else{
-            std::cout << "Error, el Nombre del usuario o identificacion no se encuentra en el registro." << std::endl;
-            usuarioLogeado = false;
-        }
-    }
-    else if(opcion == 2){
-        unsigned long int identificacion;
-        std::string nombre;
-        std::cout << "Ingrese su numero de cedula: ";
-        std::cin >> identificacion;
-        if (verificarIdentificacioEnCSV(identificacion)){
-            std::cout << "El numero de cedula ingresado ya habia sido registrado" << std::endl;
-            usuarioLogeado = false;
-        }
-        else{
+    try {
+        if (opcion == 1) {
+            unsigned long int identificacion;
+            std::string nombre;
             std::cout << "Ingrese su nombre: ";
             std::cin >> nombre;
-            std::cout << "Creando Usuario ..."<< std::endl;
-            usuarioActual = new Usuario(identificacion,nombre);
-            usuarioActual->registrarUsuario();
-            usuarioLogeado = true;
+            std::cout << "Ingrese su identificación: ";
+            std::cin >> identificacion;
+            if (verificarIdentificacionNombreEnCSV(identificacion, nombre)) {
+                usuarioActual = new Usuario(identificacion, nombre);
+                usuarioLogeado = true;
+            } else {
+                throw std::runtime_error("Error, el nombre del usuario o identificación no se encuentra en el registro.");
+            }
+        } else if (opcion == 2) {
+            unsigned long int identificacion;
+            std::string nombre;
+            std::cout << "Ingrese su número de cédula: ";
+            std::cin >> identificacion;
+            if (verificarIdentificacioEnCSV(identificacion)) {
+                throw std::runtime_error("El número de cédula ingresado ya había sido registrado");
+            } else {
+                std::cout << "Ingrese su nombre: ";
+                std::cin >> nombre;
+                std::cout << "Creando Usuario ..." << std::endl;
+                usuarioActual = new Usuario(identificacion, nombre);
+                usuarioActual->registrarUsuario();
+                std::string registro = "Creacion de usuario, " + std::to_string(usuarioActual->getIdentificacion());
+                registrarTrasaccion(registro);
+                usuarioLogeado = true;
+            }
+
+        } else {
+            throw std::invalid_argument("Opción inválida");
         }
-        
+    } catch (const std::exception& e) {
+        std::cout << "Error: " << e.what() << std::endl;
+        usuarioLogeado = false;
     }
 }
-
 
 void Banco::crearCuenta(){
     std::vector<Cuenta> cuentasUsuario = usuarioActual->getCuentas();
@@ -69,6 +71,9 @@ void Banco::crearCuenta(){
             cuenta.esDolar = true;
             usuarioActual->setCuentas(cuenta);
             registrarCuenta(cuenta.esDolar);
+            std::string registro = "Creacion Cuenta, Usuario: " + std::to_string(usuarioActual->getIdentificacion()) +
+                                    ", Moneda: Dolar";
+            registrarTrasaccion(registro);
             std::cout << "Cuenta creada con exito"<< std::endl;
         }
         else if (opcion == 2){
@@ -77,6 +82,9 @@ void Banco::crearCuenta(){
             cuenta.esDolar = false;
             usuarioActual->setCuentas(cuenta);
             registrarCuenta(cuenta.esDolar);
+            std::string registro = "Creacion Cuenta, Usuario: " + std::to_string(usuarioActual->getIdentificacion()) +
+                                    ", Moneda: Colon";
+            registrarTrasaccion(registro);
             std::cout << "Cuenta creada con exito"<< std::endl;
         }
         else if(opcion == 3){
@@ -102,6 +110,9 @@ void Banco::crearCuenta(){
                 cuentaColon.esDolar = false;
                 usuarioActual->setCuentas(cuentaColon);
                 registrarCuenta(cuentaColon.esDolar);
+                std::string registro = "Creacion Cuenta, Usuario: " + std::to_string(usuarioActual->getIdentificacion()) +
+                                        ", Moneda: Colon";
+                registrarTrasaccion(registro);
                 std::cout << "Cuenta creada con exito"<< std::endl;
             }
             else if (opcionCuenta == 2){
@@ -126,6 +137,9 @@ void Banco::crearCuenta(){
                 cuenta.esDolar = true;
                 usuarioActual->setCuentas(cuenta);
                 registrarCuenta(cuenta.esDolar);
+                std::string registro = "Creacion Cuenta, Usuario: " + std::to_string(usuarioActual->getIdentificacion()) +
+                                        ", Moneda: Dolar";
+                registrarTrasaccion(registro);
                 std::cout << "Cuenta creada con exito"<< std::endl;
             }
             else if (opcionCuenta == 2){
@@ -145,7 +159,9 @@ void Banco::crearCuenta(){
 }
 
 void Banco::cargarDatosUsuario(){
+    /* Obtener los datos del usuario acutal */
     std::vector<std::string> datos = obtenerDatos(usuarioActual->getIdentificacion());
+    /* Extraer datos*/
     std::string tipoCuenta1, dineroCuenta1Str, tipoCuenta2, dineroCuenta2Str, idPrestamos, idCDPs;
     tipoCuenta1 = datos[0];
     tipoCuenta2 = datos[2];
@@ -153,27 +169,28 @@ void Banco::cargarDatosUsuario(){
     dineroCuenta2Str = datos[3];
     idPrestamos = datos[4];
     idCDPs = datos[5];
+    /*Convertir los saldos de las cuentas a double */
     double dineroCuenta1 = std::stod(dineroCuenta1Str);
     double dineroCuenta2 = std::stod(dineroCuenta2Str);
-
-
+    // Cargar las cuentas, préstamos y CDPs del usuario actual
     cargarCuentas(tipoCuenta1, dineroCuenta1, tipoCuenta2, dineroCuenta2);
     cargarPrestamos(idPrestamos);
     cargarCDPs(idCDPs);
 }
 
 std::vector<std::string> Banco::obtenerDatos(unsigned long int identificacionBuscar) {
+     // Abrir el archivo CSV que contiene los datos de los usuarios
     std::ifstream archivoEntrada("datos/usuarios.csv");
     if (!archivoEntrada.is_open()) {
         std::cerr << "Error al abrir el archivo " << std::endl;
         return {};
     }
-
+    // Variables para almacenar los datos del usuario encontrado
     std::string linea;
     std::string resultado;
     // Ignorar la primera línea
     std::getline(archivoEntrada, resultado);
-
+     // Se itera cada línea del archivo hasta encontrar al usuario buscado
     while (std::getline(archivoEntrada, linea)) {
         std::istringstream iss(linea);
         std::string nombre, identificacionStr, tipoCuenta1, dineroCuenta, tipoCuenta2, dineroCuenta2, idPrestamos, idCdps;
@@ -188,9 +205,9 @@ std::vector<std::string> Banco::obtenerDatos(unsigned long int identificacionBus
             }
         }
     }
-
+    // Cerrar el archivo
     archivoEntrada.close();
-
+     // Extraer los datos relevantes encontrados
     std::vector<std::string> datos;
     std::istringstream tokenStream(resultado);
     std::string token;
@@ -201,7 +218,6 @@ std::vector<std::string> Banco::obtenerDatos(unsigned long int identificacionBus
         }
         contador++;
 }
-
     return datos;
 }
 
@@ -374,7 +390,7 @@ void Banco::actualizarUsuarios(){
 }
 
 
-    void Banco::mostrarInfoCuentas(std::vector<Cuenta> cuentas, bool mostrarDinero){
+void Banco::mostrarInfoCuentas(std::vector<Cuenta> cuentas, bool mostrarDinero){
     if (cuentas.empty()){
         std::cout<< "No Tienes Ninguna Cuenta" << std::endl;
         return;
@@ -425,6 +441,9 @@ void Banco::depositarCuentaColon(double dinero){
                 dinero += montoColon;
                 registrarDeposito(dinero, "colon", usuarioActual->getIdentificacion());
                 actualizarCuentas();
+                std::string registro = "Deposito , Usuario: " + std::to_string(usuarioActual->getIdentificacion()) +
+                                        ", Cuenta: Colon, tipo: Efectivo, monto: " + std::to_string(montoColon);
+                registrarTrasaccion(registro);
             }
             else if (opcionEfectivo == 2){
                 double montoColon;
@@ -433,6 +452,9 @@ void Banco::depositarCuentaColon(double dinero){
                 dinero += montoColon;
                 registrarDeposito(dinero, "colon", usuarioActual->getIdentificacion());
                 actualizarCuentas();
+                std::string registro = "Deposito , Usuario: " + std::to_string(usuarioActual->getIdentificacion()) +
+                                        ", Cuenta: Colon, tipo: Efectivo, monto: " + std::to_string(montoColon);
+                registrarTrasaccion(registro);
             }
 }
 void Banco::depositarCuentaDolar(double dinero){
@@ -450,6 +472,9 @@ void Banco::depositarCuentaDolar(double dinero){
         dinero += montoDolar;
         registrarDeposito(dinero, "dolar", usuarioActual->getIdentificacion());
         actualizarCuentas();
+        std::string registro = "Deposito, Usuario: " + std::to_string(usuarioActual->getIdentificacion()) +
+                                ", Cuenta: Dolar, tipo: Efectivo, monto: " + std::to_string(montoDolar);
+        registrarTrasaccion(registro);
         
     }
     else if (opcionEfectivo == 2){
@@ -460,6 +485,9 @@ void Banco::depositarCuentaDolar(double dinero){
         dinero += montoDolar;
         registrarDeposito(dinero, "dolar", usuarioActual->getIdentificacion());
         actualizarCuentas();
+        std::string registro = "Deposito, Usuario: " + std::to_string(usuarioActual->getIdentificacion()) +
+                                ", Cuenta: Dolar, tipo: Efectivo, monto: " + std::to_string(montoDolar);
+        registrarTrasaccion(registro);
 }
 }
 
@@ -480,9 +508,15 @@ void Banco::realizarRetiro(){
         cuenta.dinero -= monto;
         if (cuenta.esDolar){
             registrarDeposito(cuenta.dinero, "dolar", usuarioActual->getIdentificacion());
+            std::string registro = "Retiro, Usuario: " + std::to_string(usuarioActual->getIdentificacion()) +
+                                ", Cuenta: Dolar, tipo: Efectivo, monto: " + std::to_string(monto);
+            registrarTrasaccion(registro);
         }
         else{
             registrarDeposito(cuenta.dinero, "colon", usuarioActual->getIdentificacion());
+            std::string registro = "Retiro, Usuario: " + std::to_string(usuarioActual->getIdentificacion()) +
+                                ", Cuenta: Colon, tipo: Efectivo, monto: " + std::to_string(monto);
+            registrarTrasaccion(registro);
         }
         actualizarCuentas();
     }
@@ -504,9 +538,15 @@ void Banco::realizarRetiro(){
             cuenta.dinero -= monto;
             if (cuenta.esDolar){
                 registrarDeposito(cuenta.dinero, "dolar", usuarioActual->getIdentificacion());
+                std::string registro = "Retiro, Usuario: " + std::to_string(usuarioActual->getIdentificacion()) +
+                                ", Cuenta: Dolar, tipo: Efectivo, monto: " + std::to_string(monto);
+                registrarTrasaccion(registro);
             }
             else{
                 registrarDeposito(cuenta.dinero, "colon", usuarioActual->getIdentificacion());
+                std::string registro = "Retiro, Usuario: " + std::to_string(usuarioActual->getIdentificacion()) +
+                                ", Cuenta: Colon, tipo: Efectivo, monto: " + std::to_string(monto);
+                registrarTrasaccion(registro);
             }
             actualizarCuentas();
         }
@@ -522,9 +562,15 @@ void Banco::realizarRetiro(){
             cuenta.dinero -= monto;
             if (cuenta.esDolar){
                 registrarDeposito(cuenta.dinero, "dolar", usuarioActual->getIdentificacion());
+                std::string registro = "Retiro, Usuario: " + std::to_string(usuarioActual->getIdentificacion()) +
+                                ", Cuenta: Dolar, tipo: Efectivo, monto: " + std::to_string(monto);
+                registrarTrasaccion(registro);
             }
             else{
                 registrarDeposito(cuenta.dinero, "colon", usuarioActual->getIdentificacion());
+                std::string registro = "Retiro, Usuario: " + std::to_string(usuarioActual->getIdentificacion()) +
+                                ", Cuenta: Colon, tipo: Efectivo, monto: " + std::to_string(monto);
+                registrarTrasaccion(registro);
             }
             actualizarCuentas();
         }
@@ -549,6 +595,10 @@ void Banco::depositoEntreCuentas(Cuenta cuentaDepositar, Cuenta cuentaRetirar){
         registrarDeposito(cuentaDepositar.dinero, "dolar", usuarioActual->getIdentificacion());
         registrarDeposito(cuentaRetirar.dinero, "colon", usuarioActual->getIdentificacion());
         actualizarCuentas();
+        std::string registro = "Deposito, Usuario: " + std::to_string(usuarioActual->getIdentificacion()) +
+                                ", Cuenta: Dolar, tipo: Entre Cuentas, monto: " + std::to_string(montoDolar) +
+                                ", retirado de: Cuenta Colon, monto: " + std::to_string(montoColon);
+        registrarTrasaccion(registro);
         }
         else{
             double montoDolar, montoColon;
@@ -565,6 +615,10 @@ void Banco::depositoEntreCuentas(Cuenta cuentaDepositar, Cuenta cuentaRetirar){
             registrarDeposito(cuentaDepositar.dinero, "colon", usuarioActual->getIdentificacion());
             registrarDeposito(cuentaRetirar.dinero, "dolar", usuarioActual->getIdentificacion());
             actualizarCuentas();
+            std::string registro = "Deposito, Usuario: " + std::to_string(usuarioActual->getIdentificacion()) +
+                                ", Cuenta: Colon, tipo: Entre Cuentas, monto: " + std::to_string(montoColon) +
+                                ", retirado de: Cuenta Dolar, monto: " + std::to_string(montoDolar);
+            registrarTrasaccion(registro);
         }
 }
 
@@ -730,6 +784,10 @@ void Banco::transferenciaEfectivo(Cuenta cuenta, unsigned long int identificacio
         if (cuenta.esDolar){
             cuenta.dinero += montoDolar;
             registrarDeposito(cuenta.dinero, "dolar", identificacionUsuarioTransferir);
+            std::string registro = "Transferencia, Origen : Usuario " + std::to_string(usuarioActual->getIdentificacion()) +
+                                ", Efectivo, Destino: Usuario " +  std::to_string(identificacionUsuarioTransferir) + "Cuenta: Dolar, Monto: " +
+                                std::to_string(montoDolar) + ", moneda: dolar" ;
+            registrarTrasaccion(registro);
             return;
         }
         else{
@@ -737,6 +795,10 @@ void Banco::transferenciaEfectivo(Cuenta cuenta, unsigned long int identificacio
             montoColon = convertirMoneda(montoDolar, false);
             cuenta.dinero += montoColon;
             registrarDeposito(cuenta.dinero, "colon", identificacionUsuarioTransferir);
+            std::string registro = "Transferencia, Origen : Usuario " + std::to_string(usuarioActual->getIdentificacion()) +
+                                    ", Efectivo, Destino: Usuario " +  std::to_string(identificacionUsuarioTransferir) + "Cuenta: Colon, Monto: " +
+                                    std::to_string(montoColon) + ", moneda: dolar" ;
+            registrarTrasaccion(registro);
             return;
         }
     }
@@ -749,11 +811,20 @@ void Banco::transferenciaEfectivo(Cuenta cuenta, unsigned long int identificacio
             montoDolar = convertirMoneda(montoColon, true);
             cuenta.dinero += montoDolar;
             registrarDeposito(cuenta.dinero, "dolar", identificacionUsuarioTransferir);
+            std::string registro = "Transferencia, Origen : Usuario " + std::to_string(usuarioActual->getIdentificacion()) +
+                                ", Efectivo, Destino: Usuario " +  std::to_string(identificacionUsuarioTransferir) + "Cuenta: Dolar, Monto: " +
+                                std::to_string(montoDolar) + ", moneda: Colon" ;
+            registrarTrasaccion(registro);
             return;
         }
         else{
             cuenta.dinero += montoColon;
             registrarDeposito(cuenta.dinero, "colon", identificacionUsuarioTransferir);
+            std::string registro = "Transferencia, Origen : Usuario " + std::to_string(usuarioActual->getIdentificacion()) +
+                                    ", Efectivo, Destino: Usuario " +  std::to_string(identificacionUsuarioTransferir) + "Cuenta: Colon, Monto: " +
+                                    std::to_string(montoColon) + ", moneda: dolar" ;
+            registrarTrasaccion(registro);
+            return;
         }
     }
 }
@@ -773,6 +844,10 @@ void Banco::transfereciaEntreCuentas(Cuenta cuentaDepositar, Cuenta cuentaRetira
             registrarDeposito(cuentaDepositar.dinero, "dolar", identificacionUsuarioTransferir);
             registrarDeposito(cuentaRetirar.dinero, "dolar", usuarioActual->getIdentificacion());
             actualizarCuentas();
+            std::string registro = "Transferencia, Origen : Usuario " + std::to_string(usuarioActual->getIdentificacion()) +
+                                    ", Cuenta: Dolar, Destino: Usuario " +  std::to_string(identificacionUsuarioTransferir) + ", Cuenta: Dolar, Monto: " +
+                                    std::to_string(montoDolar) + ", moneda: dolar" ;
+            registrarTrasaccion(registro);
         }
         else{
             double montoColon = convertirMoneda(montoDolar, false);
@@ -781,6 +856,10 @@ void Banco::transfereciaEntreCuentas(Cuenta cuentaDepositar, Cuenta cuentaRetira
             registrarDeposito(cuentaDepositar.dinero, "colon", identificacionUsuarioTransferir);
             registrarDeposito(cuentaRetirar.dinero, "dolar", usuarioActual->getIdentificacion());
             actualizarCuentas();
+            std::string registro = "Transferencia, Origen : Usuario " + std::to_string(usuarioActual->getIdentificacion()) +
+                                    ", Cuenta: Dolar, Monto: " + std::to_string(montoDolar) + ", Destino: Usuario " +  std::to_string(identificacionUsuarioTransferir) + 
+                                    ", Cuenta: Colon, Monto: " +std::to_string(montoColon) + ", moneda: Colon" ;
+            registrarTrasaccion(registro);
         }
     }
     else{
@@ -799,6 +878,10 @@ void Banco::transfereciaEntreCuentas(Cuenta cuentaDepositar, Cuenta cuentaRetira
             registrarDeposito(cuentaDepositar.dinero, "dolar", identificacionUsuarioTransferir);
             registrarDeposito(cuentaRetirar.dinero, "colon", usuarioActual->getIdentificacion());
             actualizarCuentas();
+            std::string registro = "Transferencia, Origen : Usuario " + std::to_string(usuarioActual->getIdentificacion()) +
+                                    ", Cuenta: Colon, Monto: " + std::to_string(montoColon) + ", Destino: Usuario " +  std::to_string(identificacionUsuarioTransferir) + 
+                                    ", Cuenta: Dolar, Monto: " +std::to_string(montoDolar) + ", moneda: Dolar" ;
+            registrarTrasaccion(registro);
         }
         else{
             cuentaDepositar.dinero +=montoColon;
@@ -806,6 +889,10 @@ void Banco::transfereciaEntreCuentas(Cuenta cuentaDepositar, Cuenta cuentaRetira
             registrarDeposito(cuentaDepositar.dinero, "colon", identificacionUsuarioTransferir);
             registrarDeposito(cuentaRetirar.dinero, "colon", usuarioActual->getIdentificacion());
             actualizarCuentas();
+            std::string registro = "Transferencia, Origen : Usuario " + std::to_string(usuarioActual->getIdentificacion()) +
+                                    ", Cuenta: Colon, Destino: Usuario " +  std::to_string(identificacionUsuarioTransferir) + 
+                                    ", Cuenta: Colon, Monto: " +std::to_string(montoColon) + ", moneda: Colon" ;
+            registrarTrasaccion(registro);
         }
     }
 }

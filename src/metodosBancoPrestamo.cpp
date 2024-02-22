@@ -150,7 +150,7 @@ void Banco::crearPrestamo(bool generico){
     /* Se genera el ID del prestamo. */
     std::string ID;
     if(!generico){
-        std::string primeros3 = std::to_string(this->usuarioActual->identificacion).substr(0, 3);
+        std::string primeros3 = std::to_string(this->usuarioActual->getIdentificacion()).substr(0, 3);
         ID = "P-" + primeros3 + "-" + std::to_string(this->contadorPrestamos);
     } else {
         ID = "TABLA";
@@ -172,7 +172,7 @@ void Banco::crearPrestamo(bool generico){
     /* Si no es generado por modo información general se guarda en el usuario. */
     if (!generico) {
         this->usuarioActual->setPrestamo(prestamo);
-        std::string registro = "Creacion Prestamo, Usuario: " + std::to_string((*this->usuarioActual).identificacion) +
+        std::string registro = "Creacion Prestamo, Usuario: " + std::to_string((*this->usuarioActual).getIdentificacion()) +
                                ", ID del prestamo: " + ID;
         registrarTrasaccion(registro);
     } else {
@@ -305,7 +305,7 @@ void Banco::pagarPrestamos(){
 
     if(aprovado){
         prestamo.pagarCuota();
-        std::string registro = "Pago de cuota de prestamo, Usuario: " + std::to_string((*this->usuarioActual).identificacion) +
+        std::string registro = "Pago de cuota de prestamo, Usuario: " + std::to_string((*this->usuarioActual).getIdentificacion()) +
                                 ", ID del prestamo: " + ID_P;
         registrarTrasaccion(registro);
     } else {
