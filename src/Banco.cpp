@@ -356,8 +356,10 @@ bool Banco::pagarCuotasCuentas(double monto, std::string moneda ){
                 }
             }
         }
+        return false;
     }
      catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
+        return false;
     }
 }

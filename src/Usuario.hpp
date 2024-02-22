@@ -17,7 +17,7 @@
 #include <fstream>
 #include <string>
 #include "Prestamos.hpp"
-#include "cdp.hpp"
+#include "Cdp.hpp"
 
 /**
  * @brief struct Cuenta, almacena la informacion de una cuenta del usuario
@@ -33,10 +33,11 @@ class Usuario{
         private:
         std::vector<Cuenta> cuentas;  /**< Vector que almacena las cuentas del usuario*/
 
-        std::string nombre; /**< String que representa el nombre del usuario*/
 
         unsigned long int identificacion; /**< Numero que indenfitica al usuario*/
 
+        std::string nombre; /**< String que representa el nombre del usuario*/
+        
         std::vector<Prestamos> prestamos; /**< Vector que almacena los Prestamos solicitados por el usuario*/
 
         std::vector<CDP> cdps; /**< Vector que almacena los cpds solicitados por el usuario*/

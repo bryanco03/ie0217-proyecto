@@ -322,6 +322,16 @@ class Banco{
     void crearPrestamo(bool generico = false);
 
     /**
+     * @brief Ingresa el monto del prestamo a las cuentas del usuario.
+     * 
+     * @param monto Monto del prestamo.
+     * @param moneda Tipo de moneda del prestamo.
+     * @return true Si se recibió el dinero.
+     * @return false Si no se recibió el dinero.
+     */
+    bool recibirPrestamo(double monto, std::string moneda);
+
+    /**
      * @brief Muestra la información de prestamos de un usuario.
      * 
      */

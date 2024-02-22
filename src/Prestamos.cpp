@@ -12,9 +12,10 @@ Prestamos::Prestamos(std::string ID, std::string tipo, double monto, std::string
     Si el prestamo no fue resultado de una busqueda/creación errónea.
     Se guarda en datos/Prestamos.csv 
     */
+   /*
     if(ID != "ERROR"){
         guardarCSV();
-    }
+    }*/
 }
 
 void Prestamos::generarCSV(){
@@ -166,7 +167,6 @@ void Prestamos::mostrarInfo(bool generico){
         /* El estado se determina según la cantidad de cuotas restantes. */
         std::string estado;
         if(this->getCuotasRestantes() <= 0){
-            std::cout << this->getCuotasRestantes() << std::endl;
             estado = "Pagado";
         } else {
             estado = "En proceso de pago";
