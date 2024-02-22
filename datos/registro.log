@@ -24,3 +24,6 @@ Registro de transacciones:
 21-02-2024 22:21:00 - Transferencia, Origen : Usuario 402610887, Efectivo, Destino: Usuario 1Cuenta: Colon, Monto: 51500.000000, moneda: dolar
 21-02-2024 22:22:45 - Transferencia, Origen : Usuario 402610887, Cuenta: Dolar, Destino: Usuario 1Cuenta: Dolar, Monto: 100.000000, moneda: dolar
 21-02-2024 22:23:06 - Transferencia, Origen : Usuario 402610887, Cuenta: Dolar, Monto: 100.000000Destino: Usuario 1Cuenta: Colon, Monto: 51500.000000, moneda: Colon
+22-02-2024 00:05:57 - Creacion de usuario, 7878
+22-02-2024 12:01:00 - Deposito , Usuario: 402610887, Cuenta: Colon, tipo: Efectivo, monto: 5150.000000
+22-02-2024 12:14:27 - Deposito, Usuario: 402610887, Cuenta: Colon, tipo: Entre Cuentas, monto: 800.000000, retirado de: Cuenta Dolar, monto: 1.553398

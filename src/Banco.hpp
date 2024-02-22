@@ -260,7 +260,7 @@ class Banco{
      *  
      */
 
-    void transfereciaEntreCuentas(Cuenta cuentaDepositar, Cuenta cuentaRetirar, unsigned long int identificacion);
+    void transferenciaEntreCuentas(Cuenta cuentaDepositar, Cuenta cuentaRetirar, unsigned long int identificacion);
 
     /**
      * @brief  Actualiza la información de los usuarios en el archivo CSV de usuarios.
