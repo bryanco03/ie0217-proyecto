@@ -245,14 +245,21 @@ CDP Banco::leerCDP(std::string idCDP){
 }
 
 void Banco::cargarCDPs(std::string idCDPs){
+    /* Si el usuario no posee CDPs se retorna. */
     if(idCDPs == " "){
         return;
     }
+
+    /* Se lee el string de ids. */
     std::stringstream streamID(idCDPs);
     std::string id;
 
+    /* Se parsea el string de ids. */
     while(std::getline(streamID, id, ' ')){
+        /* Se busca el CDP del id. */
         CDP cdp = this->leerCDP(id);
+
+        /* Si se encontró un CDP con el id se asigna al vector CDPs. */
         if(cdp.getID() != "ERROR"){
             this->usuarioActual->setCdp(cdp);
         }

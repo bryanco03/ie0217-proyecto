@@ -1,4 +1,4 @@
-# include "Cdp.hpp"
+#include "Cdp.hpp"
 
 CDP::CDP(double monto, float tasaIntereses, double duracionAnnos, std::string ID, std::string moneda){
 
@@ -54,18 +54,23 @@ void CDP::guardarCSV(){
     std::string linea, ID_CSV;
     bool encontrado = false;
 
+    /* Se lee cada linea del archivo. */
     while(std::getline(viejo, linea)){
+        /* Se obtiene el id de la linea. */
         ID_CSV = linea.substr(0, linea.find(','));
+        /* Si se encuentra el mismo id del prestamo se actualiza. */
         if(ID_CSV == this->ID){
             nuevo << this->ID << "," << this->monto << ","
                   << this->tasaIntereses << "," << this->duracionAnnos << ","
                   << this->montoGanado << "," << this->moneda << std::endl;
             encontrado = true;
         } else {
-        nuevo << linea << std::endl;
+            /* Si no se encuentra se mantiene la linea. */
+            nuevo << linea << std::endl;
         }
     }
 
+    /* Si no se encontró se agrega al final. */
     if(!encontrado){
         nuevo << this->ID << "," << this->monto << ","
               << this->tasaIntereses << "," << this->duracionAnnos << ","

@@ -24,10 +24,8 @@ class Prestamos{
         int duracionMeses;      /**< Cantidad de meses a pagar de cuotas. */
         int cuotasPagadas = 0;  /**< Cantidad de cuotas ya pagadas del Prestamo. */
         double cuotaMensual;    /**< Cuota mensual a pagar. */
-        
 
     public:
-        std::string estado;     /**< Estado del Prestamo: En proceso de pago o Pagado. */
 
         /**
          * @brief Constructor que inicializa un prestamo.
@@ -87,6 +85,13 @@ class Prestamos{
          * @return std::string dolares o colones.
          */
         std::string getMoneda();
+
+        /**
+         * @brief Método para imprimir la cantidad de cuotas que falta de pagar.
+         * 
+         * @return int Cantidad de cuotas que restantes.
+         */
+        int getCuotasRestantes();
 };
 
 #endif

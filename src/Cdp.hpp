@@ -16,6 +16,14 @@
  * @brief CDP: Clase que recibe los atributos para calcular las ganacias por un CDP
 */
 class CDP {
+    private:
+        double monto;           /**< Se almacenara el monto a invertir en el CDP. */
+        float tasaIntereses;    /**< Se almacenara la tasa de intereses que se ganara. */
+        double duracionAnnos;   /**< Se almacenara la cantidad de meses que durara el CDP */
+        double montoGanado;     /**< Se almacenara el monto que ganara el cliente. */
+        std::string ID;         /**< Número ID del CDP. */
+        std::string moneda;     /**< Tipo de moneda usada para el CDP. */
+
     public:
         /**
         * @brief CDP: Constructor de la clase CDP, el mismo constructor calcula el monto final
@@ -81,16 +89,6 @@ class CDP {
          * @return std::string "dolar" o "colon"
          */
         std::string getMoneda();
-
-        
-
-    protected:
-        double monto;           /**< Se almacenara el monto a invertir en el CDP. */
-        float tasaIntereses;    /**< Se almacenara la tasa de intereses que se ganara. */
-        double duracionAnnos;   /**< Se almacenara la cantidad de meses que durara el CDP */
-        double montoGanado;     /**< Se almacenara el monto que ganara el cliente. */
-        std::string ID;         /**< Número ID del CDP. */
-        std::string moneda;     /**< Tipo de moneda usada para el CDP. */
 };
 
 #endif
