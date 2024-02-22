@@ -33,15 +33,6 @@ void Usuario::setCdp(CDP cdp){
     cdps.push_back(cdp);
 }
 
-bool Usuario::verificarDinero(double dinero){
-    for( auto& cuenta : cuentas){
-        if (cuenta.dinero >= dinero){
-            return true;
-        }
-    }
-    return false;
-}
-
 void Usuario::registrarUsuario(){
         std::ofstream archivo("datos/usuarios.csv", std::ios_base::app); // Modo de apertura para añadir al final del archivo
     if (!archivo.is_open()) {

@@ -7,3 +7,23 @@ Registro de transacciones:
 20-02-2024 22:30:05 - Creacion CDP, Usuario: 402610887, ID: C-402-0
 20-02-2024 22:30:57 - Pago de cuota de prestamo, Usuario: 402610887, ID del prestamo: P-402-0
 20-02-2024 22:45:38 - Creacion CDP, Usuario: 402610887, ID: C-402-1
+21-02-2024 18:05:28 - Creacion de usuario, 8932
+21-02-2024 21:20:42 - Creacion de usuario, 7743
+21-02-2024 21:20:48 - Creacion Cuenta, Usuario: 7743 Moneda: Dolar
+21-02-2024 21:23:22 - Creacion Cuenta, Usuario: 7743 Moneda: Colon
+21-02-2024 21:32:53 - Deposito , Usuario: 402610887, Cuenta: Dolar, tipo: Efectivo, monto: 300.000000
+21-02-2024 21:33:50 - Deposito , Usuario: 402610887, Cuenta: Dolar, tipo: Efectivo, monto: 174.757282
+21-02-2024 21:34:43 - Deposito , Usuario: 402610887, Cuenta: Colon, tipo: Efectivo, monto: 463500.000000
+21-02-2024 21:35:26 - Deposito , Usuario: 402610887, Cuenta: Colon, tipo: Efectivo, monto: 900.000000
+21-02-2024 22:17:00 - Deposito, Usuario: 402610887, Cuenta: Dolar, tipo: Efectivo, monto: 100.000000
+21-02-2024 22:17:40 - Deposito, Usuario: 402610887, Cuenta: Colon, tipo: Entre Cuentas, monto: 10000.000000, retirado de: Cuenta Dolar, monto: 19.417476
+21-02-2024 22:18:13 - Deposito, Usuario: 402610887, Cuenta: Colon, tipo: Entre Cuentas, monto: 10000.000000, retirado de: Cuenta Dolar, monto: 19.417476
+21-02-2024 22:18:37 - Deposito, Usuario: 402610887, Cuenta: Dolar, tipo: Entre Cuentas, monto: 200.000000, retirado de: Cuenta Colon, monto: 103000.000000
+21-02-2024 22:19:01 - Retiro, Usuario: 402610887, Cuenta: Dolar, tipo: Efectivo, monto: 100.000000
+21-02-2024 22:19:12 - Retiro, Usuario: 402610887, Cuenta: Colon, tipo: Entre Efectivo, monto: 10000.000000
+21-02-2024 22:21:00 - Transferencia, Origen : Usuario 402610887, Efectivo, Destino: Usuario 1Cuenta: Colon, Monto: 51500.000000, moneda: dolar
+21-02-2024 22:22:45 - Transferencia, Origen : Usuario 402610887, Cuenta: Dolar, Destino: Usuario 1Cuenta: Dolar, Monto: 100.000000, moneda: dolar
+21-02-2024 22:23:06 - Transferencia, Origen : Usuario 402610887, Cuenta: Dolar, Monto: 100.000000Destino: Usuario 1Cuenta: Colon, Monto: 51500.000000, moneda: Colon
+22-02-2024 00:05:57 - Creacion de usuario, 7878
+22-02-2024 12:01:00 - Deposito , Usuario: 402610887, Cuenta: Colon, tipo: Efectivo, monto: 5150.000000
+22-02-2024 12:14:27 - Deposito, Usuario: 402610887, Cuenta: Colon, tipo: Entre Cuentas, monto: 800.000000, retirado de: Cuenta Dolar, monto: 1.553398

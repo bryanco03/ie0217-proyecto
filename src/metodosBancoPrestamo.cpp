@@ -25,7 +25,7 @@ Prestamos opcionesPrestamo(const double monto, std::string moneda, const int tip
         intereses.insert(intereses.end(), {13, 7, 5});
     }
 
-    /* Se imprime menu de opciones según el tipo. */
+    /* Se imprime menú de opciones según el tipo. */
     std::cout << "Escoja una de las siguientes opciones:" << std::endl
               << "1. " << meses[0] << " meses a " << intereses[0] << "% de interes." << std::endl
               << "2. " << meses[1] << " meses a " << intereses[1] << "% de interes." << std::endl
@@ -35,13 +35,17 @@ Prestamos opcionesPrestamo(const double monto, std::string moneda, const int tip
     std::string input;
     std::cin >> input;
 
+    /* Manejo de errores. */
     if(isNum(input)){
         opcion = std::stoi(input);
     }
 
+    /* Se crea el objeto Prestamos según las elecciones hechas. */
     switch (opcion) {
     case -1:
         return Prestamos("ERROR", "", 0, "", 0, 0);
+        break;
+
     case 1:
         return Prestamos(ID, tipos[tipo - 1], monto, moneda, intereses[0], meses[0]);
         break;
@@ -53,6 +57,7 @@ Prestamos opcionesPrestamo(const double monto, std::string moneda, const int tip
     case 3:
         return Prestamos(ID, tipos[tipo - 1], monto, moneda, intereses[2], meses[2]);
         break;
+
     default:
         return Prestamos("ERROR", "", 0, "", 0, 0);
         break;
@@ -98,14 +103,21 @@ Prestamos Banco::leerPrestamo(std::string idPrestamo){
 }
 
 void Banco::cargarPrestamos(std::string idPrestamos){
+    /* Si el usuario no posee prestamos se retorna. */
     if(idPrestamos == " "){
         return;
     }
+
+    /* Se lee el string de ids. */
     std::stringstream streamID(idPrestamos);
     std::string id;
 
+    /* Se parsea el string de ids. */
     while(std::getline(streamID, id, ' ')){
+        /* Se busca el prestamo del id. */
         Prestamos prestamo = this->leerPrestamo(id);
+
+        /* Si se encontró un prestamo con el id se asigna al vector prestamos. */
         if(prestamo.getID() != "ERROR"){
             this->usuarioActual->setPrestamo(prestamo);
         }
@@ -150,7 +162,7 @@ void Banco::crearPrestamo(bool generico){
     /* Se genera el ID del prestamo. */
     std::string ID;
     if(!generico){
-        std::string primeros3 = std::to_string(this->usuarioActual->identificacion).substr(0, 3);
+        std::string primeros3 = std::to_string(this->usuarioActual->getIdentificacion()).substr(0, 3);
         ID = "P-" + primeros3 + "-" + std::to_string(this->contadorPrestamos);
     } else {
         ID = "TABLA";
@@ -166,16 +178,18 @@ void Banco::crearPrestamo(bool generico){
         return;
     }
     
+    /* Se guarda en datos/Prestamos.csv */
     prestamo.generarCSV();
     std::cout << "Tabla de prestamo generada en " << ID << ".csv." << std::endl;
 
     /* Si no es generado por modo información general se guarda en el usuario. */
     if (!generico) {
         this->usuarioActual->setPrestamo(prestamo);
-        std::string registro = "Creacion Prestamo, Usuario: " + std::to_string((*this->usuarioActual).identificacion) +
+        std::string registro = "Creacion Prestamo, Usuario: " + std::to_string(this->usuarioActual->getIdentificacion()) +
                                ", ID del prestamo: " + ID;
         registrarTrasaccion(registro);
     } else {
+        /* Si es de modo información general se notifica al usuario. */
         std::string registro = "Creacion tabla de Prestamo en modo información general";
         registrarTrasaccion(registro);
     }
@@ -189,31 +203,26 @@ void Banco::mostrarInfoPrestamos(){
 
     /* Caso donde se ven los prestamos propios. */
     if(idUsuario == "Yo"){
-
-        if(this->usuarioActual->getPrestamos().size() == 0){
-            std::cout << "\nUsted no posee prestamos actualmente." << std::endl;
-            return;
-        }
-
-        std::cout << "\n-----Informacion de sus prestamos-----" << std::endl;
-        for(auto& prestamo: this->usuarioActual->getPrestamos()){
-            prestamo.mostrarInfo();
-        }
-        return;
+        idUsuario = std::to_string(this->usuarioActual->getIdentificacion());
     }
 
-    /* Prestamos del nombre dado. */
+    /* Prestamos del id dado. */
     std::string idCSV, linea, sinNombre, columna, idPrestamos, id;
     std::ifstream database("datos\\usuarios.csv");
     bool encontrado = false;
 
+    /* Se buscan los id de prestamos del usuario. */
     while(std::getline(database, linea)){
+        /* Se extrae el id del usuario. */
         sinNombre = linea.substr(linea.find(',') + 1);
         idCSV = sinNombre.substr(0, sinNombre.find(','));
+
+        /* Se busca la línea con la info del usuario. */
         if(idCSV == idUsuario){
             encontrado = true;
             int i = 0;
             std::stringstream datos(linea);
+            /* Se extrae solo la columna relevante. */
             while(std::getline(datos, columna, ',')){
                 if(i == 6){
                     idPrestamos = columna;
@@ -224,16 +233,19 @@ void Banco::mostrarInfoPrestamos(){
     }
     database.close();
 
+    /* Si no se encontró el usuario en dat0s/usuarios.csv */
     if(!encontrado){
         std::cout << "Id de usuario no encontrado." << std::endl;
         return;
     }
 
+    /* Si el usuario no posee prestamos se notifica. */
     if(idPrestamos == " "){
         std::cout << "\nEste cliente no posee prestamos actualmente." << std::endl;
         return;
     }
 
+    /* Si se encontraron ids se leen y se muestran. */
     std::stringstream idParseados(idPrestamos);
     while(std::getline(idParseados, id, ' ')){
         Prestamos prestamo = this->leerPrestamo(id);
@@ -262,7 +274,7 @@ void Banco::pagarPrestamos(){
 
     /* Se obtiene el monto, si ya ha sido pagado se retorna. */
     double cuotaMensual = prestamo.getCuota();
-    if(cuotaMensual == -1){
+    if(prestamo.getCuotasRestantes() <= 0){
         std::cout << "Prestamo ya ha sido pagado completamente." << std::endl;
         return;
     }
@@ -272,7 +284,19 @@ void Banco::pagarPrestamos(){
 
     /* Se maneja el pago. */
     bool aprovado = false;
-    std::cout << "La cuota a pagar es: " << cuotaMensual << " " << prestamo.getMoneda() << "es." << std::endl;
+    std::cout << "La cuota a pagar es: " << cuotaMensual << " " << prestamo.getMoneda() << "es." 
+              << " Aun se deben pagar " << prestamo.getCuotasRestantes() << " cuotas." << std::endl;
+
+    std::cout << "Cuantas cuotas desea pagar?: ";
+    std::string inputCantidad; std::cin >> inputCantidad;
+
+    if(!isNum(inputCantidad) || std::stoi(inputCantidad) > prestamo.getCuotasRestantes() || std::stoi(inputCantidad) <= 0){
+        std::cout << "Cantidad de cuotas a pagar debe ser entero mayor a 0, menor a la cantidad restantes" << std::endl;
+        return;
+    }
+    int cantidadPagos = std::stoi(inputCantidad);
+
+
     std::cout << "Ingrese el metodo de pago:" << std::endl
                 << "1. Efectivo. " << std::endl
                 << "2. Fondos en las cuentas. " << std::endl
@@ -294,7 +318,7 @@ void Banco::pagarPrestamos(){
         aprovado = true;
         break;
     case 2:
-        aprovado = pagarCuotasCuentas(cuotaMensual, moneda);
+        aprovado = pagarCuotasCuentas(cuotaMensual * cantidadPagos, moneda);
         break;
     case 3:
         return;
@@ -303,9 +327,12 @@ void Banco::pagarPrestamos(){
         break;
     }
 
+    /* Si el pago fue aprovado se paga la cuota. */
     if(aprovado){
-        prestamo.pagarCuota();
-        std::string registro = "Pago de cuota de prestamo, Usuario: " + std::to_string((*this->usuarioActual).identificacion) +
+        for(int i = 0; i < cantidadPagos; ++i){
+            prestamo.pagarCuota();
+        }
+        std::string registro = "Pago de " + std::to_string(cantidadPagos) + " cuota/s de prestamo, Usuario: " + std::to_string(this->usuarioActual->getIdentificacion()) +
                                 ", ID del prestamo: " + ID_P;
         registrarTrasaccion(registro);
     } else {

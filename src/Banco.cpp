@@ -3,77 +3,89 @@
 std::string HoraActual();
 
 void Banco::menuAtencionCliente(){
-    int opcion;
-    if (usuarioLogeado){
-        cargarDatosUsuario();
-        iniciarContadores();
-
-    }
-    while (1){
+    try{
+        int opcion;
         if (usuarioLogeado){
-            std::cout << "\nBienvenido, " << usuarioActual->getNombre() << std::endl;
-            std::cout << "1. Crear una cuenta"<< std::endl;
-            std::cout << "2. Realizar un deposito"<< std::endl;
-            std::cout << "3. Realizar un retiro"<< std::endl;
-            std::cout << "4. Realizar una transferencia"<< std::endl;
-            std::cout << "5. Pagar Cuotas de prestamo"<< std::endl;
-            std::cout << "6. Solicitar Prestamo"<< std::endl;
-            std::cout << "7. Solicitar certificado de plazo"<< std::endl;
-            std::cout << "8. Mostrar informacion de prestamos" << std::endl;
-            std::cout << "9. Mostrar informacion de Cuentas" << std::endl;
-            std::cout << "10. Mostrar informacion de CDP" << std::endl;
-            std::cout << "11. Atras"<< std::endl; 
-            std::cout << "Ingrese una opcion: ";
-            std::cin >> opcion;
+            cargarDatosUsuario();
+            iniciarContadores();
 
-            switch (opcion){
-            case 1:
-                crearCuenta();
-                break;
-            case 2:
-                realizarDeposito();
-                break;
-            case 3:
-                realizarRetiro();
-                break;
-            case 4:
-                realizarTransaccion();
-                break;
-            case 5:
-                pagarPrestamos();
-                break;
-            case 6:
-                crearPrestamo();
-                actualizarUsuarios();
-                break;
-            case 7:
-                crearCDP();
-                actualizarUsuarios();
-                break;
-            case 8:
-                mostrarInfoPrestamos();
-                break;
-            case 9:
-                mostrarInfoCuentas(usuarioActual->getCuentas());
-                break;
-            case 10:
-                mostrarInfoCDP();
-                break;
-            case 11:
-                delete usuarioActual;
-                return;
-                break;
-            default:
-                break;
+        }
+        while (1){
+            if (usuarioLogeado){
+                std::cout << "\nBienvenido, " << usuarioActual->getNombre() << std::endl;
+                std::cout << "1. Crear una cuenta"<< std::endl;
+                std::cout << "2. Realizar un deposito"<< std::endl;
+                std::cout << "3. Realizar un retiro"<< std::endl;
+                std::cout << "4. Realizar una transferencia"<< std::endl;
+                std::cout << "5. Pagar Cuotas de prestamo"<< std::endl;
+                std::cout << "6. Solicitar Prestamo"<< std::endl;
+                std::cout << "7. Solicitar certificado de plazo"<< std::endl;
+                std::cout << "8. Mostrar informacion de prestamos" << std::endl;
+                std::cout << "9. Mostrar informacion de Cuentas" << std::endl;
+                std::cout << "10. Mostrar informacion de CDP" << std::endl;
+                std::cout << "11. Atras"<< std::endl; 
+                std::cout << "Ingrese una opcion: ";
+                std::cin >> opcion;
+
+                if (std::cin.fail()){
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    throw  std::invalid_argument("Se ingreso un tipo de dato invalido.");
+                }
+
+                switch (opcion){
+                case 1:
+                    crearCuenta();
+                    break;
+                case 2:
+                    realizarDeposito();
+                    break;
+                case 3:
+                    realizarRetiro();
+                    break;
+                case 4:
+                    realizarTransaccion();
+                    break;
+                case 5:
+                    pagarPrestamos();
+                    break;
+                case 6:
+                    crearPrestamo();
+                    actualizarUsuarios();
+                    break;
+                case 7:
+                    crearCDP();
+                    actualizarUsuarios();
+                    break;
+                case 8:
+                    mostrarInfoPrestamos();
+                    break;
+                case 9:
+                    mostrarInfoCuentas(usuarioActual->getCuentas());
+                    break;
+                case 10:
+                    mostrarInfoCDP();
+                    break;
+                case 11:
+                    delete usuarioActual;
+                    return;
+                    break;
+                default:
+                    break;
+                }
+            }
+            else{
+            std::cout<<"Error, no se pudo loggear ningun usuario"<<std::endl;
+            return;
+            break;
             }
         }
-        else{
-        std::cout<<"Error, no se pudo loggear ningun usuario"<<std::endl;
-        break;
-        }
+        delete usuarioActual;
     }
-    delete usuarioActual;
-
+    catch (const std::exception& e) {
+        delete usuarioActual;
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
 }
 
 void Banco::menuInformacionGeneral(){
@@ -219,120 +231,133 @@ bool isNum(const std::string input){
 
 
 bool Banco::pagarCuotasCuentas(double monto, std::string moneda ){
-    if (usuarioActual->getCuentas().size() == 0){
-        std::cout<<"No posees ninguna cuenta para realizar el pago" << std::endl;
-        return false;
-    }
-    else if(usuarioActual->getCuentas().size() == 1){
-        Cuenta cuenta = usuarioActual->getCuentas()[0];
-        if (cuenta.esDolar){
-            if (moneda == "dolar"){
-                if( monto > cuenta.dinero){
-                    std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
-                    return false;
-                }
-                cuenta.dinero -= monto;
-                registrarDeposito(cuenta.dinero, "dolar", usuarioActual->getIdentificacion());
-                actualizarCuentas();
-                return true;
-            }
-            else if (moneda == "colon"){
-                double montoDolar =  convertirMoneda(monto, true);
-                if (montoDolar > cuenta.dinero){
-                    std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
-                    return false;
-                }
-                cuenta.dinero -= montoDolar;
-                registrarDeposito(cuenta.dinero, "dolar", usuarioActual->getIdentificacion());
-                actualizarCuentas();
-                return true;
-            }
-        }
-        else{
-            if (moneda == "dolar"){
-                double montoColon = convertirMoneda(monto, false);
-                if( montoColon > cuenta.dinero){
-                    std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
-                    return false;
-                }
-                cuenta.dinero -= montoColon;
-                registrarDeposito(cuenta.dinero, "colon", usuarioActual->getIdentificacion());
-                actualizarCuentas();
-                return true;
-            }
-            else if (moneda == "colon"){
-                if (monto > cuenta.dinero){
-                    std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
-                    return false;
-                }
-                cuenta.dinero -= monto;
-                registrarDeposito(cuenta.dinero, "colon", usuarioActual->getIdentificacion());
-                actualizarCuentas();
-                return true;
-            }
-        }
-    }
-    else if (usuarioActual->getCuentas().size() == 2){
-        int opcionCuenta;
-        mostrarInfoCuentas(usuarioActual->getCuentas());
-        std::cout << "Con Cual Cuenta deseas realizar el pago: ";
-        std::cin >> opcionCuenta;
-        Cuenta cuenta;
-        if (opcionCuenta == 1){
-            cuenta = usuarioActual->getCuentas()[0];
-        }
-        else if (opcionCuenta == 2){
-            cuenta = usuarioActual->getCuentas()[1];
-        }
-        else{
-            std::cout << "Opcion desconocida" << std::endl;
+    try{
+
+        
+        if (usuarioActual->getCuentas().size() == 0){
+            std::cout<<"No posees ninguna cuenta para realizar el pago" << std::endl;
             return false;
         }
-        if (cuenta.esDolar){
-            if (moneda == "dolar"){
-                if( monto > cuenta.dinero){
-                    std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
-                    return false;
+        else if(usuarioActual->getCuentas().size() == 1){
+            Cuenta cuenta = usuarioActual->getCuentas()[0];
+            if (cuenta.esDolar){
+                if (moneda == "dolar"){
+                    if( monto > cuenta.dinero){
+                        std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
+                        return false;
+                    }
+                    cuenta.dinero -= monto;
+                    registrarDeposito(cuenta.dinero, "dolar", usuarioActual->getIdentificacion());
+                    actualizarCuentas();
+                    return true;
                 }
-                cuenta.dinero -= monto;
-                registrarDeposito(cuenta.dinero, "dolar", usuarioActual->getIdentificacion());
-                actualizarCuentas();
-                return true;
+                else if (moneda == "colon"){
+                    double montoDolar =  convertirMoneda(monto, true);
+                    if (montoDolar > cuenta.dinero){
+                        std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
+                        return false;
+                    }
+                    cuenta.dinero -= montoDolar;
+                    registrarDeposito(cuenta.dinero, "dolar", usuarioActual->getIdentificacion());
+                    actualizarCuentas();
+                    return true;
+                }
             }
-            else if (moneda == "colon"){
-                double montoDolar =  convertirMoneda(monto, true);
-                if (montoDolar > cuenta.dinero){
-                    std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
-                    return false;
+            else{
+                if (moneda == "dolar"){
+                    double montoColon = convertirMoneda(monto, false);
+                    if( montoColon > cuenta.dinero){
+                        std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
+                        return false;
+                    }
+                    cuenta.dinero -= montoColon;
+                    registrarDeposito(cuenta.dinero, "colon", usuarioActual->getIdentificacion());
+                    actualizarCuentas();
+                    return true;
                 }
-                cuenta.dinero -= montoDolar;
-                registrarDeposito(cuenta.dinero, "dolar", usuarioActual->getIdentificacion());
-                actualizarCuentas();
-                return true;
+                else if (moneda == "colon"){
+                    if (monto > cuenta.dinero){
+                        std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
+                        return false;
+                    }
+                    cuenta.dinero -= monto;
+                    registrarDeposito(cuenta.dinero, "colon", usuarioActual->getIdentificacion());
+                    actualizarCuentas();
+                    return true;
+                }
             }
         }
-        else{
-            if (moneda == "dolar"){
-                double montoColon = convertirMoneda(monto, false);
-                if( montoColon > cuenta.dinero){
-                    std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
-                    return false;
-                }
-                cuenta.dinero -= montoColon;
-                registrarDeposito(cuenta.dinero, "colon", usuarioActual->getIdentificacion());
-                actualizarCuentas();
-                return true;
+        else if (usuarioActual->getCuentas().size() == 2){
+            int opcionCuenta;
+            mostrarInfoCuentas(usuarioActual->getCuentas());
+            std::cout << "Con Cual Cuenta deseas realizar el pago: ";
+            std::cin >> opcionCuenta;
+             if (std::cin.fail()){
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                throw  std::invalid_argument("Se ingreso un tipo de dato invalido.");
+
             }
-            else if (moneda == "colon"){
-                if (monto > cuenta.dinero){
-                    std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
-                    return false;
+            Cuenta cuenta;
+            if (opcionCuenta == 1){
+                cuenta = usuarioActual->getCuentas()[0];
+            }
+            else if (opcionCuenta == 2){
+                cuenta = usuarioActual->getCuentas()[1];
+            }
+            else{
+                std::cout << "Opcion desconocida" << std::endl;
+                return false;
+            }
+            if (cuenta.esDolar){
+                if (moneda == "dolar"){
+                    if( monto > cuenta.dinero){
+                        std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
+                        return false;
+                    }
+                    cuenta.dinero -= monto;
+                    registrarDeposito(cuenta.dinero, "dolar", usuarioActual->getIdentificacion());
+                    actualizarCuentas();
+                    return true;
                 }
-                cuenta.dinero -= monto;
-                registrarDeposito(cuenta.dinero, "colon", usuarioActual->getIdentificacion());
-                actualizarCuentas();
-                return true;
+                else if (moneda == "colon"){
+                    double montoDolar =  convertirMoneda(monto, true);
+                    if (montoDolar > cuenta.dinero){
+                        std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
+                        return false;
+                    }
+                    cuenta.dinero -= montoDolar;
+                    registrarDeposito(cuenta.dinero, "dolar", usuarioActual->getIdentificacion());
+                    actualizarCuentas();
+                    return true;
+                }
+            }
+            else{
+                if (moneda == "dolar"){
+                    double montoColon = convertirMoneda(monto, false);
+                    if( montoColon > cuenta.dinero){
+                        std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
+                        return false;
+                    }
+                    cuenta.dinero -= montoColon;
+                    registrarDeposito(cuenta.dinero, "colon", usuarioActual->getIdentificacion());
+                    actualizarCuentas();
+                    return true;
+                }
+                else if (moneda == "colon"){
+                    if (monto > cuenta.dinero){
+                        std::cout << "No posees con el sufiente dinero para pagar la cuota del prestamo"<< std::endl;
+                        return false;
+                    }
+                    cuenta.dinero -= monto;
+                    registrarDeposito(cuenta.dinero, "colon", usuarioActual->getIdentificacion());
+                    actualizarCuentas();
+                    return true;
+                }
             }
         }
+    }
+     catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
     }
 }

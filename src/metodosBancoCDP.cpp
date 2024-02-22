@@ -106,7 +106,7 @@ void Banco::crearCDP(){
     }
 
     /* Se genera el ID del CDP. */
-    std::string primeros3 = std::to_string((*this->usuarioActual).identificacion).substr(0, 3);
+    std::string primeros3 = std::to_string((*this->usuarioActual).getIdentificacion()).substr(0, 3);
     std::string ID = "C-" + primeros3 + "-" + std::to_string(this->contadorCDP);
 
     /* Se aumenta contador de CDPs. */
@@ -201,7 +201,7 @@ void Banco::mostrarInfoCDP(){
     
     std::cout << "\n-----Informacion de sus certificados a plazo-----" << std::endl;
     /* Se imprimen los certificados a plazo del usuario que este loggeado en el sistema */
-    for(auto& cdp: this->usuarioActual->cdps){
+    for(auto& cdp: this->usuarioActual->getCdps()){
         /* Se imprime la informacion del CDP */
         std::cout << "ID del CDP: " << cdp.getID() <<
         ", Monto ingresado: " << cdp.getMonto() << ", Tasa de intereses: " <<
@@ -245,14 +245,21 @@ CDP Banco::leerCDP(std::string idCDP){
 }
 
 void Banco::cargarCDPs(std::string idCDPs){
+    /* Si el usuario no posee CDPs se retorna. */
     if(idCDPs == " "){
         return;
     }
+
+    /* Se lee el string de ids. */
     std::stringstream streamID(idCDPs);
     std::string id;
 
+    /* Se parsea el string de ids. */
     while(std::getline(streamID, id, ' ')){
+        /* Se busca el CDP del id. */
         CDP cdp = this->leerCDP(id);
+
+        /* Si se encontró un CDP con el id se asigna al vector CDPs. */
         if(cdp.getID() != "ERROR"){
             this->usuarioActual->setCdp(cdp);
         }
