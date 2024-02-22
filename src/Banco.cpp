@@ -69,6 +69,7 @@ void Banco::menuAtencionCliente(){
         }
         else{
         std::cout<<"Error, no se pudo loggear ningun usuario"<<std::endl;
+        return;
         break;
         }
     }

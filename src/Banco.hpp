@@ -24,12 +24,27 @@
 bool isNum(std::string input);
 
 class Banco{
+    public:
+    void loggearUsuario();
+    void menuAtencionCliente();
+
+    /**
+    * @brief Generar el menú del modo de información general.
+    * 
+    */
+    void menuInformacionGeneral();
+
+    /**
+     * @brief Crear archivos de registro (usuarios.csv, Prestamos.csv, etc) si no existen.
+     * 
+     */
+    void iniciarArchivos();
+
+
     private:
     Usuario* usuarioActual;     /**< Puntero a usuario que esta iniciado en la sesión. */
     int contadorCDP;            /**Contador para ID de los CDP*/
     int contadorPrestamos;      /**< Contador para ID de prestamos. */
-
-    public:
     bool usuarioLogeado;        /**< */
 
     /*************************************************
@@ -44,28 +59,14 @@ class Banco{
      */
     void iniciarContadores();
 
-    /**
-     * @brief Crear archivos de registro (usuarios.csv, Prestamos.csv, etc) si no existen.
-     * 
-     */
-    void iniciarArchivos();
-
-
     void cargarDatosUsuario();
     std::vector<std::string> obtenerDatos();
-    void menuAtencionCliente();
 
     /**
      * @brief Actualizar datos de un usuario en datos/usuarios.csv
      * 
      */
     void actualizarUsuarios();
-
-    /**
-     * @brief Generar el menú del modo de información general.
-     * 
-     */
-    void menuInformacionGeneral();
 
     /**
      * @brief Registrar una transacción hecha en datos/registro.log
@@ -80,7 +81,6 @@ class Banco{
             Métodos relacionados a usuarios
     
     **************************************************/
-    void loggearUsuario();
     bool verificarIdentificacionNombreEnCSV(unsigned long int identificacionBuscada, std::string nombreBuscar);
     bool verificarIdentificacioEnCSV(unsigned long int identificacionBuscada);
 

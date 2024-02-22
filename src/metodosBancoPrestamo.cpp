@@ -203,17 +203,7 @@ void Banco::mostrarInfoPrestamos(){
 
     /* Caso donde se ven los prestamos propios. */
     if(idUsuario == "Yo"){
-        /* Si no posee prestamos se notifica. */
-        if(this->usuarioActual->getPrestamos().size() == 0){
-            std::cout << "\nUsted no posee prestamos actualmente." << std::endl;
-            return;
-        }
-        /* Se muestran los prestamos. */
-        std::cout << "\n-----Informacion de sus prestamos-----" << std::endl;
-        for(auto& prestamo: this->usuarioActual->getPrestamos()){
-            prestamo.mostrarInfo();
-        }
-        return;
+        idUsuario = std::to_string(this->usuarioActual->getIdentificacion());
     }
 
     /* Prestamos del id dado. */
@@ -295,9 +285,9 @@ void Banco::pagarPrestamos(){
     /* Se maneja el pago. */
     bool aprovado = false;
     std::cout << "La cuota a pagar es: " << cuotaMensual << " " << prestamo.getMoneda() << "es." 
-              << "Aun se deben pagar " << prestamo.getCuotasRestantes() << " cuotas." << std::endl;
+              << " Aun se deben pagar " << prestamo.getCuotasRestantes() << " cuotas." << std::endl;
 
-    std::cout << "¿Cuantas cuotas desea pagar?: ";
+    std::cout << "Cuantas cuotas desea pagar?: ";
     std::string inputCantidad; std::cin >> inputCantidad;
 
     if(!isNum(inputCantidad) || std::stoi(inputCantidad) > prestamo.getCuotasRestantes() || std::stoi(inputCantidad) <= 0){

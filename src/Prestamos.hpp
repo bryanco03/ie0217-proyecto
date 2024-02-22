@@ -24,7 +24,6 @@ class Prestamos{
         int duracionMeses;      /**< Cantidad de meses a pagar de cuotas. */
         int cuotasPagadas = 0;  /**< Cantidad de cuotas ya pagadas del Prestamo. */
         double cuotaMensual;    /**< Cuota mensual a pagar. */
-        std::string estado;     /**< Estado del Prestamo: En proceso de pago o Pagado. */
 
     public:
 

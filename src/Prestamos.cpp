@@ -3,13 +3,7 @@
 Prestamos::Prestamos(std::string ID, std::string tipo, double monto, std::string moneda, float tasaInteres, int duracionMeses, int cuotasPagadas /*= 0*/)
     : ID(ID), tipo(tipo), monto(monto), moneda(moneda), tasaInteres(tasaInteres), duracionMeses(duracionMeses), cuotasPagadas(cuotasPagadas) {
 
-    /* Se define el estado del prestamo. */
-    if(this->cuotasPagadas >= duracionMeses){
-        this->estado = "Pagado";
-    } else {
-        this->estado = "En proceso de pago.";
-    }
-
+    
     /* Se definen variables por medio de fórmulas. */
     double tasaMensual = this->tasaInteres/(12*100);
     this->cuotaMensual = (this->monto * tasaMensual)/(1 - std::pow(1 + tasaMensual,-this->duracionMeses));
@@ -140,7 +134,7 @@ void Prestamos::pagarCuota(){
     if(cuotasPagadas == mesActual - 1){
         std::cout << "El prestamo se ha pagado completamente, "
         << "se va a registrar como pagado."<< std::endl;
-        this->estado = "Pagado";
+        //this->estado = "Pagado";
     }
 
     /* Se guardan ambos archivos. */
@@ -167,8 +161,17 @@ void Prestamos::mostrarInfo(bool generico){
     << ",  Cantidad de meses: " << this->duracionMeses
     << ",  Cuota mensual: " << this->cuotaMensual;
 
+    /* Si es de información general se imprime el estado. */
     if(!generico){
-        std::cout << ",  Estado: " << this->estado << std::endl;
+        /* El estado se determina según la cantidad de cuotas restantes. */
+        std::string estado;
+        if(this->getCuotasRestantes() <= 0){
+            std::cout << this->getCuotasRestantes() << std::endl;
+            estado = "Pagado";
+        } else {
+            estado = "En proceso de pago";
+        }
+        std::cout << ",  Estado: " << estado << std::endl;
     } else {
         std::cout << std::endl;
     }
@@ -179,11 +182,7 @@ std::string Prestamos::getID(){
 }
 
 double Prestamos::getCuota(){
-    if(this->estado == "Pagado"){
-        return -1;
-    } else {
-        return this->cuotaMensual;
-    }
+    return this->cuotaMensual;
 }
 
 std::string Prestamos::getMoneda(){
