@@ -1,9 +1,13 @@
 /**
- * \copyright Copyright 2024 Diego Alfaro, Bryan Cortes, Heiner Obando. All right reserved. This project is released under the MIT License
- * @file CDP.hpp
- * @date 07/02/2024
+ * @file Cdp.hpp
  * @author Diego Alfaro, Bryan Cortes, Heiner Obando
-*/
+ * @brief Declaración de clase CDP.
+ * @version 0.1
+ * @date 2024-02-7
+ * 
+ * @copyright MIT License Copyright (c) 2024
+ * 
+ */
 
 #ifndef CDP_HPP
 #define CDP_HPP
