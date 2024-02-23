@@ -1,3 +1,15 @@
+/**
+ * @file main.cpp
+ * @author Diego Alfaro, Bryan Cortes, Heiner Obando
+ * @brief Implementacion del main del programa
+ * @version 0.1
+ * @date 2024-02-22
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
+
+
 #include "Usuario.hpp"
 #include "Banco.hpp"
 

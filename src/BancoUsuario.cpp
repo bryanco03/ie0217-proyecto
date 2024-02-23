@@ -1,3 +1,13 @@
+/**
+ * @file BancoUsuario.cpp
+ * @author Diego Alfaro, Bryan Cortes, Heiner Obando
+ * @brief Implementacion de  métodos Sobre Usuarios y cuentas dentro  de la Clase Banco
+ * @version 0.1
+ * @date 2024-02-22
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 
 #include "Banco.hpp"
 #include "Usuario.hpp"
