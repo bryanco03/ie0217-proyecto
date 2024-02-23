@@ -1,3 +1,13 @@
+/**
+ * @file Prestamos.cpp
+ * @author Diego Alfaro, Bryan Cortes, Heiner Obando
+ * @brief Implementacion de los metodos del Pretamo
+ * @version 0.1
+ * @date 2024-02-22
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include "Prestamos.hpp"
 
 Prestamos::Prestamos(std::string ID, std::string tipo, double monto, std::string moneda, float tasaInteres, int duracionMeses, int cuotasPagadas /*= 0*/)

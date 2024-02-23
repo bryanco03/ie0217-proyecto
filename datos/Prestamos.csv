@@ -1,6 +1,7 @@
 ID,Tipo,Monto,Moneda,Tasa Interes,Duracion Meses,Cuotas Pagadas
 P-118-0,Personal,120,colon,15,5,5
-P-118-1,Hipotecario,2000,dolar,5,36,0
+P-118-1,Hipotecario,2000,dolar,5,36,2
 P-118-2,Prendario,900000,colon,5,30,0
 TABLA,Prendario,90000,colon,13,10,0
 P-682-4,Prendario,500,colon,5,30,0
+P-402-5,Personal,500000,colon,7,10,1

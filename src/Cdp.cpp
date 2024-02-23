@@ -1,3 +1,13 @@
+/**
+ * @file Cdp.cpp
+ * @author Diego Alfaro, Bryan Cortes, Heiner Obando
+ * @brief Implementacion de los metodos de los CDPs
+ * @version 0.1
+ * @date 2024-02-22
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include "Cdp.hpp"
 
 CDP::CDP(double monto, float tasaIntereses, double duracionAnnos, std::string ID, std::string moneda){

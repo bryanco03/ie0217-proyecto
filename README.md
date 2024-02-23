@@ -1,4 +1,62 @@
-# ie0217-proyecto
+# Proyecto Final IE0217
+
+---
+### [Documentacion](https://joyful-vacherin-6ba7d2.netlify.app/index.html)
+---
+
+
+## Pasos para la ejecución del programa. 
+
+Para correr el progrma hay que seguir las siguientes indicaciones:
+
+1. Clonar el repositorio
+
+ ```
+ git clone https://github.com/bryanco03/ie0217-proyecto.git
+```
+
+2. Ponerse en el directorio del reposito
+
+Si estas en Windows
+ ```
+  cd .\ie0217-proyecto\
+```
+Si estas en linux
+ ```
+  cd ie0217-proyecto
+
+```
+
+
+3. Ejecutar el makefile (Asegurarse que se tenga instalado)
+
+Si estas en windows
+ ```
+mingw32-make
+```
+si estas en linux
+
+ ```
+make
+```
+4. Disfruta del Programa
+
+5. Al finalizar puedes ejecutar el siguiente comando para eliminar los ejecutables realizados.
+
+Si estas en windows
+ ```
+mingw32-make clean
+```
+si estas en linux
+
+ ```
+make clean
+```
+
+
+
+
+
 
 # Temas a investigar 
 

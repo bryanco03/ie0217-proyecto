@@ -1,6 +1,7 @@
 Nombre,Identificacion,TipoCuenta1,DineroCuenta1,TipoCuenta2,DineroCuenta2,IdPrestamos,IdCdps
-Butters,118950793,dolar,1500.000000,colon,1141995.462735, P-118-0 P-118-1 P-118-2 , C-118-0 C-118-1 
+Butters,118950793,dolar,1597.087379,colon,1141995.462735, P-118-0 P-118-1 P-118-2 , C-118-0 C-118-1 
 Cartman,591239941,dolar,1000.000000, ,0, , 
 Stan,682432581,dolar,666.000000,colon,1350.000000, P-682-4 , 
 Kyle,314817596,dolar,700.000000,colon,8923.000000, , C-314-2 
 Kenny,893148731,dolar,0,colon,0, , 
+Bryan,402610887,colon,50000.000000,dolar,851.815441, P-402-5 , C-402-3 
