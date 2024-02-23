@@ -1,3 +1,13 @@
+/**
+ * @file Usuario.cpp
+ * @author Diego Alfaro, Bryan Cortes, Heiner Obando
+ * @brief Implementacion de los metodos de Usuario
+ * @version 0.1
+ * @date 2024-02-22
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include "Usuario.hpp"
 
 Usuario::Usuario(unsigned long int identificacion, std::string nombre): identificacion(identificacion), nombre(nombre){

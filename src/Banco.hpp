@@ -1,9 +1,14 @@
 /**
- * \copyright Copyright 2024 Diego Alfaro, Bryan Cortes, Heiner Obando. All right reserved. This project is released under the MIT License
  * @file Banco.hpp
- * @date 15/02/2024
  * @author Diego Alfaro, Bryan Cortes, Heiner Obando
-*/
+ * @brief Declaración de clase Banco.
+ * @version 0.1
+ * @date 2024-02-15
+ * 
+ * @copyright MIT License Copyright (c) 2024
+ * 
+ */
+
 
 #ifndef BANCO_HPP
 #define BANCO_HPP
@@ -23,6 +28,11 @@
 
 bool isNum(std::string input);
 
+
+/**
+ * @brief Clase que realiza las acciones del banco.
+ * 
+ */
 class Banco{
     public:
     /**
@@ -37,7 +47,7 @@ class Banco{
      */
     void loggearUsuario();
 
-    /*
+    /**
     * @brief Generar el menú del modo de información general.
     * 
     */
@@ -315,6 +325,16 @@ class Banco{
     * @param generico bool Indica si es un prestamo en el modo información general, default = false.
     */
     void crearPrestamo(bool generico = false);
+
+    /**
+     * @brief Ingresa el monto del prestamo a las cuentas del usuario.
+     * 
+     * @param monto Monto del prestamo.
+     * @param moneda Tipo de moneda del prestamo.
+     * @return true Si se recibió el dinero.
+     * @return false Si no se recibió el dinero.
+     */
+    bool recibirPrestamo(double monto, std::string moneda);
 
     /**
      * @brief Muestra la información de prestamos de un usuario.

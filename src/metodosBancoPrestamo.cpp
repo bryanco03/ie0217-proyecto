@@ -178,19 +178,52 @@ void Banco::crearPrestamo(bool generico){
         return;
     }
     
-    /* Se guarda en datos/Prestamos.csv */
-    prestamo.generarCSV();
-    std::cout << "Tabla de prestamo generada en " << ID << ".csv." << std::endl;
+    bool recibido = false;
+    if(!generico){
+        std::cout << "Recibir dinero en efectivo o en cuentas?: " << std::endl 
+        << "1. Efectivo" << std::endl
+        << "2. En cuentas" << std::endl;
+        std::cout << "Opcion: ";
+        std::string inputRecibir; std::cin >> inputRecibir;
+        if(!isNum(inputRecibir) || std::stoi(inputRecibir) > 2 || std::stoi(inputRecibir) < 0){
+            std::cout << "ERROR: Opcion debe ser un entero entre 1 y 2" << std::endl;
+            return;
+        }
+        int opcionRecibir = std::stoi(inputRecibir);
+
+        switch (opcionRecibir) {
+        case 1:
+            recibido = true;
+            break;
+        
+        case 2:
+            recibido = recibirPrestamo(monto, moneda);
+            break;
+
+        default:
+            break;
+        }
+    }
 
     /* Si no es generado por modo información general se guarda en el usuario. */
-    if (!generico) {
+    if (!generico && recibido) {
         this->usuarioActual->setPrestamo(prestamo);
+    
+        /* Se guarda en datos/Prestamos.csv */
+        prestamo.generarCSV();
+        prestamo.guardarCSV();
+        std::cout << "Tabla de prestamo generada en " << ID << ".csv." << std::endl;
+    
+        /* Se guarda en el registro. */
         std::string registro = "Creacion Prestamo, Usuario: " + std::to_string(this->usuarioActual->getIdentificacion()) +
                                ", ID del prestamo: " + ID;
         registrarTrasaccion(registro);
     } else {
         /* Si es de modo información general se notifica al usuario. */
         std::string registro = "Creacion tabla de Prestamo en modo información general";
+        std::cout << "Tabla de prestamo generada en " << ID << ".csv." << std::endl;
+        prestamo.generarCSV();
+        prestamo.guardarCSV();
         registrarTrasaccion(registro);
     }
 }
@@ -338,5 +371,66 @@ void Banco::pagarPrestamos(){
     } else {
         std::cout << "ERROR: Pago no fue aprobado." << std::endl;
         return;
+    }
+}
+
+bool Banco::recibirPrestamo(double monto, std::string moneda){
+    Cuenta cuenta;
+
+    if(usuarioActual->getCuentas().empty()){
+        std::cout << "ERROR: No posees ninguna cuenta para recibir el monto" << std::endl;
+        return false;
+    }
+
+    if(usuarioActual->getCuentas().size() == 2){
+    std::cout << "Escoja la cuenta a la cual depositar el monto: " << std::endl;
+    mostrarInfoCuentas(usuarioActual->getCuentas());
+    std::cout << "Cual cuenta?: ";
+    std::string inputRecibir; std::cin >> inputRecibir;
+    if(!isNum(inputRecibir) || std::stoi(inputRecibir) > 2 || std::stoi(inputRecibir) < 0){
+        std::cout << "ERROR: Opcion debe ser un entero entre 1 y 2" << std::endl;
+        return false;
+    }
+    int opcionRecibir = std::stoi(inputRecibir);
+
+    if(opcionRecibir == 1){
+        cuenta = usuarioActual->getCuentas()[0];
+    } else {
+        cuenta = usuarioActual->getCuentas()[1];
+    }
+}
+
+    if(usuarioActual->getCuentas().size() == 1){
+        cuenta = usuarioActual->getCuentas()[0];
+    }
+
+    if(cuenta.esDolar){
+        /* Caso donde cuenta es en dolar. */
+        if(moneda == "dolar"){
+            cuenta.dinero += monto;
+            registrarDeposito(cuenta.dinero, "dolar", usuarioActual->getIdentificacion());
+            actualizarCuentas();
+            return true;
+        } else {
+            double montoDolar = convertirMoneda(monto, true);
+            cuenta.dinero += montoDolar;
+            registrarDeposito(cuenta.dinero, "dolar", usuarioActual->getIdentificacion());
+            actualizarCuentas();
+            return true; 
+        }
+    /* Caso donde cuenta es en colon. */
+    } else {
+        if(moneda == "colon"){
+            cuenta.dinero += monto;
+            registrarDeposito(cuenta.dinero, "colon", usuarioActual->getIdentificacion());
+            actualizarCuentas();
+            return true;
+        } else {
+            double montoColon = convertirMoneda(monto, false);
+            cuenta.dinero += montoColon;
+            registrarDeposito(cuenta.dinero, "colon", usuarioActual->getIdentificacion());
+            actualizarCuentas();
+            return true;    
+        }
     }
 }

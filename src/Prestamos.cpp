@@ -1,3 +1,13 @@
+/**
+ * @file Prestamos.cpp
+ * @author Diego Alfaro, Bryan Cortes, Heiner Obando
+ * @brief Implementacion de los metodos del Pretamo
+ * @version 0.1
+ * @date 2024-02-22
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include "Prestamos.hpp"
 
 Prestamos::Prestamos(std::string ID, std::string tipo, double monto, std::string moneda, float tasaInteres, int duracionMeses, int cuotasPagadas /*= 0*/)
@@ -12,9 +22,10 @@ Prestamos::Prestamos(std::string ID, std::string tipo, double monto, std::string
     Si el prestamo no fue resultado de una busqueda/creación errónea.
     Se guarda en datos/Prestamos.csv 
     */
+   /*
     if(ID != "ERROR"){
         guardarCSV();
-    }
+    }*/
 }
 
 void Prestamos::generarCSV(){
@@ -166,7 +177,6 @@ void Prestamos::mostrarInfo(bool generico){
         /* El estado se determina según la cantidad de cuotas restantes. */
         std::string estado;
         if(this->getCuotasRestantes() <= 0){
-            std::cout << this->getCuotasRestantes() << std::endl;
             estado = "Pagado";
         } else {
             estado = "En proceso de pago";

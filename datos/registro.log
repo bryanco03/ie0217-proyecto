@@ -1,29 +1,49 @@
 Registro de transacciones:
-20-02-2024 19:05:54 - Creacion Prestamo, Usuario: 402610887, ID del prestamo: P-402-0
-20-02-2024 19:06:21 - Pago de cuota de prestamo, Usuario: 402610887, ID del prestamo: P-402-0
-20-02-2024 21:37:47 - Pago de cuota de prestamo, Usuario: 402610887, ID del prestamo: P-402-0
-20-02-2024 22:20:53 - Pago de cuota de prestamo, Usuario: 402610887, ID del prestamo: P-402-0
-20-02-2024 22:21:15 - Pago de cuota de prestamo, Usuario: 402610887, ID del prestamo: P-402-0
-20-02-2024 22:30:05 - Creacion CDP, Usuario: 402610887, ID: C-402-0
-20-02-2024 22:30:57 - Pago de cuota de prestamo, Usuario: 402610887, ID del prestamo: P-402-0
-20-02-2024 22:45:38 - Creacion CDP, Usuario: 402610887, ID: C-402-1
-21-02-2024 18:05:28 - Creacion de usuario, 8932
-21-02-2024 21:20:42 - Creacion de usuario, 7743
-21-02-2024 21:20:48 - Creacion Cuenta, Usuario: 7743 Moneda: Dolar
-21-02-2024 21:23:22 - Creacion Cuenta, Usuario: 7743 Moneda: Colon
-21-02-2024 21:32:53 - Deposito , Usuario: 402610887, Cuenta: Dolar, tipo: Efectivo, monto: 300.000000
-21-02-2024 21:33:50 - Deposito , Usuario: 402610887, Cuenta: Dolar, tipo: Efectivo, monto: 174.757282
-21-02-2024 21:34:43 - Deposito , Usuario: 402610887, Cuenta: Colon, tipo: Efectivo, monto: 463500.000000
-21-02-2024 21:35:26 - Deposito , Usuario: 402610887, Cuenta: Colon, tipo: Efectivo, monto: 900.000000
-21-02-2024 22:17:00 - Deposito, Usuario: 402610887, Cuenta: Dolar, tipo: Efectivo, monto: 100.000000
-21-02-2024 22:17:40 - Deposito, Usuario: 402610887, Cuenta: Colon, tipo: Entre Cuentas, monto: 10000.000000, retirado de: Cuenta Dolar, monto: 19.417476
-21-02-2024 22:18:13 - Deposito, Usuario: 402610887, Cuenta: Colon, tipo: Entre Cuentas, monto: 10000.000000, retirado de: Cuenta Dolar, monto: 19.417476
-21-02-2024 22:18:37 - Deposito, Usuario: 402610887, Cuenta: Dolar, tipo: Entre Cuentas, monto: 200.000000, retirado de: Cuenta Colon, monto: 103000.000000
-21-02-2024 22:19:01 - Retiro, Usuario: 402610887, Cuenta: Dolar, tipo: Efectivo, monto: 100.000000
-21-02-2024 22:19:12 - Retiro, Usuario: 402610887, Cuenta: Colon, tipo: Entre Efectivo, monto: 10000.000000
-21-02-2024 22:21:00 - Transferencia, Origen : Usuario 402610887, Efectivo, Destino: Usuario 1Cuenta: Colon, Monto: 51500.000000, moneda: dolar
-21-02-2024 22:22:45 - Transferencia, Origen : Usuario 402610887, Cuenta: Dolar, Destino: Usuario 1Cuenta: Dolar, Monto: 100.000000, moneda: dolar
-21-02-2024 22:23:06 - Transferencia, Origen : Usuario 402610887, Cuenta: Dolar, Monto: 100.000000Destino: Usuario 1Cuenta: Colon, Monto: 51500.000000, moneda: Colon
-22-02-2024 00:05:57 - Creacion de usuario, 7878
-22-02-2024 12:01:00 - Deposito , Usuario: 402610887, Cuenta: Colon, tipo: Efectivo, monto: 5150.000000
-22-02-2024 12:14:27 - Deposito, Usuario: 402610887, Cuenta: Colon, tipo: Entre Cuentas, monto: 800.000000, retirado de: Cuenta Dolar, monto: 1.553398
+22-02-2024 16:51:18 - Creacion de usuario, 118950793
+22-02-2024 16:51:25 - Creacion Cuenta, Usuario: 118950793, Moneda: Dolar
+22-02-2024 16:51:28 - Creacion Cuenta, Usuario: 118950793, Moneda: Colon
+22-02-2024 16:51:43 - Deposito , Usuario: 118950793, Cuenta: Colon, tipo: Efectivo, monto: 257500.000000
+22-02-2024 16:52:35 - Retiro, Usuario: 118950793, Cuenta: Colon, tipo: Efectivo, monto: 7500.000000
+22-02-2024 16:53:48 - Creacion de usuario, 4009
+22-02-2024 16:54:42 - Creacion Cuenta, Usuario: 4009, Moneda: Dolar
+22-02-2024 16:55:09 - Transferencia, Origen: Usuario 118950793, Efectivo, Destino: Usuario 4009Cuenta: Dolar, Monto: 515.000000, moneda: dolar
+22-02-2024 16:56:43 - Creacion Prestamo, Usuario: 118950793, ID del prestamo: P-118-0
+22-02-2024 16:57:14 - Creacion Prestamo, Usuario: 118950793, ID del prestamo: P-118-1
+22-02-2024 16:57:33 - Creacion Prestamo, Usuario: 118950793, ID del prestamo: P-118-2
+22-02-2024 16:58:24 - Pago de 5 cuota/s de prestamo, Usuario: 118950793, ID del prestamo: P-118-0
+22-02-2024 16:59:24 - Creacion CDP, Usuario: 118950793, ID: C-118-0
+22-02-2024 16:59:41 - Creacion CDP, Usuario: 118950793, ID: C-118-1
+22-02-2024 17:01:25 - Creacion tabla de Prestamo en modo información general
+22-02-2024 17:03:11 - Creacion tabla de Prestamo en modo información general
+22-02-2024 17:05:37 - Creacion tabla de Prestamo en modo información general
+22-02-2024 17:21:10 - Creacion de usuario, 591239941
+22-02-2024 17:21:14 - Creacion Cuenta, Usuario: 591239941, Moneda: Dolar
+22-02-2024 17:21:21 - Deposito, Usuario: 591239941, Cuenta: Dolar, tipo: Efectivo, monto: 1000.000000
+22-02-2024 17:21:37 - Creacion de usuario, 682432581
+22-02-2024 17:21:39 - Creacion Cuenta, Usuario: 682432581, Moneda: Dolar
+22-02-2024 17:21:40 - Creacion Cuenta, Usuario: 682432581, Moneda: Colon
+22-02-2024 17:21:51 - Deposito , Usuario: 682432581, Cuenta: Colon, tipo: Efectivo, monto: 850.000000
+22-02-2024 17:22:01 - Deposito, Usuario: 682432581, Cuenta: Dolar, tipo: Efectivo, monto: 666.000000
+22-02-2024 17:22:20 - Creacion Prestamo, Usuario: 682432581, ID del prestamo: P-682-4
+22-02-2024 17:23:04 - Creacion de usuario, 314817596
+22-02-2024 17:23:07 - Creacion Cuenta, Usuario: 314817596, Moneda: Dolar
+22-02-2024 17:23:09 - Creacion Cuenta, Usuario: 314817596, Moneda: Colon
+22-02-2024 17:23:17 - Deposito, Usuario: 314817596, Cuenta: Dolar, tipo: Efectivo, monto: 700.000000
+22-02-2024 17:23:28 - Deposito , Usuario: 314817596, Cuenta: Colon, tipo: Efectivo, monto: 8923.000000
+22-02-2024 17:23:44 - Creacion CDP, Usuario: 314817596, ID: C-314-2
+22-02-2024 17:24:17 - Creacion de usuario, 893148731
+22-02-2024 17:24:19 - Creacion Cuenta, Usuario: 893148731, Moneda: Dolar
+22-02-2024 17:24:22 - Creacion Cuenta, Usuario: 893148731, Moneda: Colon
+22-02-2024 20:32:32 - Creacion de usuario, 402610887
+22-02-2024 20:32:43 - Creacion Cuenta, Usuario: 402610887, Moneda: Colon
+22-02-2024 20:32:46 - Creacion Cuenta, Usuario: 402610887, Moneda: Dolar
+22-02-2024 20:33:09 - Deposito, Usuario: 402610887, Cuenta: Colon, tipo: Entre Cuentas, monto: 0.000000, retirado de: Cuenta Dolar, monto: 0.000000
+22-02-2024 20:33:23 - Deposito, Usuario: 402610887, Cuenta: Dolar, tipo: Efectivo, monto: 500.000000
+22-02-2024 20:33:42 - Deposito, Usuario: 402610887, Cuenta: Colon, tipo: Entre Cuentas, monto: 100000.000000, retirado de: Cuenta Dolar, monto: 194.174757
+22-02-2024 20:34:13 - Retiro, Usuario: 402610887, Cuenta: Dolar, tipo: Efectivo, monto: 5.000000
+22-02-2024 20:35:00 - Transferencia, Origen: Usuario 402610887, Cuenta: Colon, Monto: 50000.000000, Destino: Usuario 118950793, Cuenta: Dolar, Monto: 97.087379, moneda: Dolar
+22-02-2024 20:35:42 - Creacion CDP, Usuario: 402610887, ID: C-402-3
+22-02-2024 20:36:28 - Creacion Prestamo, Usuario: 402610887, ID del prestamo: P-402-5
+22-02-2024 20:40:52 - Pago de 1 cuota/s de prestamo, Usuario: 402610887, ID del prestamo: P-402-5
+22-02-2024 20:42:19 - Pago de 2 cuota/s de prestamo, Usuario: 402610887, ID del prestamo: P-118-1
+22-02-2024 20:49:55 - Creacion tabla de Prestamo en modo información general

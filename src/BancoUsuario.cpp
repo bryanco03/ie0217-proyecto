@@ -1,3 +1,13 @@
+/**
+ * @file BancoUsuario.cpp
+ * @author Diego Alfaro, Bryan Cortes, Heiner Obando
+ * @brief Implementacion de  métodos Sobre Usuarios y cuentas dentro  de la Clase Banco
+ * @version 0.1
+ * @date 2024-02-22
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 
 #include "Banco.hpp"
 #include "Usuario.hpp"
@@ -9,10 +19,10 @@
 void Banco::loggearUsuario() {
     try{
         int opcion;
-        std::cout << "\nBienvenido a atención al cliente " << std::endl;
+        std::cout << "\nBienvenido a atencion al cliente " << std::endl;
         std::cout << "1. Loggearse " << std::endl;
         std::cout << "2. Registrarse " << std::endl;
-        std::cout << "Elige una opción: ";
+        std::cout << "Elige una opcion: ";
         std::cin >> opcion;
 
         if (std::cin.fail()){
@@ -27,7 +37,7 @@ void Banco::loggearUsuario() {
             std::string nombre;
             std::cout << "Ingrese su nombre: ";
             std::cin >> nombre;
-            std::cout << "Ingrese su identificación: ";
+            std::cout << "Ingrese su identificacion: ";
             std::cin >> identificacion;
 
             if (std::cin.fail()){
@@ -46,7 +56,7 @@ void Banco::loggearUsuario() {
         } else if (opcion == 2) {
             unsigned long int identificacion;
             std::string nombre;
-            std::cout << "Ingrese su número de cédula: ";
+            std::cout << "Ingrese su numero de cedula: ";
             std::cin >> identificacion;
 
             if (std::cin.fail()){
@@ -60,7 +70,7 @@ void Banco::loggearUsuario() {
             }
 
             if (verificarIdentificacioEnCSV(identificacion)) {
-                throw std::runtime_error("El número de cédula ingresado ya había sido registrado");
+                throw std::runtime_error("El numero de cedula ingresado ya habia sido registrado");
             } else {
                 std::cout << "Ingrese su nombre: ";
                 std::cin >> nombre;
@@ -73,7 +83,7 @@ void Banco::loggearUsuario() {
             }
 
         } else {
-            throw std::invalid_argument("Opción inválida");
+            throw std::invalid_argument("Opcion invalida");
         }
     } catch (const std::exception& e) {
         std::cout << "Error: " << e.what() << std::endl;
@@ -98,7 +108,7 @@ void Banco::crearCuenta(){
                 throw  std::invalid_argument("Se ingreso un tipo de dato invalido.");
             }
             if (opcion < 1 || opcion > 3) {
-                throw std::invalid_argument("Opción inválida");
+                throw std::invalid_argument("Opcion invalida");
             }
             if (opcion == 1){
                 Cuenta cuenta;
@@ -197,7 +207,7 @@ void Banco::crearCuenta(){
             }
         }
         else if (cuentasUsuario.size() == 2){
-            throw std::runtime_error("Ya tienes el máximo permitido de cuentas");
+            throw std::runtime_error("Ya tienes el maximo permitido de cuentas");
         }
     }
     catch (const std::exception& e) {
@@ -299,7 +309,7 @@ void Banco::cargarCuentas(std::string tipoCuenta1, double dineroCuenta1, std::st
 void Banco::realizarDeposito(){
     try{
         if (usuarioActual->getCuentas().size() == 0){
-            throw std::runtime_error("No tienes ninguna cuenta, necesitas hacer una cuenta para realizar un depósito");
+            throw std::runtime_error("No tienes ninguna cuenta, necesitas hacer una cuenta para realizar un deposito");
             return ;
         }
         int opcion;
@@ -394,7 +404,7 @@ void Banco::realizarDeposito(){
             return;
         }
         else{
-            throw std::invalid_argument("Opción inválida");
+            throw std::invalid_argument("Opcion invalida");
         }
     }
     catch (const std::exception& e) {
@@ -508,7 +518,7 @@ void Banco::depositarCuentaColon(double dinero){
                 throw  std::invalid_argument("Se ingreso un tipo de dato invalido.");
         }
         if (opcionEfectivo < 1 || opcionEfectivo > 2) {
-            throw std::invalid_argument("Opción inválida");
+            throw std::invalid_argument("Opcion invalida");
         }
 
         if (opcionEfectivo == 1){
@@ -570,7 +580,7 @@ void Banco::depositarCuentaDolar(double dinero){
                 throw  std::invalid_argument("Se ingreso un tipo de dato invalido.");
         }
         if (opcionEfectivo < 1 || opcionEfectivo > 2) {
-            throw std::invalid_argument("Opción inválida");
+            throw std::invalid_argument("Opcion inválida");
         }
 
         if (opcionEfectivo == 1){

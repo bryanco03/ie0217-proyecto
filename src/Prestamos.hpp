@@ -1,9 +1,13 @@
 /**
- * \copyright Copyright 2024 Diego Alfaro, Bryan Cortes, Heiner Obando. All right reserved. This project is released under the MIT License
  * @file Prestamos.hpp
- * @date 14/02/2024
  * @author Diego Alfaro, Bryan Cortes, Heiner Obando
-*/
+ * @brief Declaraciones de la clase Prestamos 
+ * @version 0.1
+ * @date 2024-02-14
+ * 
+ * @copyright MIT License Copyright (c) 2024
+ * 
+ */
 
 #ifndef PRESTAMOS_HPP
 #define PRESTAMOS_HPP
@@ -13,7 +17,10 @@
 #include <cmath>
 #include <fstream>
 
-
+/**
+ * @brief Clase para representar un prestamo de un usuario.
+ * 
+ */
 class Prestamos{
     private:
         std::string ID;         /**< Número ID del prestamo. */

@@ -1,3 +1,13 @@
+/**
+ * @file Banco.cpp
+ * @author Diego Alfaro, Bryan Cortes, Heiner Obando
+ * @brief Implementacion de algunos métodos generales de Clase Banco
+ * @version 0.1
+ * @date 2024-02-22
+ * 
+ * @copyright Copyright (c) 2024
+ * 
+ */
 #include "Banco.hpp"
 
 std::string HoraActual();
@@ -292,7 +302,7 @@ bool Banco::pagarCuotasCuentas(double monto, std::string moneda ){
             mostrarInfoCuentas(usuarioActual->getCuentas());
             std::cout << "Con Cual Cuenta deseas realizar el pago: ";
             std::cin >> opcionCuenta;
-             if (std::cin.fail()){
+            if (std::cin.fail()){
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 throw  std::invalid_argument("Se ingreso un tipo de dato invalido.");
@@ -356,8 +366,10 @@ bool Banco::pagarCuotasCuentas(double monto, std::string moneda ){
                 }
             }
         }
+        return false;
     }
-     catch (const std::exception& e) {
+    catch (const std::exception& e) {
         std::cerr << "Error: " << e.what() << std::endl;
+        return false;
     }
 }
