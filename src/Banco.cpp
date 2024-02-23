@@ -72,9 +72,10 @@ void Banco::menuAtencionCliente(){
                     /* Se eliminan los archivos privados del usuario. */
                     #if _WIN32
                         std::system("del datos\\P-*");
+                        std::system("del datos\\C-*");
                     #elif __linux__
                         std::system("rm -f datos/P-*");
-
+                        std::system("rm -f datos/C-*");
                     #endif
 
                     return;
@@ -98,6 +99,11 @@ void Banco::menuAtencionCliente(){
 }
 
 void Banco::menuInformacionGeneral(){
+    /* Se vuelve a mostrar la tabla hecha anteriormente si existe. */
+    Prestamos prestamo = this->leerPrestamo("TABLA");
+    if(prestamo.getID() != "ERROR"){
+        prestamo.generarCSV();
+    }
     bool generico = true;
     while (1) {
         std::cout << "\nBienvenido al menu de informacion general" << std::endl
@@ -134,6 +140,12 @@ void Banco::menuInformacionGeneral(){
             InfoGeneralCDP();
             break;
         case 4:
+            /* Se eliminan el archivo TABLA.csv . */
+            #if _WIN32
+                std::system("del datos\\TABLA.csv");
+            #elif __linux__
+                std::system("rm -f datos/TABLA.csv");
+            #endif
             return;
             break;
         default:
@@ -178,7 +190,7 @@ void Banco::iniciarArchivos(){
 
     if(!std::ifstream("datos//CDP.csv")){
         std::ofstream cdpCrear("datos//CDP.csv");
-        cdpCrear << "ID,Monto ingresado,Intereses Ganados,Duracion del CDP,Monto Ganado" << std::endl;
+        cdpCrear << "ID,Monto ingresado,Intereses Ganados,Duracion del CDP,Monto Ganado,Moneda" << std::endl;
         cdpCrear.close(); 
     }
 
