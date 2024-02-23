@@ -214,7 +214,7 @@ void Banco::mostrarInfoCDP(){
 CDP Banco::leerCDP(std::string idCDP){
     /* Se crean variables a usar. */
     std::string linea, primeraLinea;                        /*String de IDs y linea a leer del csv. */
-    std::ifstream database("datos\\" + idCDP + ".csv");     /* Se lee el archivo csv. */
+    std::ifstream database("datos/" + idCDP + ".csv");     /* Se lee el archivo csv. */
     std::vector<std::string> infoC;                         /* Vector con la informacion del CDP. */
 
     /* Se busca el CDP. */

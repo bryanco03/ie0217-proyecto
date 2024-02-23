@@ -69,7 +69,7 @@ Prestamos opcionesPrestamo(const double monto, std::string moneda, const int tip
 Prestamos Banco::leerPrestamo(std::string idPrestamo){
     /* Se crean variables a usar. */
     std::string ID_CSV, linea;                      /*String de IDs y linea a leer del csv. */
-    std::ifstream database("datos\\Prestamos.csv"); /* Se lee el archivo csv. */
+    std::ifstream database("datos/Prestamos.csv"); /* Se lee el archivo csv. */
     std::vector<std::string> infoP;                 /* Vector con la informacion del prestamo. */
 
     /* Se busca el prestamo. */
@@ -241,7 +241,7 @@ void Banco::mostrarInfoPrestamos(){
 
     /* Prestamos del id dado. */
     std::string idCSV, linea, sinNombre, columna, idPrestamos, id;
-    std::ifstream database("datos\\usuarios.csv");
+    std::ifstream database("datos/usuarios.csv");
     bool encontrado = false;
 
     /* Se buscan los id de prestamos del usuario. */

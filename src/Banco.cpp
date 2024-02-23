@@ -192,7 +192,7 @@ double Banco::convertirMoneda(double monto, bool enDolares){
 void Banco::registrarTrasaccion(const std::string& informacion){
     
     /* Se abre el archivo .log donde se almacenara el registro */
-    std::ofstream registro("datos\\registro.log", std::ios::app);
+    std::ofstream registro("datos/registro.log", std::ios::app);
 
     /* Se comprueba que el .log sea accesible */
     if (!registro.is_open()) {

@@ -24,7 +24,7 @@ void Prestamos::generarCSV(){
     double montoRestante = this->monto;
 
     /* Se abre el archivo .csv */
-    std::ofstream archivo ("datos\\" + this->ID + ".csv");
+    std::ofstream archivo ("datos/" + this->ID + ".csv");
 
     /* Se escriben datos del prestamo en la tabla. */
     archivo << "Mes,Cuota Mensual,Intereses,Amortizacion,Monto Restante";
@@ -60,7 +60,7 @@ void Prestamos::generarCSV(){
 
 void Prestamos::guardarCSV(){
     /* Se abre el archivo de registro. */
-    std::string nombreArchivo = "datos\\Prestamos.csv";
+    std::string nombreArchivo = "datos/Prestamos.csv";
     std::ifstream viejo(nombreArchivo);
     std::ofstream nuevo("temp1.csv");
 
@@ -105,7 +105,7 @@ void Prestamos::guardarCSV(){
 
 void Prestamos::pagarCuota(){
     /* Se abre el archivo del prestamo. */
-    std::string nombreArchivo = "datos\\" + this->ID + ".csv";
+    std::string nombreArchivo = "datos/" + this->ID + ".csv";
     std::ifstream viejo(nombreArchivo);
     std::ofstream nuevo("temp2.csv");
     std::string temp, linea, palabra;

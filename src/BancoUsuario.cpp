@@ -405,7 +405,7 @@ void Banco::realizarDeposito(){
 
 void Banco::actualizarUsuarios(){
     /* Se abre el archivo de registro. */
-    std::string nombreArchivo = "datos\\usuarios.csv";
+    std::string nombreArchivo = "datos/usuarios.csv";
     std::ifstream viejo(nombreArchivo);
     std::ofstream nuevo("temp1.csv");
     Usuario user = *this->usuarioActual;
