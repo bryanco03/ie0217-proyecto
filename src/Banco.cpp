@@ -77,17 +77,8 @@ void Banco::menuAtencionCliente(){
                     mostrarInfoCDP();
                     break;
                 case 11:
+                    eliminarArchivos();
                     delete usuarioActual;
-
-                    /* Se eliminan los archivos privados del usuario. */
-                    #if _WIN32
-                        std::system("del datos\\P-*");
-                        std::system("del datos\\C-*");
-                    #elif __linux__
-                        std::system("rm -f datos/P-*");
-                        std::system("rm -f datos/C-*");
-                    #endif
-
                     return;
                     break;
                 default:
@@ -151,11 +142,13 @@ void Banco::menuInformacionGeneral(){
             break;
         case 4:
             /* Se eliminan el archivo TABLA.csv . */
-            #if _WIN32
-                std::system("del datos\\TABLA.csv");
-            #elif __linux__
-                std::system("rm -f datos/TABLA.csv");
-            #endif
+            if(prestamo.getID() != "ERROR"){
+                #if _WIN32
+                    std::system("del datos\\TABLA.csv");
+                #elif __linux__
+                    std::system("rm -f datos/TABLA.csv");
+                #endif
+            }
             return;
             break;
         default:
@@ -218,6 +211,30 @@ double Banco::convertirMoneda(double monto, bool enDolares){
     else{
         return monto * 515;
     }
+}
+
+void Banco::eliminarArchivos(){
+    /* Se eliminan los archivos privados del usuario. 
+       Se determina el sistema operativo para hacer las operaciones correctas. */
+    #if _WIN32
+        if(usuarioActual->getPrestamos().size() != 0){
+            std::system("del datos\\P-*");
+        }
+
+        if(usuarioActual->getCdps().size() != 0){
+            std::system("del datos\\C-*");
+        }
+
+    #elif __linux__
+        if(usuarioActual->getPrestamos().size() != 0){
+            std::system("rm -f datos/P-*");;
+        }
+
+        if(usuarioActual->getCdps().size() != 0){
+            std::system("rm -f datos/C-*");
+        }
+
+    #endif
 }
 
 void Banco::registrarTrasaccion(const std::string& informacion){

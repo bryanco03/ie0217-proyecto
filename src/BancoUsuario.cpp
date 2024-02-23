@@ -772,7 +772,6 @@ void Banco::depositoEntreCuentas(Cuenta cuentaDepositar, Cuenta cuentaRetirar){
     
             cuentaDepositar.dinero += montoDolar;
             cuentaRetirar.dinero -= montoColon;
-            std::cout << cuentaRetirar.dinero << std::endl;
             registrarDeposito(cuentaDepositar.dinero, "dolar", usuarioActual->getIdentificacion());
             registrarDeposito(cuentaRetirar.dinero, "colon", usuarioActual->getIdentificacion());
             actualizarCuentas();

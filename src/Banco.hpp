@@ -71,9 +71,6 @@ class Banco{
     void menuAtencionCliente();
 
 
-
-
-
     private:
     Usuario* usuarioActual;     /**< Puntero a usuario que esta iniciado en la sesión. */
     int contadorCDP;            /**Contador para ID de los CDP*/
@@ -91,6 +88,13 @@ class Banco{
      * 
      */
     void iniciarContadores();
+
+    /**
+     * @brief Eliminar los archivos presonales de un usuario si los posee.
+     * 
+     */
+    void eliminarArchivos();
+
     /**
      * @brief Carga los datos del usuario actual desde un archivo CSV.
      *        Los datos incluyen el tipo de cuenta, el saldo de cada cuenta,
@@ -98,6 +102,8 @@ class Banco{
      * 
      */
     void cargarDatosUsuario();
+
+
     /**
      * @brief Obtiene los datos de un usuario a partir de su identificación.
      * 
@@ -106,6 +112,11 @@ class Banco{
      * @return std::vector<std::string> vector de strings con los datos del usuario, o un vector vacío si no se encontró el usuario.
      */
     std::vector<std::string> obtenerDatos(unsigned long int identificacion);
+
+    /**
+     * @brief Actualizar los datos de un usuario en datos/usuarios.csv
+     * 
+     */
     void actualizarUsuarios();
 
     /**
@@ -216,6 +227,7 @@ class Banco{
      * 
      */
     void realizarDeposito();
+
     /**
      * @brief  Realiza un depósito en la cuenta en colones del usuario actual.
      * Se solicita al usuario el monto a depositar y se registra la transacción.
@@ -223,13 +235,13 @@ class Banco{
      * @param dinero El saldo actual de la cuenta en colones.
      */
     void depositarCuentaColon(double dinero);
-        /**
+
+    /**
      * @brief  Realiza un depósito en la cuenta en Dolares del usuario actual.
      * Se solicita al usuario el monto a depositar y se registra la transacción.
      * 
      * @param dinero El saldo actual de la cuenta en Dolares.
      */
-
     void depositarCuentaDolar(double dinero);
 
     /**
@@ -259,7 +271,6 @@ class Banco{
      * @param identificacion  La identificación del usuario a quien se le realiza la transferencia.
      *  
      */
-
     void transferenciaEfectivo(Cuenta cuenta , unsigned long int identificacion);
 
     /**
@@ -270,7 +281,6 @@ class Banco{
      * @param identificacion  La identificación del usuario a quien se le realiza la transferencia.
      *  
      */
-
     void transferenciaEntreCuentas(Cuenta cuentaDepositar, Cuenta cuentaRetirar, unsigned long int identificacion);
 
     /**
@@ -288,8 +298,6 @@ class Banco{
      * @param cuentaDepositar La cuenta a la que se realizará el depósito.
      * @param cuenaRetirar La cuenta de la que se retirará el dinero para el depósito.
      */
-
-
     void depositoEntreCuentas(Cuenta cuentaDepositar, Cuenta cuenaRetirar);
 
     /**
@@ -310,7 +318,6 @@ class Banco{
      * @return true Si el pago fue exitoso.
      * @return false si no es exitoso.
      */
-
     bool pagarCuotasCuentas(double montoCuota, std::string moneda);
 
 
@@ -350,7 +357,7 @@ class Banco{
     void pagarPrestamos();
 
     /**
-     * @brief Crear un objeto prestamo de información guardada en datos/Prestamos.csv
+     * @brief Crear un objeto prestamo de la información guardada en datos/Prestamos.csv
      * 
      * @param idPrestamo std::string Id de un prestamo
      * @return Prestamos Objeto prestamo correspondiente al id.
@@ -397,7 +404,7 @@ class Banco{
     void cargarCDPs(std::string idCDPs);
 
     /**
-     * @brief Crear un objeto CDP de información guardada en el csv perteneciente al CDP.
+     * @brief Crear un objeto CDP de la información guardada en datos/CDP.csv.
      * 
      * @param idCDP std::string Id de un CDP.
      * @return CDP Objeto CDP correspondiente al id.

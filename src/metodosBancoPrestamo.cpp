@@ -379,37 +379,45 @@ void Banco::pagarPrestamos(){
 }
 
 bool Banco::recibirPrestamo(double monto, std::string moneda){
+    /* Se define la cuenta a modificar. */
     Cuenta cuenta;
 
+    /* Si el usario no posee cuentas se da el error y se niega el pago. */
     if(usuarioActual->getCuentas().empty()){
         std::cout << "ERROR: No posees ninguna cuenta para recibir el monto" << std::endl;
         return false;
     }
 
+    /* Si el usuario posee dos cuentas se le da a escoger una. */
     if(usuarioActual->getCuentas().size() == 2){
-    std::cout << "Escoja la cuenta a la cual depositar el monto: " << std::endl;
-    mostrarInfoCuentas(usuarioActual->getCuentas());
-    std::cout << "Cual cuenta?: ";
-    std::string inputRecibir; std::cin >> inputRecibir;
-    if(!isNum(inputRecibir) || std::stoi(inputRecibir) > 2 || std::stoi(inputRecibir) < 0){
-        std::cout << "ERROR: Opcion debe ser un entero entre 1 y 2" << std::endl;
-        return false;
-    }
-    int opcionRecibir = std::stoi(inputRecibir);
+        std::cout << "Escoja la cuenta a la cual depositar el monto: " << std::endl;
+        mostrarInfoCuentas(usuarioActual->getCuentas());
+        std::cout << "Cual cuenta?: ";
 
-    if(opcionRecibir == 1){
-        cuenta = usuarioActual->getCuentas()[0];
-    } else {
-        cuenta = usuarioActual->getCuentas()[1];
-    }
-}
+        /* Manejo de errores. */
+        std::string inputRecibir; std::cin >> inputRecibir;
+        if(!isNum(inputRecibir) || std::stoi(inputRecibir) > 2 || std::stoi(inputRecibir) < 0){
+            std::cout << "ERROR: Opcion debe ser un entero entre 1 y 2" << std::endl;
+            return false;
+        }
+        int opcionRecibir = std::stoi(inputRecibir);
 
+        /* Se declara la cuenta. */
+        if(opcionRecibir == 1){
+            cuenta = usuarioActual->getCuentas()[0];
+        } else {
+            cuenta = usuarioActual->getCuentas()[1];
+        }
+    }
+
+    /* Si el usuario solo posee una cuenta se usa esa. */
     if(usuarioActual->getCuentas().size() == 1){
+        std::cout << "Se deposito el monto en su cuenta." << std::endl;
         cuenta = usuarioActual->getCuentas()[0];
     }
 
+    /* Caso donde cuenta es en dolar. */
     if(cuenta.esDolar){
-        /* Caso donde cuenta es en dolar. */
         if(moneda == "dolar"){
             cuenta.dinero += monto;
             registrarDeposito(cuenta.dinero, "dolar", usuarioActual->getIdentificacion());
