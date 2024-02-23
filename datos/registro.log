@@ -1,1 +1,36 @@
 Registro de transacciones:
+22-02-2024 16:51:18 - Creacion de usuario, 118950793
+22-02-2024 16:51:25 - Creacion Cuenta, Usuario: 118950793, Moneda: Dolar
+22-02-2024 16:51:28 - Creacion Cuenta, Usuario: 118950793, Moneda: Colon
+22-02-2024 16:51:43 - Deposito , Usuario: 118950793, Cuenta: Colon, tipo: Efectivo, monto: 257500.000000
+22-02-2024 16:52:35 - Retiro, Usuario: 118950793, Cuenta: Colon, tipo: Efectivo, monto: 7500.000000
+22-02-2024 16:53:48 - Creacion de usuario, 4009
+22-02-2024 16:54:42 - Creacion Cuenta, Usuario: 4009, Moneda: Dolar
+22-02-2024 16:55:09 - Transferencia, Origen: Usuario 118950793, Efectivo, Destino: Usuario 4009Cuenta: Dolar, Monto: 515.000000, moneda: dolar
+22-02-2024 16:56:43 - Creacion Prestamo, Usuario: 118950793, ID del prestamo: P-118-0
+22-02-2024 16:57:14 - Creacion Prestamo, Usuario: 118950793, ID del prestamo: P-118-1
+22-02-2024 16:57:33 - Creacion Prestamo, Usuario: 118950793, ID del prestamo: P-118-2
+22-02-2024 16:58:24 - Pago de 5 cuota/s de prestamo, Usuario: 118950793, ID del prestamo: P-118-0
+22-02-2024 16:59:24 - Creacion CDP, Usuario: 118950793, ID: C-118-0
+22-02-2024 16:59:41 - Creacion CDP, Usuario: 118950793, ID: C-118-1
+22-02-2024 17:01:25 - Creacion tabla de Prestamo en modo información general
+22-02-2024 17:03:11 - Creacion tabla de Prestamo en modo información general
+22-02-2024 17:05:37 - Creacion tabla de Prestamo en modo información general
+22-02-2024 17:21:10 - Creacion de usuario, 591239941
+22-02-2024 17:21:14 - Creacion Cuenta, Usuario: 591239941, Moneda: Dolar
+22-02-2024 17:21:21 - Deposito, Usuario: 591239941, Cuenta: Dolar, tipo: Efectivo, monto: 1000.000000
+22-02-2024 17:21:37 - Creacion de usuario, 682432581
+22-02-2024 17:21:39 - Creacion Cuenta, Usuario: 682432581, Moneda: Dolar
+22-02-2024 17:21:40 - Creacion Cuenta, Usuario: 682432581, Moneda: Colon
+22-02-2024 17:21:51 - Deposito , Usuario: 682432581, Cuenta: Colon, tipo: Efectivo, monto: 850.000000
+22-02-2024 17:22:01 - Deposito, Usuario: 682432581, Cuenta: Dolar, tipo: Efectivo, monto: 666.000000
+22-02-2024 17:22:20 - Creacion Prestamo, Usuario: 682432581, ID del prestamo: P-682-4
+22-02-2024 17:23:04 - Creacion de usuario, 314817596
+22-02-2024 17:23:07 - Creacion Cuenta, Usuario: 314817596, Moneda: Dolar
+22-02-2024 17:23:09 - Creacion Cuenta, Usuario: 314817596, Moneda: Colon
+22-02-2024 17:23:17 - Deposito, Usuario: 314817596, Cuenta: Dolar, tipo: Efectivo, monto: 700.000000
+22-02-2024 17:23:28 - Deposito , Usuario: 314817596, Cuenta: Colon, tipo: Efectivo, monto: 8923.000000
+22-02-2024 17:23:44 - Creacion CDP, Usuario: 314817596, ID: C-314-2
+22-02-2024 17:24:17 - Creacion de usuario, 893148731
+22-02-2024 17:24:19 - Creacion Cuenta, Usuario: 893148731, Moneda: Dolar
+22-02-2024 17:24:22 - Creacion Cuenta, Usuario: 893148731, Moneda: Colon

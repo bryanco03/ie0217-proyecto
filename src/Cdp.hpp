@@ -17,7 +17,7 @@
 #include <fstream>
 
 /**
- * @brief CDP: Clase que recibe los atributos para calcular las ganacias por un CDP
+ * @brief Clase que recibe los atributos para calcular las ganacias por un CDP
 */
 class CDP {
     private:

@@ -221,6 +221,9 @@ void Banco::crearPrestamo(bool generico){
     } else {
         /* Si es de modo información general se notifica al usuario. */
         std::string registro = "Creacion tabla de Prestamo en modo información general";
+        std::cout << "Tabla de prestamo generada en " << ID << ".csv." << std::endl;
+        prestamo.generarCSV();
+        prestamo.guardarCSV();
         registrarTrasaccion(registro);
     }
 }
