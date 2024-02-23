@@ -7,15 +7,6 @@ Prestamos::Prestamos(std::string ID, std::string tipo, double monto, std::string
     /* Se definen variables por medio de fórmulas. */
     double tasaMensual = this->tasaInteres/(12*100);
     this->cuotaMensual = (this->monto * tasaMensual)/(1 - std::pow(1 + tasaMensual,-this->duracionMeses));
-
-    /* 
-    Si el prestamo no fue resultado de una busqueda/creación errónea.
-    Se guarda en datos/Prestamos.csv 
-    */
-   /*
-    if(ID != "ERROR"){
-        guardarCSV();
-    }*/
 }
 
 void Prestamos::generarCSV(){
@@ -50,7 +41,11 @@ void Prestamos::generarCSV(){
 
         /* Si no es generico se agrega el estado de la cuota, inicialmente no pagada. */
         if(this->ID != "TABLA"){
-            archivo << ",NO PAGADO" << std::endl;
+            if(i + 1 <= cuotasPagadas){
+                archivo << ",PAGADO" << std::endl;
+            } else {
+                archivo << ",NO PAGADO" << std::endl;
+            }
         } else {
             archivo << std::endl;
         }

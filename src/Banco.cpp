@@ -68,6 +68,15 @@ void Banco::menuAtencionCliente(){
                     break;
                 case 11:
                     delete usuarioActual;
+
+                    /* Se eliminan los archivos privados del usuario. */
+                    #if _WIN32
+                        std::system("del datos\\P-*");
+                    #elif __linux__
+                        std::system("rm -f datos/P-*");
+
+                    #endif
+
                     return;
                     break;
                 default:

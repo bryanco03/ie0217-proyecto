@@ -120,6 +120,7 @@ void Banco::cargarPrestamos(std::string idPrestamos){
         /* Si se encontró un prestamo con el id se asigna al vector prestamos. */
         if(prestamo.getID() != "ERROR"){
             this->usuarioActual->setPrestamo(prestamo);
+            prestamo.generarCSV();
         }
     }
 }
@@ -305,6 +306,9 @@ void Banco::pagarPrestamos(){
         return;
     }
 
+    /* Si se encontró el prestamo se genera su tabla. */
+    prestamo.generarCSV();
+
     /* Se obtiene el monto, si ya ha sido pagado se retorna. */
     double cuotaMensual = prestamo.getCuota();
     if(prestamo.getCuotasRestantes() <= 0){
@@ -316,7 +320,7 @@ void Banco::pagarPrestamos(){
     std::string moneda = prestamo.getMoneda();
 
     /* Se maneja el pago. */
-    bool aprovado = false;
+    bool aprobado = false;
     std::cout << "La cuota a pagar es: " << cuotaMensual << " " << prestamo.getMoneda() << "es." 
               << " Aun se deben pagar " << prestamo.getCuotasRestantes() << " cuotas." << std::endl;
 
@@ -348,10 +352,10 @@ void Banco::pagarPrestamos(){
     /* Métodos de pago. */
     switch (opcion) {
     case 1:
-        aprovado = true;
+        aprobado = true;
         break;
     case 2:
-        aprovado = pagarCuotasCuentas(cuotaMensual * cantidadPagos, moneda);
+        aprobado = pagarCuotasCuentas(cuotaMensual * cantidadPagos, moneda);
         break;
     case 3:
         return;
@@ -360,8 +364,8 @@ void Banco::pagarPrestamos(){
         break;
     }
 
-    /* Si el pago fue aprovado se paga la cuota. */
-    if(aprovado){
+    /* Si el pago fue aprobado se paga la cuota. */
+    if(aprobado){
         for(int i = 0; i < cantidadPagos; ++i){
             prestamo.pagarCuota();
         }
