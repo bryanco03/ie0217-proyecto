@@ -17,15 +17,6 @@ Prestamos::Prestamos(std::string ID, std::string tipo, double monto, std::string
     /* Se definen variables por medio de fórmulas. */
     double tasaMensual = this->tasaInteres/(12*100);
     this->cuotaMensual = (this->monto * tasaMensual)/(1 - std::pow(1 + tasaMensual,-this->duracionMeses));
-
-    /* 
-    Si el prestamo no fue resultado de una busqueda/creación errónea.
-    Se guarda en datos/Prestamos.csv 
-    */
-   /*
-    if(ID != "ERROR"){
-        guardarCSV();
-    }*/
 }
 
 void Prestamos::generarCSV(){
@@ -34,7 +25,7 @@ void Prestamos::generarCSV(){
     double montoRestante = this->monto;
 
     /* Se abre el archivo .csv */
-    std::ofstream archivo ("datos\\" + this->ID + ".csv");
+    std::ofstream archivo ("datos/" + this->ID + ".csv");
 
     /* Se escriben datos del prestamo en la tabla. */
     archivo << "Mes,Cuota Mensual,Intereses,Amortizacion,Monto Restante";
@@ -60,7 +51,11 @@ void Prestamos::generarCSV(){
 
         /* Si no es generico se agrega el estado de la cuota, inicialmente no pagada. */
         if(this->ID != "TABLA"){
-            archivo << ",NO PAGADO" << std::endl;
+            if(i + 1 <= cuotasPagadas){
+                archivo << ",PAGADO" << std::endl;
+            } else {
+                archivo << ",NO PAGADO" << std::endl;
+            }
         } else {
             archivo << std::endl;
         }
@@ -70,7 +65,7 @@ void Prestamos::generarCSV(){
 
 void Prestamos::guardarCSV(){
     /* Se abre el archivo de registro. */
-    std::string nombreArchivo = "datos\\Prestamos.csv";
+    std::string nombreArchivo = "datos/Prestamos.csv";
     std::ifstream viejo(nombreArchivo);
     std::ofstream nuevo("temp1.csv");
 
@@ -115,7 +110,7 @@ void Prestamos::guardarCSV(){
 
 void Prestamos::pagarCuota(){
     /* Se abre el archivo del prestamo. */
-    std::string nombreArchivo = "datos\\" + this->ID + ".csv";
+    std::string nombreArchivo = "datos/" + this->ID + ".csv";
     std::ifstream viejo(nombreArchivo);
     std::ofstream nuevo("temp2.csv");
     std::string temp, linea, palabra;

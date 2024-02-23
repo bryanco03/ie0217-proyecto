@@ -36,7 +36,7 @@ CDP::CDP(double monto, float tasaIntereses, double duracionAnnos, std::string ID
 void CDP::generarCSV(){
 
     /* Se abre el archivo .csv con el nombre del ID */
-    std::ofstream archivo("datos\\" + this->ID + ".csv");
+    std::ofstream archivo("datos/" + this->ID + ".csv");
     archivo << "Monto ingresado,Tasa de intereses,Tiempo del CDP (annos),Monto ganado,Moneda\n";
 
     /* Se almacenan la informacion del CDP en una linea del CDP */
@@ -51,7 +51,7 @@ void CDP::generarCSV(){
 void CDP::guardarCSV(){
 
     /* Se abre el archivo de registro. */
-    std::string nombreArchivo = "datos\\CDP.csv";
+    std::string nombreArchivo = "datos/CDP.csv";
     
     /* Se abre el archivo .csv previamente creado */
     std::ifstream viejo(nombreArchivo);

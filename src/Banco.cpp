@@ -77,6 +77,7 @@ void Banco::menuAtencionCliente(){
                     mostrarInfoCDP();
                     break;
                 case 11:
+                    eliminarArchivos();
                     delete usuarioActual;
                     return;
                     break;
@@ -99,6 +100,11 @@ void Banco::menuAtencionCliente(){
 }
 
 void Banco::menuInformacionGeneral(){
+    /* Se vuelve a mostrar la tabla hecha anteriormente si existe. */
+    Prestamos prestamo = this->leerPrestamo("TABLA");
+    if(prestamo.getID() != "ERROR"){
+        prestamo.generarCSV();
+    }
     bool generico = true;
     while (1) {
         std::cout << "\nBienvenido al menu de informacion general" << std::endl
@@ -135,6 +141,14 @@ void Banco::menuInformacionGeneral(){
             InfoGeneralCDP();
             break;
         case 4:
+            /* Se eliminan el archivo TABLA.csv . */
+            if(prestamo.getID() != "ERROR"){
+                #if _WIN32
+                    std::system("del datos\\TABLA.csv");
+                #elif __linux__
+                    std::system("rm -f datos/TABLA.csv");
+                #endif
+            }
             return;
             break;
         default:
@@ -179,7 +193,7 @@ void Banco::iniciarArchivos(){
 
     if(!std::ifstream("datos//CDP.csv")){
         std::ofstream cdpCrear("datos//CDP.csv");
-        cdpCrear << "ID,Monto ingresado,Intereses Ganados,Duracion del CDP,Monto Ganado" << std::endl;
+        cdpCrear << "ID,Monto ingresado,Intereses Ganados,Duracion del CDP,Monto Ganado,Moneda" << std::endl;
         cdpCrear.close(); 
     }
 
@@ -199,10 +213,34 @@ double Banco::convertirMoneda(double monto, bool enDolares){
     }
 }
 
+void Banco::eliminarArchivos(){
+    /* Se eliminan los archivos privados del usuario. 
+       Se determina el sistema operativo para hacer las operaciones correctas. */
+    #if _WIN32
+        if(usuarioActual->getPrestamos().size() != 0){
+            std::system("del datos\\P-*");
+        }
+
+        if(usuarioActual->getCdps().size() != 0){
+            std::system("del datos\\C-*");
+        }
+
+    #elif __linux__
+        if(usuarioActual->getPrestamos().size() != 0){
+            std::system("rm -f datos/P-*");;
+        }
+
+        if(usuarioActual->getCdps().size() != 0){
+            std::system("rm -f datos/C-*");
+        }
+
+    #endif
+}
+
 void Banco::registrarTrasaccion(const std::string& informacion){
     
     /* Se abre el archivo .log donde se almacenara el registro */
-    std::ofstream registro("datos\\registro.log", std::ios::app);
+    std::ofstream registro("datos/registro.log", std::ios::app);
 
     /* Se comprueba que el .log sea accesible */
     if (!registro.is_open()) {

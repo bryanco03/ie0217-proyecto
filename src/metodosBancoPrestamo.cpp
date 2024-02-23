@@ -69,7 +69,7 @@ Prestamos opcionesPrestamo(const double monto, std::string moneda, const int tip
 Prestamos Banco::leerPrestamo(std::string idPrestamo){
     /* Se crean variables a usar. */
     std::string ID_CSV, linea;                      /*String de IDs y linea a leer del csv. */
-    std::ifstream database("datos\\Prestamos.csv"); /* Se lee el archivo csv. */
+    std::ifstream database("datos/Prestamos.csv"); /* Se lee el archivo csv. */
     std::vector<std::string> infoP;                 /* Vector con la informacion del prestamo. */
 
     /* Se busca el prestamo. */
@@ -120,6 +120,7 @@ void Banco::cargarPrestamos(std::string idPrestamos){
         /* Si se encontró un prestamo con el id se asigna al vector prestamos. */
         if(prestamo.getID() != "ERROR"){
             this->usuarioActual->setPrestamo(prestamo);
+            prestamo.generarCSV();
         }
     }
 }
@@ -241,7 +242,7 @@ void Banco::mostrarInfoPrestamos(){
 
     /* Prestamos del id dado. */
     std::string idCSV, linea, sinNombre, columna, idPrestamos, id;
-    std::ifstream database("datos\\usuarios.csv");
+    std::ifstream database("datos/usuarios.csv");
     bool encontrado = false;
 
     /* Se buscan los id de prestamos del usuario. */
@@ -305,6 +306,9 @@ void Banco::pagarPrestamos(){
         return;
     }
 
+    /* Si se encontró el prestamo se genera su tabla. */
+    prestamo.generarCSV();
+
     /* Se obtiene el monto, si ya ha sido pagado se retorna. */
     double cuotaMensual = prestamo.getCuota();
     if(prestamo.getCuotasRestantes() <= 0){
@@ -316,7 +320,7 @@ void Banco::pagarPrestamos(){
     std::string moneda = prestamo.getMoneda();
 
     /* Se maneja el pago. */
-    bool aprovado = false;
+    bool aprobado = false;
     std::cout << "La cuota a pagar es: " << cuotaMensual << " " << prestamo.getMoneda() << "es." 
               << " Aun se deben pagar " << prestamo.getCuotasRestantes() << " cuotas." << std::endl;
 
@@ -348,10 +352,10 @@ void Banco::pagarPrestamos(){
     /* Métodos de pago. */
     switch (opcion) {
     case 1:
-        aprovado = true;
+        aprobado = true;
         break;
     case 2:
-        aprovado = pagarCuotasCuentas(cuotaMensual * cantidadPagos, moneda);
+        aprobado = pagarCuotasCuentas(cuotaMensual * cantidadPagos, moneda);
         break;
     case 3:
         return;
@@ -360,8 +364,8 @@ void Banco::pagarPrestamos(){
         break;
     }
 
-    /* Si el pago fue aprovado se paga la cuota. */
-    if(aprovado){
+    /* Si el pago fue aprobado se paga la cuota. */
+    if(aprobado){
         for(int i = 0; i < cantidadPagos; ++i){
             prestamo.pagarCuota();
         }
@@ -375,37 +379,45 @@ void Banco::pagarPrestamos(){
 }
 
 bool Banco::recibirPrestamo(double monto, std::string moneda){
+    /* Se define la cuenta a modificar. */
     Cuenta cuenta;
 
+    /* Si el usario no posee cuentas se da el error y se niega el pago. */
     if(usuarioActual->getCuentas().empty()){
         std::cout << "ERROR: No posees ninguna cuenta para recibir el monto" << std::endl;
         return false;
     }
 
+    /* Si el usuario posee dos cuentas se le da a escoger una. */
     if(usuarioActual->getCuentas().size() == 2){
-    std::cout << "Escoja la cuenta a la cual depositar el monto: " << std::endl;
-    mostrarInfoCuentas(usuarioActual->getCuentas());
-    std::cout << "Cual cuenta?: ";
-    std::string inputRecibir; std::cin >> inputRecibir;
-    if(!isNum(inputRecibir) || std::stoi(inputRecibir) > 2 || std::stoi(inputRecibir) < 0){
-        std::cout << "ERROR: Opcion debe ser un entero entre 1 y 2" << std::endl;
-        return false;
-    }
-    int opcionRecibir = std::stoi(inputRecibir);
+        std::cout << "Escoja la cuenta a la cual depositar el monto: " << std::endl;
+        mostrarInfoCuentas(usuarioActual->getCuentas());
+        std::cout << "Cual cuenta?: ";
 
-    if(opcionRecibir == 1){
-        cuenta = usuarioActual->getCuentas()[0];
-    } else {
-        cuenta = usuarioActual->getCuentas()[1];
-    }
-}
+        /* Manejo de errores. */
+        std::string inputRecibir; std::cin >> inputRecibir;
+        if(!isNum(inputRecibir) || std::stoi(inputRecibir) > 2 || std::stoi(inputRecibir) < 0){
+            std::cout << "ERROR: Opcion debe ser un entero entre 1 y 2" << std::endl;
+            return false;
+        }
+        int opcionRecibir = std::stoi(inputRecibir);
 
+        /* Se declara la cuenta. */
+        if(opcionRecibir == 1){
+            cuenta = usuarioActual->getCuentas()[0];
+        } else {
+            cuenta = usuarioActual->getCuentas()[1];
+        }
+    }
+
+    /* Si el usuario solo posee una cuenta se usa esa. */
     if(usuarioActual->getCuentas().size() == 1){
+        std::cout << "Se deposito el monto en su cuenta." << std::endl;
         cuenta = usuarioActual->getCuentas()[0];
     }
 
+    /* Caso donde cuenta es en dolar. */
     if(cuenta.esDolar){
-        /* Caso donde cuenta es en dolar. */
         if(moneda == "dolar"){
             cuenta.dinero += monto;
             registrarDeposito(cuenta.dinero, "dolar", usuarioActual->getIdentificacion());

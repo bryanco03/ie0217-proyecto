@@ -139,9 +139,6 @@ void Banco::crearCDP(){
     std::string registro = "Creacion CDP, Usuario: " + std::to_string(this->usuarioActual->getIdentificacion()) + ", ID: " +
     ID;
 
-    /*", Monto Ingresado: " + montoReducidoStr + ',' + " Tasa de interes: " + interesReducidoStr + ", Duracion del CDP: " +
-    tiempoReducidoStr + " annos.";*/
-    
     /* Se llama a la funcion que maneja el registro de transacciones */
     registrarTrasaccion(registro);
     this->usuarioActual->setCdp(cdp);
@@ -214,33 +211,35 @@ void Banco::mostrarInfoCDP(){
 
 CDP Banco::leerCDP(std::string idCDP){
     /* Se crean variables a usar. */
-    std::string linea, primeraLinea;                        /*String de IDs y linea a leer del csv. */
-    std::ifstream database("datos\\" + idCDP + ".csv");     /* Se lee el archivo csv. */
+    std::string ID_CSV, linea;                              /*String de IDs y linea a leer del csv. */
+    std::ifstream database("datos/CDP.csv");                /* Se lee el archivo csv. */
     std::vector<std::string> infoC;                         /* Vector con la informacion del CDP. */
 
     /* Se busca el CDP. */
-    if(!database.good()){
-        return CDP(1, 1, 1, "ERROR", "");
-    }
-
-    /* Se ignora la primera linea. */
-    std::getline(database, primeraLinea);
-
-    /* Se cargan los datos. */
     while(std::getline(database, linea)){
-        /* Se lee la linea y se guarda en infoC. */
-        std::stringstream datos(linea);
-        while(datos.good()){
-            std::string columna;
-            std::getline(datos, columna, ',');
-            infoC.push_back(columna);
+        ID_CSV = linea.substr(0, linea.find(','));
+
+        /* Si se encuentra se lee la linea y se guarda en infoP. */
+        if(idCDP == ID_CSV){
+            std::stringstream datos(linea);
+            while(datos.good()){
+                std::string columna;
+                std::getline(datos, columna, ',');
+                infoC.push_back(columna);
+            }
         }
     }
-
+    
     /* Se cierra el archivo.*/
     database.close();
 
-    CDP cdp(std::stod(infoC[0]), std::stof(infoC[1]), std::stoi(infoC[2]), idCDP, infoC[4]);
+    /* Si no se encontró el CDP se imprime el error. */
+    if(infoC.size() == 0){
+        return CDP(1, 1, 1, "ERROR", "");
+    }
+
+    /* Si se encontró se retorna el CDP. */
+    CDP cdp(std::stod(infoC[1]), std::stof(infoC[2]), std::stoi(infoC[3]), idCDP, infoC[5]);
     
     return cdp;
 }
@@ -263,6 +262,7 @@ void Banco::cargarCDPs(std::string idCDPs){
         /* Si se encontró un CDP con el id se asigna al vector CDPs. */
         if(cdp.getID() != "ERROR"){
             this->usuarioActual->setCdp(cdp);
+            cdp.generarCSV();
         }
     }
 }

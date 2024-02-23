@@ -415,7 +415,7 @@ void Banco::realizarDeposito(){
 
 void Banco::actualizarUsuarios(){
     /* Se abre el archivo de registro. */
-    std::string nombreArchivo = "datos\\usuarios.csv";
+    std::string nombreArchivo = "datos/usuarios.csv";
     std::ifstream viejo(nombreArchivo);
     std::ofstream nuevo("temp1.csv");
     Usuario user = *this->usuarioActual;
@@ -772,7 +772,6 @@ void Banco::depositoEntreCuentas(Cuenta cuentaDepositar, Cuenta cuentaRetirar){
     
             cuentaDepositar.dinero += montoDolar;
             cuentaRetirar.dinero -= montoColon;
-            std::cout << cuentaRetirar.dinero << std::endl;
             registrarDeposito(cuentaDepositar.dinero, "dolar", usuarioActual->getIdentificacion());
             registrarDeposito(cuentaRetirar.dinero, "colon", usuarioActual->getIdentificacion());
             actualizarCuentas();
