@@ -839,6 +839,7 @@ void Banco::realizarTransaccion(){
                 std::cout << "Como deseas realizar la transferencia: " << std::endl;
                 std::cout << "1. Efectivo " << std::endl;
                 std::cout << "2. Cuentas" << std::endl;
+                std::cout << "Ingrese una opcion: ";
                 std::cin >> opcionTransferencia;
                 if (std::cin.fail()){
                     std::cin.clear();
@@ -904,6 +905,7 @@ void Banco::realizarTransaccion(){
                     std::cout << "Como deseas realizar la transferencia: " << std::endl;
                     std::cout << "1. Efectivo " << std::endl;
                     std::cout << "2. Cuentas" << std::endl;
+                    std::cout << "Ingrese una opcion: ";
                     std::cin >> opcionTransferencia;
                     if (std::cin.fail()){
                         std::cin.clear();
@@ -958,6 +960,7 @@ void Banco::realizarTransaccion(){
                     std::cout << "Como deseas realizar la transferencia: " << std::endl;
                     std::cout << "1. Efectivo " << std::endl;
                     std::cout << "2. Cuentas" << std::endl;
+                    std::cout << "Ingrese una opcion: ";
                     std::cin >> opcionTransferencia;
                     if (std::cin.fail()){
                         std::cin.clear();
@@ -1032,6 +1035,12 @@ void Banco::transferenciaEfectivo(Cuenta cuenta, unsigned long int identificacio
         std::cout << "Ingrese el monto a depositar: ";
         std::cin >> monto;
 
+        if (std::cin.fail()){
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            throw  std::invalid_argument("Se ingreso un tipo de dato invalido.");
+        }
+
         if (monto <= 0) {
             throw std::invalid_argument("El monto debe ser mayor que cero.");
         }
@@ -1093,6 +1102,13 @@ void Banco::transferenciaEntreCuentas(Cuenta cuentaDepositar, Cuenta cuentaRetir
             std::cout << "Vas a transferir el dinero de la cuenta en dolares" << std::endl;
             std::cout << "Ingrese el monto en dolares que deseas transferir: " ;
             std::cin >> montoDolar;
+
+            if (std::cin.fail()){
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                throw  std::invalid_argument("Se ingreso un tipo de dato invalido.");
+            }
+
             if (montoDolar <= 0) {
                 throw std::invalid_argument("El monto debe ser mayor que cero.");
             }
@@ -1129,6 +1145,11 @@ void Banco::transferenciaEntreCuentas(Cuenta cuentaDepositar, Cuenta cuentaRetir
             std::cout << "Vas a transferir el dinero de la cuenta en Colones" << std::endl;
             std::cout << "Ingrese el monto en colones que deseas transferir: " ;
             std::cin >> montoColon;
+            if (std::cin.fail()){
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                throw  std::invalid_argument("Se ingreso un tipo de dato invalido.");
+            }
             if (montoColon <= 0) {
                 throw std::invalid_argument("El monto debe ser mayor que cero.");
             }
